@@ -1,13 +1,14 @@
 .btn-color{
-  background: #406595;
-  color: #fff;
-}
-.text-color{
-  color: #406595;
-}
-.center{
-  display: flex;
-  justify-content: center;
-  align-content: center;
-
-}
+    background: #406595;
+    color: #fff;
+  }
+  .text-color{
+    color: #406595;
+  }
+  .center{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  
+  }
+  
