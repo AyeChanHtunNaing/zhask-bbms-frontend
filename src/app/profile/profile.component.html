@@ -1,5 +1,46 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-  <p>Hi thel lay :3 Nga profile par</p>
+
+  <div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center
+              min-vh-100">
+      <div class="col-lg-5 col-md-7 py-8 py-xl-0">
+        <div class="card shadow">
+          <div class="card-body p-6">
+            <div class="mb-4">
+              <h2 class="mb-1 fw-bold text-color">User Profile</h2>
+            </div>
+            <form>
+              <div class="mb-3">
+                <label for="name" class="form-label text-color">Name</label>
+                <input type="text" id="name" class="form-control" name="name">
+              </div>
+              <div class="mb-3">
+                <label for="uname" class="form-label text-color">Username</label>
+                <input type="text" id="uname" class="form-control" name="uname">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label text-color">Email</label>
+                <input type="email" id="email" class="form-control" name="email">
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label text-color">Password</label>
+                <input type="password" id="password" class="form-control" name="password">
+              </div>
+              <div class="mb-3">
+                <label for="created" class="form-label text-color">Created At</label>
+                <input type="text" id="created" class="form-control" name="created">
+              </div>
+              <div class="mb-3 d-grid">
+                <button class="btn btn-color btn-lg btn-block" type="button">Update Profile</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
