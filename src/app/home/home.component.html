@@ -3,48 +3,47 @@
 <div class="body" [ngClass]="getBodyClass()">
 
 
-  <button type="button" class="btn btn-primary me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
-   Create New Workspace
+  <button type="button" class="btn btn-color me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Create New Workspace
   </button>
 
 
-
-  <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-danger" id="exampleModalLabel">New Workspace</h5>
+          <h2 class="modal-title text-color fw-bold" id="exampleModalLabel">New Workspace</h2>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="name" class="form-label">Workspace Name</label>
-              <input type="text" class="form-control" id="name">
+              <input type="text" class="form-control" [(ngModel)]="workspace.wname"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors?.['required']">Name is required</div>
+              </div>
             </div>
             <div class="mb-3">
               <label for="desc" class="form-label">Description</label>
-              <textarea class="form-control" id="desc" rows="3"></textarea>
+              <textarea class="form-control" id="desc" [(ngModel)]="workspace.wdes" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
+              <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+                <div>Description is required</div>
+
+              </div>
             </div>
             <div class="mb-3">
               <label for="invite" class="form-label">Invite people <span class="text-danger">(optional)</span></label>
-              <input type="text" class="form-control" id="invite">
+              <input type="text" class="form-control" [(ngModel)]="workspace.wemail" formControlName="email"  id="invite">
             </div>
-            <button type="button" class="btn btn-primary d-flex mx-auto">Create</button>
+            <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
           </form>
         </div>
         <div class="modal-footer">
 
+        </div>
       </div>
     </div>
+
   </div>
-
 </div>
-
-
-
-
-
-
-

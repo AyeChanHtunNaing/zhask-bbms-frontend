@@ -1,5 +1,13 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-  <p>Hi thel lay :3 Nga friends par</p>
+  <h1 class="text-color">Your Friends</h1>
+
+  <div class="container d-flex flex-column">
+    <mat-card class="mt-3"><span class="fs-6">Harry</span></mat-card>
+    <mat-card class="mt-3"><span class="fs-6">James</span></mat-card>
+    <mat-card class="mt-3"><span class="fs-6">Puppy</span></mat-card>
+    <mat-card class="mt-3"><span class="fs-6">Dasy</span></mat-card>
+  </div>
+
 </div>

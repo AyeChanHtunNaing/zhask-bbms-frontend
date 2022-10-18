@@ -21,3 +21,10 @@
   position: absolute;
   right: 10px;
 }
+.text-color{
+  color: #406595;
+}
+.btn-color{
+  background: #406595;
+  color: #fff;
+}
