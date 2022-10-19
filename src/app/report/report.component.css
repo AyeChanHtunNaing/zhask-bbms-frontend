@@ -22,4 +22,10 @@ button{
   position: absolute;
   right: 20px;
 }
-
+@media only screen and (min-width: 1200px) {
+  .report-div{
+    position: absolute;
+    right:185px;
+    left:185px;
+  }
+}

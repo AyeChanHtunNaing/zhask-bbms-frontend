@@ -18,6 +18,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import {MatCardModule} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
+import { WorkspaceComponent } from './workspace/workspace.component';
+import { BoardComponent } from './board/board.component';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
+    WorkspaceComponent,
+    BoardComponent,
 
   ],
   imports: [

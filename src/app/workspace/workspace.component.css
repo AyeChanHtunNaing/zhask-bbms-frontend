@@ -1,0 +1,64 @@
+.body {
+  width: calc(100% - 5rem);
+  height: 100vh;
+  margin-left: 5rem;
+  position: relative;
+  top: 0;
+  transition: all 0.5s ease;
+  background: #f4f7fa;
+  padding: 3rem;
+  text-align: center;
+}
+.body-trimmed {
+  width: calc(100% - 16.5625rem);
+  margin-left: 16.5625rem;
+}
+.body-md-screen {
+  width: calc(100% - 10rem);
+  margin-left: 10rem;
+}
+.btn-create{
+  position: absolute;
+  right: 10px;
+}
+.text-color{
+  color: #406595;
+}
+.btn-color{
+  background: #406595;
+  color: #fff;
+}
+.column{
+  float: left;
+  width:25%;
+  padding: 0 10px;
+}
+@media only screen and (max-width: 600px) {
+  .column{
+    width:100%;
+  }
+}
+@media only screen and (max-width: 775px) {
+  .column{
+    width:75%;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .board-div{
+    position: absolute;
+    right:175px;
+    left:175px;
+  }
+}
+
+
+.row{
+  margin:0 -5px;
+}
+.row:after{
+  content:"";
+  display:table;
+  clear: both;
+}
+
+

@@ -9,6 +9,8 @@
     display: flex;
     justify-content: center;
     align-content: center;
-  
+
   }
-  
+  .body{
+    background: #f4f7fa;
+  }
