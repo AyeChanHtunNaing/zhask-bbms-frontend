@@ -1,13 +1,9 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-
-
   <button type="button" class="btn btn-color me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Create New Workspace
   </button>
-
-
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -19,14 +15,14 @@
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="name" class="form-label">Workspace Name</label>
-              <input type="text" class="form-control" [(ngModel)]="workspace.wname"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+              <input type="text" class="form-control" [(ngModel)]="workspace.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
               <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                 <div *ngIf="f.name.errors?.['required']">Name is required</div>
               </div>
             </div>
             <div class="mb-3">
-              <label for="desc" class="form-label">Description</label>
-              <textarea class="form-control" id="desc" [(ngModel)]="workspace.wdes" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
+              <label for="descs" class="form-label">Description</label>
+              <textarea class="form-control" id="descs" [(ngModel)]="workspace.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
               <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
                 <div>Description is required</div>
 
@@ -34,16 +30,31 @@
             </div>
             <div class="mb-3">
               <label for="invite" class="form-label">Invite people <span class="text-danger">(optional)</span></label>
-              <input type="text" class="form-control" [(ngModel)]="workspace.wemail" formControlName="email"  id="invite">
+              <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite">
             </div>
             <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
           </form>
         </div>
         <div class="modal-footer">
-
         </div>
       </div>
     </div>
-
   </div>
+
+  <!-- board -->
+  <div class="board-div">
+  <div class="list-menu mt-5" *ngFor="let item of workspaces"  (click)="goToBoard(item.id)">
+    <a  class="list-menu-item" >
+      <div class="column mt-3">
+        <div class="card shadow-sm">
+          <h3 class="text-color">Workspace {{item.id}}</h3>
+          <p class="text-dark">{{item.name}}</p>
+          <p>{{item.description}}</p>
+
+        </div>
+      </div>
+    </a>
+  </div>
+  </div>
+  <!-- board end -->
 </div>

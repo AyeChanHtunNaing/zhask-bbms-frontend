@@ -1,6 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { Workspace } from '../models/workspace';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { WorkspaceService } from '../services/workspace.service';
+import { EmailResponse } from '../message/emailresponse';
+import { InviteMember } from '../models/invitemember';
+import { InvitememberService } from '../services/invitemember.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -16,8 +20,11 @@ export class HomeComponent implements OnInit ,OnChanges{
   isSideNavCollapsed = false;
   screenWidths = 0;
   workspace : Workspace =new Workspace();
+  invitemember:InviteMember=new InviteMember();
+  workspaces:Workspace[]=[];
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -26,7 +33,7 @@ export class HomeComponent implements OnInit ,OnChanges{
 
   registerForm!: FormGroup;
   submitted = false;
-  constructor( private formBuilder: FormBuilder){
+  constructor( private formBuilder: FormBuilder,private workspaceService: WorkspaceService,private invitememberService:InvitememberService){
     this.registerForm = formBuilder.group({
       email: ['', [Validators.email]],
       name: ['', [Validators.required]],
@@ -40,6 +47,9 @@ export class HomeComponent implements OnInit ,OnChanges{
       desc: ['', [Validators.required]],
     });
     throw new Error('Method not implemented.');
+  }
+  emailresponse:EmailResponse={
+    token:''
   }
   getBodyClass(): string {
     let styleClass = '';
@@ -64,26 +74,45 @@ export class HomeComponent implements OnInit ,OnChanges{
     //True if all the fields are filled
     if(this.submitted)
     {
-      alert("Great!!");
+      this.workspaceService.createWorkspace(this.workspace)
+    .subscribe(res => {
+      this.emailresponse= res as EmailResponse;
+
+      //alert(this.emailresponse.token);
+      location.reload();
+
+    },
+    err => {
+      this.emailresponse = err;
+
+     // alert(this.emailresponse.token);
+    });
+
+    this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
+    },
+      err=>
+      {
+
+      }
+  )
+
+   this.getWorkspaces();
     }
 
+  }
+  getWorkspaces()
+  {
+    this.workspaceService.getWorkspace().subscribe(data => {
+      this.workspaces = data;
+    });
   }
   ngOnInit() {
-    //Add User form validations
+    this.getWorkspaces();
 
   }
 
-  /* home area pop up form*/
-  ngSubmit(){
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.registerForm.invalid) {
-      return;
-    }
-    //True if all the fields are filled
-    if(this.submitted)
-    {
-      alert("Great!!");
-    }
+
+  goToBoard(item:number){
+  alert("Hello")
   }
 }

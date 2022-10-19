@@ -6,7 +6,7 @@ interface SideNavToggle {
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
   isSideNavCollapsed = false;

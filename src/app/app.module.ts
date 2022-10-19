@@ -17,6 +17,7 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import {MatCardModule} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {FormsModule} from "@angular/forms";
     AppRoutingModule,
     ReactiveFormsModule,
     MatCardModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

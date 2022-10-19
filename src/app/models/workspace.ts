@@ -1,6 +1,7 @@
 export class Workspace {
- wname !: string;
- wdes !: string;
- wemail !: string;
+ id!:number;
+ name !: string;
+ description !: string;
+
 }
 

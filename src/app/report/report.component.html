@@ -1,5 +1,82 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
-
 <div class="body" [ngClass]="getBodyClass()">
-  <p>Hi thel lay :3 Nga report par</p>
+
+  <button type="button" class="btn btn-outline-primary">Generate Report</button>
+
+  <main class="py-6 bg-surface-secondary mt-5">
+    <div class="container-fluid">
+      <!-- Card stats -->
+      <div class="row g-6 mb-6">
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Workspaces</span> <span class="h3 font-bold mb-0">4</span> </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Boards</span> <span class="h3 font-bold mb-0">22</span> </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Assigned Tasks</span> <span class="h3 font-bold mb-0">233</span> </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Finished Tasks</span> <span class="h3 font-bold mb-0">99</span> </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <!-- detail -->
+    <h2 style="text-align: left" class="text-color">Title</h2>
+    <div class="table-responsive">
+      <table class="table table-hover table-nowrap">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1 </td>
+          <td>Hi </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2 </td>
+          <td>Hello </td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
 </div>
+
+
