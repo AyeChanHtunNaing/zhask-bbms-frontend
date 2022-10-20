@@ -5,6 +5,7 @@ import { WorkspaceService } from '../services/workspace.service';
 import { EmailResponse } from '../message/emailresponse';
 import { InviteMember } from '../models/invitemember';
 import { InvitememberService } from '../services/invitemember.service';
+import { Router } from '@angular/router';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -38,7 +39,8 @@ export class HomeComponent implements OnInit ,OnChanges{
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
     return forbidden ? { 'email': { value: control.value } } : null;
   };
-  constructor( private formBuilder: FormBuilder,private workspaceService: WorkspaceService,private invitememberService:InvitememberService){
+  constructor( private formBuilder: FormBuilder,private workspaceService: WorkspaceService,private invitememberService:InvitememberService
+              ,private router : Router){
     this.registerForm = this.formBuilder.group({
       email: ['',[this.commaSepEmail ]],
       name: ['', [Validators.required]],
@@ -69,8 +71,6 @@ export class HomeComponent implements OnInit ,OnChanges{
   onSubmit() {
 
     this.submitted = true;
-    if(this.commaSepEmail==null)
-      alert("Invalid Email")
     // stop here if form is invalid
     if (this.registerForm.invalid) {
       return;
@@ -111,9 +111,8 @@ export class HomeComponent implements OnInit ,OnChanges{
 
   }
 
-
-  goToBoard(item:number){
-    alert("Hello")
+  goToBoard(workspaceId:number){
+    this.router.navigate(['workspace', workspaceId]);
   }
 }
 

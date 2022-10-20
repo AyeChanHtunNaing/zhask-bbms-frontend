@@ -24,7 +24,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'workspace', component: WorkspaceComponent},
+  {path: 'workspace/:workspaceId', component: WorkspaceComponent},
   {path: 'board', component: BoardComponent},
 
 

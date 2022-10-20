@@ -15,14 +15,14 @@
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="names" class="form-label">Board Name</label>
-              <input type="text" class="form-control" [(ngModel)]="workspace.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+              <input type="text" class="form-control" [(ngModel)]="board.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
               <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                 <div *ngIf="f.name.errors?.['required']">Name is required</div>
               </div>
             </div>
             <div class="mb-3">
               <label for="descs" class="form-label">Description</label>
-              <textarea class="form-control" id="descs" [(ngModel)]="workspace.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
+              <textarea class="form-control" id="descs" [(ngModel)]="board.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
               <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
                 <div>Description is required</div>
 
@@ -43,7 +43,7 @@
 
   <!-- board -->
   <div class="board-div">
-    <div class="list-menu mt-5" *ngFor="let item of workspaces"  (click)="goToBoard(item.id)">
+    <div class="list-menu mt-5" *ngFor="let item of boards"  (click)="goTotaskLists(item.id)">
       <a  class="list-menu-item" >
         <div class="column mt-3">
           <div class="card shadow-sm">
