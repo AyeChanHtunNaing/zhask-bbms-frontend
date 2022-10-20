@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { Workspace } from '../models/workspace';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { WorkspaceService } from '../services/workspace.service';
 import { EmailResponse } from '../message/emailresponse';
 import { InviteMember } from '../models/invitemember';
@@ -33,23 +33,25 @@ export class HomeComponent implements OnInit ,OnChanges{
 
   registerForm!: FormGroup;
   submitted = false;
+  commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
+    const emails = control.value.split(',').map((e: string)=>e.trim());
+    const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
+    return forbidden ? { 'email': { value: control.value } } : null;
+  };
   constructor( private formBuilder: FormBuilder,private workspaceService: WorkspaceService,private invitememberService:InvitememberService){
-    this.registerForm = formBuilder.group({
-      email: ['', [Validators.email]],
+    this.registerForm = this.formBuilder.group({
+      email: ['',[this.commaSepEmail ]],
       name: ['', [Validators.required]],
       desc: ['', [Validators.required]],
     });
+
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.registerForm = this.formBuilder.group({
-      email: ['', [Validators.email]],
-      name: ['', [Validators.required]],
-      desc: ['', [Validators.required]],
-    });
-    throw new Error('Method not implemented.');
+
   }
   emailresponse:EmailResponse={
     token:''
+
   }
   getBodyClass(): string {
     let styleClass = '';
@@ -67,6 +69,8 @@ export class HomeComponent implements OnInit ,OnChanges{
   onSubmit() {
 
     this.submitted = true;
+    if(this.commaSepEmail==null)
+      alert("Invalid Email")
     // stop here if form is invalid
     if (this.registerForm.invalid) {
       return;
@@ -75,28 +79,24 @@ export class HomeComponent implements OnInit ,OnChanges{
     if(this.submitted)
     {
       this.workspaceService.createWorkspace(this.workspace)
-    .subscribe(res => {
-      this.emailresponse= res as EmailResponse;
+        .subscribe(res => {
 
-      //alert(this.emailresponse.token);
-      location.reload();
+            location.reload();
 
-    },
-    err => {
-      this.emailresponse = err;
+          },
+          err => {
 
-     // alert(this.emailresponse.token);
-    });
+          });
 
-    this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
-    },
-      err=>
-      {
+      this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
+        },
+        err=>
+        {
 
-      }
-  )
+        }
+      )
 
-   this.getWorkspaces();
+      this.getWorkspaces();
     }
 
   }
@@ -113,6 +113,8 @@ export class HomeComponent implements OnInit ,OnChanges{
 
 
   goToBoard(item:number){
-  alert("Hello")
+    alert("Hello")
   }
 }
+
+

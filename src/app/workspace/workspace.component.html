@@ -14,7 +14,7 @@
         <div class="modal-body">
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="name" class="form-label">Board Name</label>
+              <label for="names" class="form-label">Board Name</label>
               <input type="text" class="form-control" [(ngModel)]="workspace.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
               <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                 <div *ngIf="f.name.errors?.['required']">Name is required</div>
@@ -47,9 +47,10 @@
       <a  class="list-menu-item" >
         <div class="column mt-3">
           <div class="card shadow-sm">
-            <h3 class="text-color">Workspace {{item.id}}</h3>
+            <h3 class="text-color">Board {{item.id}}</h3>
             <p class="text-dark">{{item.name}}</p>
             <p>{{item.description}}</p>
+            <p class="fs-6"><i class='bx bxs-user-circle fs-6'></i> 10 &nbsp; <i class='bx bx-task fs-6' ></i> 15</p>
 
           </div>
         </div>

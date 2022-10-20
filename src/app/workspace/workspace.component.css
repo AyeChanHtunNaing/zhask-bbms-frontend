@@ -60,5 +60,7 @@
   display:table;
   clear: both;
 }
-
+.align{
+  left:10px;
+}
 
