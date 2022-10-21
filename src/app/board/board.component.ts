@@ -1,7 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CardStore} from '../models/CardStore';
-import {List} from '../models/List';
 import {FormGroup} from "@angular/forms";
+import { TaskListService } from '../services/tasklist.service';
+import { ActivatedRoute } from '@angular/router';
+import { Board } from '../models/board';
+import { TaskList } from '../models/TaskList';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -35,34 +38,38 @@ export class BoardComponent implements OnInit {
     return styleClass;
   }
   // board starts
-  cardStore!: CardStore;
-  lists!: List[] ;
+  cardStores!: CardStore;
+  tasklists!: TaskList[] ;
+  tasklist:TaskList=new TaskList();
   listName!: string;
-  constructor() { }
+  board:Board=new Board();
+  constructor(private tasklistService:TaskListService,private route:ActivatedRoute) { }
   setMockData(): void {
-    this.cardStore = new CardStore();
-    this.lists = [
-      {
-        name: 'To Do',
-        cards: []
-      },
-      {
-        name: 'Doing',
-        cards: []
-      },
-      {
-        name: 'Done',
-        cards: []
-      }
-    ];
+    this.cardStores = new CardStore();
+   
+     this.tasklistService.getTask(this.board.id).subscribe(data => {
+      this.tasklists  = data;
+    });
   }
 
   ngOnInit() {
+    this.board.id=this.route.snapshot.params['boardId'];
+    this.tasklist.board=this.board;
     this.setMockData();
   }
 
   addList(listName: string) {
-    this.lists.push({name:listName,cards:[]});
-    this.listName="";
+  this.tasklist.title=listName;
+  this.tasklistService.createTaskList(this.tasklist)
+  .subscribe(res => {
+
+      location.reload();
+
+    },
+    err => {
+
+    });
+
+    this.listName=" ";
   }
 }

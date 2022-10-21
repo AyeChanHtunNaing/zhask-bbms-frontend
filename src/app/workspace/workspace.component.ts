@@ -7,7 +7,7 @@ import { InviteMember } from '../models/invitemember';
 import { InvitememberService } from '../services/invitemember.service';
 import { Board } from '../models/board';
 import { BoardService } from '../services/board.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -53,7 +53,7 @@ export class WorkspaceComponent implements OnInit {
   }
  
   constructor( private formBuilder: FormBuilder,private boardService: BoardService,private invitememberService:InvitememberService
-                ,private route : ActivatedRoute){
+                ,private route : ActivatedRoute , private router : Router){
     this.registerForm = this.formBuilder.group({
       email: ['',[this.commaSepEmail ]],
       name: ['', [Validators.required]],
@@ -113,7 +113,7 @@ export class WorkspaceComponent implements OnInit {
     this.getBoard();
   }
 
-  goTotaskLists(item:number){
-    alert(this.board.name)
+  goTotaskLists(baordId:number){
+    this.router.navigate(['board', baordId]);
   }
 }

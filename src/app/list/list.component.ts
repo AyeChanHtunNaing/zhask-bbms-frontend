@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit } from "@angular/core";
-import { Card } from "../models/Card";
-import { List } from "../models/List";
+import { Task } from "../models/Task";
+import { TaskList } from "../models/TaskList";
 import { CardStore } from "../models/CardStore";
 @Component({
   selector: "app-list",
@@ -8,7 +8,7 @@ import { CardStore } from "../models/CardStore";
   styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
-  @Input() list!: List;
+  @Input() tasklist!: TaskList;
   @Input() cardStore!: CardStore ;
   displayAddCard = false;
   constructor() {}
@@ -44,9 +44,7 @@ export class ListComponent implements OnInit {
     }
   }
   onEnter(value: string) {
-
     const cardId = this.cardStore.newCard(value);
-
-    this.list.cards.push(cardId);
+    this.tasklist.tasks.push(cardId);
   }
 }

@@ -1,11 +1,10 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="body" [ngClass]="getBodyClass()">
 <div class="display">
-  <app-list *ngFor="let list of lists" [list]="list" [cardStore]="cardStore"></app-list>
+  <app-list *ngFor="let list of tasklists" [tasklist]="list" [cardStore]="cardStores"></app-list>
   <div class="add">
-  <input type="text" class="input" [(ngModel)]="listName">
+  <input type="text" class="input" [(ngModel)]="listName" placeholder="Add Title">
   <span class="btn" (click)="addList(listName)">Add New List</span>
   </div>
-
 </div>
 </div>
