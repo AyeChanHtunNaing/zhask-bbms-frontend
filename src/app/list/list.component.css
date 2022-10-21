@@ -9,8 +9,8 @@
 .list__title {
   margin: 0;
   padding: 16px 0;
-  background: #f4f7fa;
-  color:#406595;
+  background: #406595;
+  color:#fff;
   font-size: 20px;
 }
 .list a {
@@ -23,7 +23,7 @@
 input{
   width: 300px;
   padding: 10px;
-  border: 1px solid violet;
+  border: 1px solid #406595;
   outline: 0;
   background: #fff;
   box-shadow:none;

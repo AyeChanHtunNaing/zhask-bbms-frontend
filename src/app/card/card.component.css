@@ -1,8 +1,8 @@
 p {
-  background: #F7CE55;
+  background: #f4f7fa;
   margin: 0 0 6px 0;
   padding: 6px 6px 2px 8px;
-  border: 1px solid green;
+  border: 1px solid #406595 ;
   font-style: italic;
-  color: #fff;
+  color: #406595;
 }

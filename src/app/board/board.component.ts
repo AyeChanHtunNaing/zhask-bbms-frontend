@@ -62,6 +62,7 @@ export class BoardComponent implements OnInit {
   }
 
   addList(listName: string) {
-    this.lists.push({name:listName,cards:[]})
+    this.lists.push({name:listName,cards:[]});
+    this.listName="";
   }
 }
