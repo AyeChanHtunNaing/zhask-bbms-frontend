@@ -1,3 +1,11 @@
-<p>board works!</p>
-<div class="card">
+<app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+<div class="body" [ngClass]="getBodyClass()">
+<div class="display">
+  <app-list *ngFor="let list of lists" [list]="list" [cardStore]="cardStore"></app-list>
+  <div class="add">
+  <input type="text" class="input" [(ngModel)]="listName">
+  <span class="btn" (click)="addList(listName)">Add New List</span>
+  </div>
+
+</div>
 </div>

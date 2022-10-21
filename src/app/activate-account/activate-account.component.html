@@ -1,0 +1,12 @@
+<app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+
+<div class="body" [ngClass]="getBodyClass()">
+  <div class="container custom-div vh-100">
+    <div class="card d-flex mx-auto">
+      <img src="../../assets/images/check.png" class="d-flex mx-auto w-25 h-25 animate__shakeX" >
+        <p class="fs-3 mt-3">Your account has been activated. </p>
+        <p class="fs-5 mt-3">Continue to <a routerLink="/login">Login</a></p>
+
+    </div>
+  </div>
+</div>

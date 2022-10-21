@@ -20,6 +20,9 @@ import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { BoardComponent } from './board/board.component';
+import {ActivateAccountComponent} from "./activate-account/activate-account.component";
+import { ListComponent } from './list/list.component';
+import { CardComponent } from './card/card.component';
 
 
 @NgModule({
@@ -39,6 +42,9 @@ import { BoardComponent } from './board/board.component';
     ForgotPasswordComponent,
     WorkspaceComponent,
     BoardComponent,
+    ActivateAccountComponent,
+    ListComponent,
+    CardComponent
 
   ],
   imports: [

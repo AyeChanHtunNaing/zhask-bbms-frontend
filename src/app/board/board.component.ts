@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { EmailResponse } from '../message/emailresponse';
-import { Board } from '../models/board';
-import { InviteMember } from '../models/invitemember';
-import { Workspace } from '../models/workspace';
-import { BoardService } from '../services/board.service';
-import { InvitememberService } from '../services/invitemember.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {CardStore} from '../models/CardStore';
+import {List} from '../models/List';
+import {FormGroup} from "@angular/forms";
+interface SideNavToggle {
+  screenWidth: number;
+  collapsed: boolean;
+}
 
 @Component({
   selector: 'app-board',
@@ -13,81 +13,55 @@ import { InvitememberService } from '../services/invitemember.service';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
-
-  workSpace : Workspace = new Workspace();
-  boards:Board[]=[];
-  board : Board = new Board();
-  invitemember:InviteMember=new InviteMember();
+  //form
   registerForm!: FormGroup;
-  
-  submitted = false;
-  commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
-    const emails = control.value.split(',').map((e: string)=>e.trim());
-    const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
-    return forbidden ? { 'email': { value: control.value } } : null;
-  };
-
-  constructor( private formBuilder: FormBuilder,private boardService: BoardService,private invitememberService:InvitememberService){
-    this.registerForm = this.formBuilder.group({
-      email: ['',[this.commaSepEmail ]],
-      name: ['', [Validators.required]],
-      desc: ['', [Validators.required]],
-    });
+  //board UI layout
+  isSideNavCollapsed = false;
+  screenWidths = 0;
+  @Input() collapsed = false;
+  @Input() screenWidth = 0;
+  onToggleSideNav(data: SideNavToggle): void {
+    this.screenWidths = data.screenWidth;
+    this.isSideNavCollapsed = data.collapsed;
   }
 
-  emailresponse:EmailResponse={
-    token:''
-
-  }
-
-  get f() {
-    return this.registerForm.controls;
-  }
-
-  onSubmit() {
-
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.registerForm.invalid) {
-      return;
+  getBodyClass(): string {
+    let styleClass = '';
+    if(this.collapsed && this.screenWidth > 768) {
+      styleClass = 'body-trimmed';
+    } else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
+      styleClass = 'body-md-screen'
     }
-    //True if all the fields are filled
-    if(this.submitted)
-    {
-      this.boardService.createBoard(this.board)
-        .subscribe(res => {
-
-            location.reload();
-
-          },
-          err => {
-
-          });
-
-      this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
-        },
-        err=>
-        {
-
-        }
-      )
-
-      this.getBoard();
-    }
-
+    return styleClass;
   }
-  getBoard()
-  {
-    this.boardService.getBoard(this.workSpace.id).subscribe(data => {
-      this.boards = data;
-    });
+  // board starts
+  cardStore!: CardStore;
+  lists!: List[] ;
+  listName!: string;
+  constructor() { }
+  setMockData(): void {
+    this.cardStore = new CardStore();
+    this.lists = [
+      {
+        name: 'To Do',
+        cards: []
+      },
+      {
+        name: 'Doing',
+        cards: []
+      },
+      {
+        name: 'Done',
+        cards: []
+      }
+    ];
   }
+
   ngOnInit() {
-    this.getBoard();
-
+    this.setMockData();
   }
 
-  goTotaskLists(item:number){
-    alert(this.board.name)
+  addList(listName: string) {
+    this.lists.push({name:listName,cards:[]})
   }
 }
