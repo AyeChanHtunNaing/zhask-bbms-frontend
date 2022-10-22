@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Card } from "../models/Task";
+import { Task } from "../models/Task";
 @Component({
   selector: "app-card",
   templateUrl: "./card.component.html",
   styleUrls: ["./card.component.css"],
 })
 export class CardComponent implements OnInit {
-  @Input() card!: Card;
+  @Input() card!: Task;
   constructor() {}
   ngOnInit() {}
   dragStart(ev:any) {
