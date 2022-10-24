@@ -16,7 +16,7 @@
           <div class="col-md-6 col-lg-6 d-flex align-items-center">
             <div class="card-body p-4 p-lg-5 text-color">
 
-              <form>
+              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
                 <div class="d-flex align-items-center mb-3 pb-1">
                   <span class="h3 fw-bold mb-0">Bulletin Board System</span>
@@ -25,18 +25,24 @@
                 <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h3>
 
                 <div class="form-outline mb-4">
-                  <label class="form-label" for="form2Example17">Email address</label>
-                  <input type="email" id="form2Example17" class="form-control form-control-lg" />
+                  <label class="form-label" for="email">Email address</label>
+                  <input type="email" class="form-control" [(ngModel)]="user.email"  formControlName="email" id="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" >
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors?.['required']">Email is required</div>
+                  </div>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <label class="form-label" for="form2Example27">Password</label>
-                  <input type="password" id="form2Example27" class="form-control form-control-lg" />
-
+                  <label class="form-label" for="password">Password</label>
+                  <input type="password" class="form-control" [(ngModel)]="user.password"  formControlName="password" id="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors}"  >
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors?.['required']">Password is required</div>
+                  </div>
                 </div>
 
+
                 <div class="pt-1 mb-4">
-                  <button class="btn btn-color btn-lg btn-block" type="button">Login</button>
+                  <button type="submit" class="btn btn-color btn-lg btn-block">Login</button>
                 </div>
 
                 <a routerLink="/forgot-password" class="small text-muted">Forgot password?</a>
