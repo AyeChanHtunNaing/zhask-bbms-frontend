@@ -1,10 +1,37 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="body" [ngClass]="getBodyClass()">
-<div class="display">
+  <div class="display">
+    <button type="button" class="btn btn-color me-3 my-2 invite" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+      <i class="bi bi-person-plus"></i>
+    </button>
   <app-list *ngFor="let list of tasklists" [tasklist]="list" [cardStore]="cardStores"></app-list>
   <div class="add">
   <input type="text" class="input" [(ngModel)]="listName" placeholder="Add Title">
   <span class="btn" (click)="addList(listName)">Add New List</span>
   </div>
+
+    <!-- invite member -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title text-color fw-bold" id="exampleModalLabel1">Invite Members</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="inviteForm" (ngSubmit)="onInviteSubmit()">
+
+              <div class="mb-3">
+                <label for="invite" class="form-label">Invite people</label>
+                <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite" required>
+              </div>
+              <button type="submit" class="btn btn-color">Invite</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 </div>

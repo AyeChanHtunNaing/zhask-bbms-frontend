@@ -1,9 +1,16 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-  <button type="button" class="btn btn-color me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Create New Board
-  </button>
+  <div class="text-end">
+    <button type="button" class="btn btn-color me-3 my-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+      Invite Member  <i class="bi bi-person-plus"></i>
+    </button>
+    <button type="button" class="btn btn-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Create New Board <i class="bi bi-clipboard"></i>
+    </button>
+
+  </div>
+  <!-- workspace -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -12,7 +19,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
             <div class="mb-3">
               <label for="names" class="form-label">Board Name</label>
               <input type="text" class="form-control" [(ngModel)]="board.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
@@ -28,10 +35,6 @@
 
               </div>
             </div>
-            <div class="mb-3">
-              <label for="invite" class="form-label">Invite people <span class="text-danger">(optional)</span></label>
-              <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite">
-            </div>
             <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
           </form>
         </div>
@@ -41,6 +44,29 @@
     </div>
   </div>
 
+  <!-- invite member -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title text-color fw-bold" id="exampleModalLabel1">Invite Members</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="inviteForm" (ngSubmit)="onInviteSubmit()">
+
+            <div class="mb-3">
+              <label for="invite" class="form-label">Invite people</label>
+              <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite">
+            </div>
+            <button type="submit" class="btn btn-color d-flex mx-auto">Invite</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- board -->
   <div class="board-div">
     <div class="list-menu mt-5" *ngFor="let item of boards"  (click)="goTotaskLists(item.id)">

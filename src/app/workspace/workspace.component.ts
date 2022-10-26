@@ -26,7 +26,9 @@ export class WorkspaceComponent implements OnInit {
   board : Board = new Board();
   invitemember:InviteMember=new InviteMember();
   registerForm!: FormGroup;
-  
+  inviteForm!:FormGroup;
+
+
   submitted = false;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
@@ -51,14 +53,18 @@ export class WorkspaceComponent implements OnInit {
     }
     return styleClass;
   }
- 
+
   constructor( private formBuilder: FormBuilder,private boardService: BoardService,private invitememberService:InvitememberService
                 ,private route : ActivatedRoute , private router : Router){
     this.registerForm = this.formBuilder.group({
-      email: ['',[this.commaSepEmail ]],
+
       name: ['', [Validators.required]],
       desc: ['', [Validators.required]],
     });
+    this.inviteForm = this.formBuilder.group({
+      email: ['',[this.commaSepEmail ]],
+    });
+
   }
 
   emailresponse:EmailResponse={
@@ -70,7 +76,7 @@ export class WorkspaceComponent implements OnInit {
     return this.registerForm.controls;
   }
 
-  onSubmit() {
+  onRegisterSubmit() {
 
     this.submitted = true;
     // stop here if form is invalid
@@ -90,6 +96,20 @@ export class WorkspaceComponent implements OnInit {
 
           });
 
+      alert("Process successfully done")
+      this.getBoard();
+    }
+  }
+  onInviteSubmit() {
+
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.inviteForm.invalid) {
+      return;
+    }
+    //True if all the fields are filled
+    if(this.submitted)
+    {
       this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
         },
         err=>
@@ -97,6 +117,7 @@ export class WorkspaceComponent implements OnInit {
 
         }
       );
+      alert("Process successfully done")
       this.getBoard();
     }
   }

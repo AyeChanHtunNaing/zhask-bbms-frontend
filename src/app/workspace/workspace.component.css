@@ -17,10 +17,7 @@
   width: calc(100% - 10rem);
   margin-left: 10rem;
 }
-.btn-create{
-  position: absolute;
-  right: 10px;
-}
+
 .text-color{
   color: #406595;
 }
@@ -51,7 +48,6 @@
   }
 }
 
-
 .row{
   margin:0 -5px;
 }
@@ -63,4 +59,7 @@
 .align{
   left:10px;
 }
+
+
+
 

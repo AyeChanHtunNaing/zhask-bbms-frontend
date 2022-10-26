@@ -33,3 +33,11 @@
   width:250px;
   height:50px;
 }
+.invite{
+  position: relative;
+  float: right;
+}
+.btn-color{
+  background: #406595;
+  color: #fff;
+}
