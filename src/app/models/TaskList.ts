@@ -5,6 +5,5 @@ export class TaskList {
   title !: string ;
   description !: string;
   deleteStatus !: boolean;
-  tasks!:string[];
   board !: Board;
 }

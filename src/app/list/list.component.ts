@@ -1,7 +1,8 @@
 import { Component, HostListener, Input, OnInit } from "@angular/core";
 import { Task } from "../models/Task";
 import { TaskList } from "../models/TaskList";
-import { CardStore } from "../models/CardStore";
+import { TaskService } from "../services/task.service";
+import { TitleStrategy } from "@angular/router";
 @Component({
   selector: "app-list",
   templateUrl: "./list.component.html",
@@ -9,15 +10,25 @@ import { CardStore } from "../models/CardStore";
 })
 export class ListComponent implements OnInit {
   @Input() tasklist!: TaskList;
-  @Input() cardStore!: CardStore ;
   displayAddCard = false;
-  constructor() {}
+  task : Task = new Task();
+  tasks:Task[]=[];
+  tasklistModel : TaskList = new TaskList();
+  taskId!:string;
+  constructor(private taskService : TaskService) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.taskService.getTask(this.tasklist.id).subscribe(data=>
+      {
+        this.tasks=data;
+      })
+  }
   allowDrop($event:any) {
     $event.preventDefault();
+    window.localStorage.setItem('title',this.tasklist.title);
+    
   }
   drop($event:any) {
     $event.preventDefault();
@@ -42,9 +53,34 @@ export class ListComponent implements OnInit {
     } else {
       target.appendChild(document.getElementById(data));
     }
-  }
+    this.task.description=window.localStorage.getItem('description') as string;
+    this.tasklistModel.id=this.tasklist.id;
+    this.taskId=window.localStorage.getItem('taskId') as string;
+    this.task.taskList=this.tasklistModel;
+    this.taskService.updateTask(this.taskId,this.task).subscribe(data=>
+      {
+      });
+     window.localStorage.removeItem('taskId');
+     window.localStorage.removeItem('description');
+     alert(this.tasklist.id)
+  } 
+  
   onEnter(value: string) {
-    const cardId = this.cardStore.newCard(value);
-    this.tasklist.tasks.push(cardId);
+    this.tasklistModel.id=this.tasklist.id;
+    this.task.description=value;
+    this.task.taskList=this.tasklistModel;
+    this.taskService.createTask(this.task).subscribe(res => {
+      location.reload();
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    });
+    this.taskService.getTask(this.tasklist.id).subscribe(data=>
+      {
+        this.tasks=data;
+      })
   }
-}
+  
+  }
+

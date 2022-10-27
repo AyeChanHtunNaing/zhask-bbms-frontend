@@ -22,7 +22,7 @@ import { WorkspaceComponent } from './workspace/workspace.component';
 import { BoardComponent } from './board/board.component';
 import {ActivateAccountComponent} from "./activate-account/activate-account.component";
 import { ListComponent } from './list/list.component';
-import { CardComponent } from './card/card.component';
+import { CardComponent } from './task/task.component';
 
 
 @NgModule({

@@ -2,9 +2,8 @@
   <p class="list__title"><strong>{{tasklist.title}}</strong></p>
   <br>
   <div class="cards">
-    <app-card *ngFor="let cardId of tasklist.tasks" [card]="cardStore.getCard(cardId)"></app-card>
+    <app-card *ngFor="let task of tasks" [card]="task"></app-card>
   </div>
-
   <input #addCardInput type="text" (keyup.enter)="onEnter(addCardInput.value); addCardInput.value=''; displayAddCard=false;" *ngIf="displayAddCard" autofocus>
   <br>
   <span class="list__newcard fs-6 text-primary" (click)="toggleDisplayAddCard();">Add a card... <i class='bx bx-add-to-queue'></i></span>

@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CardStore} from '../models/CardStore';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { TaskListService } from '../services/tasklist.service';
 import { ActivatedRoute } from '@angular/router';
@@ -23,6 +22,7 @@ export class BoardComponent implements OnInit {
 
   inviteForm!:FormGroup;
   submitted = false;
+  
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -34,6 +34,7 @@ export class BoardComponent implements OnInit {
   screenWidths = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+  
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -48,8 +49,7 @@ export class BoardComponent implements OnInit {
     }
     return styleClass;
   }
-  // board starts
-  cardStores!: CardStore;
+  // board start
   tasklists!: TaskList[] ;
   tasklist:TaskList=new TaskList();
   listName!: string;
@@ -60,8 +60,6 @@ export class BoardComponent implements OnInit {
     });
   }
   setMockData(): void {
-    this.cardStores = new CardStore();
-
      this.tasklistService.getTask(this.board.id).subscribe(data => {
       this.tasklists  = data;
     });
@@ -89,7 +87,7 @@ export class BoardComponent implements OnInit {
 
         }
       );
-      alert("Process successfully done")
+     // alert("Process successfully done")
       this.ngOnInit()
     }
   }

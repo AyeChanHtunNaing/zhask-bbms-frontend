@@ -4,7 +4,7 @@
     <button type="button" class="btn btn-color me-3 my-2 invite" data-bs-toggle="modal" data-bs-target="#exampleModal1">
       <i class="bi bi-person-plus"></i>
     </button>
-  <app-list *ngFor="let list of tasklists" [tasklist]="list" [cardStore]="cardStores"></app-list>
+  <app-list *ngFor="let list of tasklists" [tasklist]="list"></app-list>
   <div class="add">
   <input type="text" class="input" [(ngModel)]="listName" placeholder="Add Title">
   <span class="btn" (click)="addList(listName)">Add New List</span>
