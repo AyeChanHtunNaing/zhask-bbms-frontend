@@ -60,7 +60,7 @@ export class BoardComponent implements OnInit {
     });
   }
   setMockData(): void {
-     this.tasklistService.getTask(this.board.id).subscribe(data => {
+     this.tasklistService.getTaskList(this.board.id).subscribe(data => {
       this.tasklists  = data;
     });
   }
@@ -87,7 +87,6 @@ export class BoardComponent implements OnInit {
 
         }
       );
-     // alert("Process successfully done")
       this.ngOnInit()
     }
   }

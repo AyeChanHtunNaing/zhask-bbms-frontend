@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Task } from "../models/Task";
 import { TaskList } from "../models/TaskList";
+import { TaskService } from "../services/task.service";
 @Component({
   selector: "app-card",
   templateUrl: "./task.component.html",
@@ -9,18 +10,29 @@ import { TaskList } from "../models/TaskList";
 export class CardComponent implements OnInit {
   @Input() card!: Task;
   title!:string;
-  constructor() {
+  constructor(private taskService:TaskService) {
     
   }
   ngOnInit() {
-    this.title=window.localStorage.getItem('title') as string;
+    this.taskService.getTaskIdWithtaskId(this.card.id).subscribe(
+      data=>
+      {
+       this.title=data.title;
+      }
+     )
   }
   dragStart(ev:any) {
-    ev.dataTransfer.setData("text", ev.target.id);
+    
+   ev.dataTransfer.setData("text", ev.target.id);
    window.localStorage.setItem('taskId',this.card.id+"");
    window.localStorage.setItem('description',this.card.description);
-   this.title=window.localStorage.getItem('title') as string;
-   window.localStorage.removeItem('title')
+  
+   this.taskService.getTaskIdWithtaskId(this.card.id).subscribe(
+    data=>{
+     this.title=data.title;
+     location.reload();
+    });
+
   }
   update(){
     alert("update")
@@ -28,10 +40,6 @@ export class CardComponent implements OnInit {
   }
   delete(){
     
-    // if(this.title=="ToDo"){
-    //   alert("can't delete")
-    // }else{
-    //   alert("delete")
-    // }
   }
+ 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Task} from '../models/Task';
+import { TaskList } from '../models/TaskList';
 
 @Injectable({
     providedIn: 'root'
@@ -9,6 +10,7 @@ import { Task} from '../models/Task';
 export class TaskService{
 
     private baseURL = "http://localhost:8080/api/v1/task";
+    private baseURLForTaskList = "http://localhost:8080/api/v1/gettasklist";
     constructor(private httpClient: HttpClient) {    
     }
 
@@ -23,5 +25,8 @@ export class TaskService{
    updateTask(taskId:string,task:Task):Observable<Object>
    {
     return this.httpClient.put(`${this.baseURL}/${taskId}`,task)
+   }
+   getTaskIdWithtaskId(taskId:number):Observable<TaskList>{
+    return this.httpClient.get<TaskList>(`${this.baseURLForTaskList}/${taskId}`);
    }
 }

@@ -27,8 +27,6 @@ export class ListComponent implements OnInit {
   }
   allowDrop($event:any) {
     $event.preventDefault();
-    window.localStorage.setItem('title',this.tasklist.title);
-    
   }
   drop($event:any) {
     $event.preventDefault();
@@ -62,7 +60,7 @@ export class ListComponent implements OnInit {
       });
      window.localStorage.removeItem('taskId');
      window.localStorage.removeItem('description');
-     alert(this.tasklist.id)
+    
   } 
   
   onEnter(value: string) {

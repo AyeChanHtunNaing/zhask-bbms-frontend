@@ -95,8 +95,7 @@ export class WorkspaceComponent implements OnInit {
           err => {
 
           });
-
-      alert("Process successfully done")
+     // alert("Process successfully done")
       this.getBoard();
     }
   }

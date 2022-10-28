@@ -11,14 +11,14 @@ export class TaskListService {
     constructor(private httpClient: HttpClient) { 
     
     }
-    getTask(boardId : number): Observable<TaskList[]>{
+    getTaskList(boardId : number): Observable<TaskList[]>{
         return this.httpClient.get<TaskList[]>(`${this.baseURL}/${boardId}`);
       }
     
       createTaskList(tasklist : TaskList): Observable<Object>{
         return this.httpClient.post(`${this.baseURL}`, tasklist);
       }
-      getTaskListById(boardId: number): Observable<TaskList>{
-        return this.httpClient.get<TaskList>(`${this.baseURL}/${boardId}`);
-      }
+      // getTaskListById(boardId: number): Observable<TaskList>{
+      //   return this.httpClient.get<TaskList>(`${this.baseURL}/${boardId}`);
+      // }
 }

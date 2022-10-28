@@ -1,9 +1,11 @@
 <div class="card d-flex justify-content-between p-3 flex-row" draggable="true" (dragstart)="dragStart($event)" id="{{card.id}}">
   <div>
-  {{card.description}}
+  {{title}}
 </div>
-<div >  
+<div *ngIf="title=='ToDo'" >
   <i class="bi bi-pencil-square fs-6" (click)="update()"></i>
+</div>
+<div *ngIf="title=='Doing'">  
   <i class="bi bi-x-square fs-6 mx-3"  (click)="delete()"></i>
 </div>
 </div>
