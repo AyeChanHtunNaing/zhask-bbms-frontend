@@ -3,16 +3,39 @@
     {{card.description}}
   </div>
   <div *ngIf="title=='ToDo'" >
-    <i class="bi bi-pencil-square fs-6" (click)="update(card)"></i>
+    <i class="bi bi-pencil-square fs-6" (click)="getTaskDetails(card)"  data-bs-toggle="modal" data-bs-target="#editModal" ></i>
   </div>
   <div *ngIf="title=='Doing'">
     <i class="bi bi-pencil-square fs-6" (click)="update(card)"></i>
   </div>
   <div *ngIf="title=='Done'">
-    <i class="bi bi-x-square fs-6 mx-3"  (click)="delete()"></i>
+    <i class="bi bi-x-square fs-6 mx-3"  (click)="delete(card.id)"></i>
   </div>
   <div *ngIf="title!='ToDo' && title!='Doing' && title!='Done'">
     <i class="bi bi-pencil-square fs-6" (click)="update(card)"></i>
-    <i class="bi bi-x-square fs-6 mx-3" (click)="delete()"></i>
+    <i class="bi bi-x-square fs-6 mx-3" (click)="delete(card.id)"></i>
   </div>
+  <!-- edit modal starts -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editModalLabel">Edit Task</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <input [(ngModel)]="taskDesc" class="form-control" id="editDescription" name="taskDesc">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-color">Update Task</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- edit modal ends -->
 </div>

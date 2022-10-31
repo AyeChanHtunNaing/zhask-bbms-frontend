@@ -12,6 +12,7 @@ export class CardComponent implements OnInit {
   @Input() title!:string;
 
   taskDetails:any;
+  taskDesc!:string;
   editForm!:FormGroup;
 
   constructor(private taskService:TaskService,private fb:FormBuilder,) {
@@ -33,14 +34,24 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('description',this.card.description);
   }
   update(task:Task){
+    alert(task.description)
     alert("update")
 
   }
-  delete(){
-    alert("delete")
-  }
+  delete(taskId:number){
+      let decision=confirm("Are you sure to delete Note?");
+      if(decision==true){
+    this.taskService.deleteTask(taskId).subscribe(data => {
+      location.reload()
+    })
+      }
+
+    }
+
   getTaskDetails(task:Task){
     this.taskDetails=task;
+    this.taskDesc=this.taskDetails.description;
     console.log(this.taskDetails)
+    console.log(this.taskDesc)
   }
 }

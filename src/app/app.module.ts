@@ -25,6 +25,7 @@ import { ListComponent } from './list/list.component';
 import { CardComponent } from './task/task.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,8 @@ import { CardComponent } from './task/task.component';
     BoardComponent,
     ActivateAccountComponent,
     ListComponent,
-    CardComponent
+    CardComponent,
+
 
   ],
   imports: [

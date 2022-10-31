@@ -11,13 +11,13 @@ export class TaskService{
 
     private baseURL = "http://localhost:8080/api/v1/task";
     private baseURLForTaskList = "http://localhost:8080/api/v1/gettasklist";
-    constructor(private httpClient: HttpClient) {    
+    constructor(private httpClient: HttpClient) {
     }
 
     getTask(tasklistId : number): Observable<Task[]>{
         return this.httpClient.get<Task[]>(`${this.baseURL}/${tasklistId}`);
     }
-    
+
     createTask(task : Task): Observable<Object>{
         console.log(task.taskList.id)
     return this.httpClient.post(`${this.baseURL}`, task);
@@ -26,7 +26,7 @@ export class TaskService{
    {
     return this.httpClient.put(`${this.baseURL}/${taskId}`,task)
    }
-   getTaskIdWithtaskId(taskId:number):Observable<TaskList>{
-    return this.httpClient.get<TaskList>(`${this.baseURLForTaskList}/${taskId}`);
-   }
+    deleteTask(taskId:number):Observable<Object>{
+      return this.httpClient.delete(`${this.baseURL}/${taskId}`);
+    }
 }
