@@ -21,12 +21,13 @@ export class ListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.taskService.getTask(this.tasklist.id).subscribe(data=>
-      {
-        this.tasks=data;
-      })
+    {
+      this.tasks=data;
+    })
   }
   allowDrop($event:any) {
     $event.preventDefault();
+
   }
   drop($event:any) {
     $event.preventDefault();
@@ -56,29 +57,35 @@ export class ListComponent implements OnInit {
     this.taskId=window.localStorage.getItem('taskId') as string;
     this.task.taskList=this.tasklistModel;
     this.taskService.updateTask(this.taskId,this.task).subscribe(data=>
-      {
-      });
-     window.localStorage.removeItem('taskId');
-     window.localStorage.removeItem('description');
-    
-  } 
-  
+    {
+    });
+    window.localStorage.removeItem('taskId');
+    window.localStorage.removeItem('description');
+    window.localStorage.setItem('title',this.tasklist.title)
+
+  }
+  dragstart(ev:any)
+  {
+    window.localStorage.setItem('title',this.tasklist.title)
+    //alert(this.tasklist.title)
+  }
   onEnter(value: string) {
     this.tasklistModel.id=this.tasklist.id;
     this.task.description=value;
     this.task.taskList=this.tasklistModel;
     this.taskService.createTask(this.task).subscribe(res => {
-      location.reload();
-      console.log(res);
-    },
-    err => {
-      console.log(err);
-    });
+        location.reload();
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      });
     this.taskService.getTask(this.tasklist.id).subscribe(data=>
-      {
-        this.tasks=data;
-      })
+    {
+      this.tasks=data;
+    })
   }
-  
-  }
+
+
+}
 

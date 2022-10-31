@@ -1,46 +1,36 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-
-  <div class="container d-flex flex-column">
-    <div class="row align-items-center justify-content-center
-              min-vh-100">
-      <div class="col-lg-5 col-md-7 py-8 py-xl-0">
-        <div class="card shadow">
-          <div class="card-body p-6">
-            <div class="mb-4">
-              <h2 class="mb-1 fw-bold text-color">User Profile</h2>
-            </div>
-            <form>
-              <div class="mb-3">
-                <label for="name" class="form-label text-color">Name</label>
-                <input type="text" id="name" class="form-control" name="name">
-              </div>
-              <div class="mb-3">
-                <label for="uname" class="form-label text-color">Username</label>
-                <input type="text" id="uname" class="form-control" name="uname">
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label text-color">Email</label>
-                <input type="email" id="email" class="form-control" name="email">
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label text-color">Password</label>
-                <input type="password" id="password" class="form-control" name="password">
-              </div>
-              <div class="mb-3">
-                <label for="created" class="form-label text-color">Created At</label>
-                <input type="text" id="created" class="form-control" name="created">
-              </div>
-              <div class="mb-3 d-grid">
-                <button class="btn btn-color btn-lg btn-block" type="button">Update Profile</button>
-              </div>
-
-            </form>
+  <div class="container w-75 h-75 d-flex mx-auto mt-5">
+    <div class="row">
+      <div class="col-md-5 mt-5">
+        <img src="./assets/images/pikachu.png"  class="img-fluid rounded-circle mx-5" alt="profile pic" width="300px" height="300px">
+        <button class="btn btn-primary mx-auto"> <i class="bi bi-camera-fill"></i> Upload Profile</button>
+      </div>
+      <div class="col-md-7 mt-5">
+        <form class="mx-5">
+          <div class="form-outline mb-4">
+            <label class="form-label" for="name">Name</label>
+            <input type="text" class="form-control" id="name" value="Pikachu">
           </div>
-        </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="uname">User Name</label>
+            <input type="text" class="form-control" id="uname" value="pika">
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email">Email address</label>
+            <input type="email" class="form-control" id="email" value="pikachu@gmail.com" readonly>
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="createdAt">Created At</label>
+            <input type="text" class="form-control"  id="createdAt" value="11/01/2001" readonly>
+          </div>
+          <button type="submit" class="btn btn-color btn-lg btn-block">Update Profile</button>
+        </form>
+
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
+

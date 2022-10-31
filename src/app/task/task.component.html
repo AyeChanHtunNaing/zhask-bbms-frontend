@@ -1,11 +1,18 @@
-<div class="card d-flex justify-content-between p-3 flex-row" draggable="true" (dragstart)="dragStart($event)" id="{{card.id}}">
+<div class="card d-flex justify-content-between p-3 flex-row" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
   <div>
-  {{title}}
-</div>
-<div *ngIf="title=='ToDo'" >
-  <i class="bi bi-pencil-square fs-6" (click)="update()"></i>
-</div>
-<div *ngIf="title=='Doing'">  
-  <i class="bi bi-x-square fs-6 mx-3"  (click)="delete()"></i>
-</div>
+    {{card.description}}
+  </div>
+  <div *ngIf="title=='ToDo'" >
+    <i class="bi bi-pencil-square fs-6" (click)="update(card)"></i>
+  </div>
+  <div *ngIf="title=='Doing'">
+    <i class="bi bi-pencil-square fs-6" (click)="update(card)"></i>
+  </div>
+  <div *ngIf="title=='Done'">
+    <i class="bi bi-x-square fs-6 mx-3"  (click)="delete()"></i>
+  </div>
+  <div *ngIf="title!='ToDo' && title!='Doing' && title!='Done'">
+    <i class="bi bi-pencil-square fs-6" (click)="update(card)"></i>
+    <i class="bi bi-x-square fs-6 mx-3" (click)="delete()"></i>
+  </div>
 </div>

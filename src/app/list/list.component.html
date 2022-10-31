@@ -1,8 +1,9 @@
-<div class="list" (dragover)="allowDrop($event)" (drop)="drop($event)">
+<div class="list" (dragover)="allowDrop($event)" (dragend)="dragstart($event)" (drop)="drop($event)" >
   <p class="list__title"><strong>{{tasklist.title}}</strong></p>
   <br>
   <div class="cards">
-    <app-card *ngFor="let task of tasks" [card]="task"></app-card>
+    <app-card *ngFor="let task of tasks" [card]="task" [title]="tasklist.title">
+    </app-card>
   </div>
   <input #addCardInput type="text" (keyup.enter)="onEnter(addCardInput.value); addCardInput.value=''; displayAddCard=false;" *ngIf="displayAddCard" autofocus>
   <br>

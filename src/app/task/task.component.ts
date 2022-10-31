@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Task } from "../models/Task";
-import { TaskList } from "../models/TaskList";
 import { TaskService } from "../services/task.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 @Component({
   selector: "app-card",
   templateUrl: "./task.component.html",
@@ -9,37 +9,38 @@ import { TaskService } from "../services/task.service";
 })
 export class CardComponent implements OnInit {
   @Input() card!: Task;
-  title!:string;
-  constructor(private taskService:TaskService) {
-    
+  @Input() title!:string;
+
+  taskDetails:any;
+  editForm!:FormGroup;
+
+  constructor(private taskService:TaskService,private fb:FormBuilder,) {
+    this.editForm=this.fb.group({
+      description:['',[Validators.required]],
+    });
   }
   ngOnInit() {
-    this.taskService.getTaskIdWithtaskId(this.card.id).subscribe(
-      data=>
-      {
-       this.title=data.title;
-      }
-     )
-  }
-  dragStart(ev:any) {
-    
-   ev.dataTransfer.setData("text", ev.target.id);
-   window.localStorage.setItem('taskId',this.card.id+"");
-   window.localStorage.setItem('description',this.card.description);
-  
-   this.taskService.getTaskIdWithtaskId(this.card.id).subscribe(
-    data=>{
-     this.title=data.title;
-     location.reload();
-    });
 
   }
-  update(){
+  dragend(ev:any)
+  {
+    this.title=window.localStorage.getItem('title') as string;
+    // location.reload()
+  }
+  dragStart(ev:any) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    window.localStorage.setItem('taskId',this.card.id+"");
+    window.localStorage.setItem('description',this.card.description);
+  }
+  update(task:Task){
     alert("update")
-   
+
   }
   delete(){
-    
+    alert("delete")
   }
- 
+  getTaskDetails(task:Task){
+    this.taskDetails=task;
+    console.log(this.taskDetails)
+  }
 }

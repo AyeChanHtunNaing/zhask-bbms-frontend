@@ -6,3 +6,7 @@ p {
   font-style: italic;
   color: #406595;
 }
+.btn-color{
+  background-color: #406595;
+  color: white;
+}
