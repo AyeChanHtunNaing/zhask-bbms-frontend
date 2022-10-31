@@ -10,23 +10,24 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class CardComponent implements OnInit {
   @Input() card!: Task;
   @Input() title!:string;
-
-  taskDetails:any;
+  isView: boolean=false;
+  taskDetails!:Task;
   taskDesc!:string;
   editForm!:FormGroup;
 
   constructor(private taskService:TaskService,private fb:FormBuilder,) {
     this.editForm=this.fb.group({
-      description:['',[Validators.required]],
+      taskDesc:['',[Validators.required]],
     });
-  }
-  ngOnInit() {
 
   }
+  ngOnInit() {
+    
+  }
+  
   dragend(ev:any)
   {
     this.title=window.localStorage.getItem('title') as string;
-    // location.reload()
   }
   dragStart(ev:any) {
     ev.dataTransfer.setData("text", ev.target.id);
@@ -34,8 +35,7 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('description',this.card.description);
   }
   update(task:Task){
-    alert(task.description)
-    alert("update")
+    alert("update"+this.card.description)
 
   }
   delete(taskId:number){
@@ -47,11 +47,16 @@ export class CardComponent implements OnInit {
       }
 
     }
-
-  getTaskDetails(task:Task){
-    this.taskDetails=task;
-    this.taskDesc=this.taskDetails.description;
-    console.log(this.taskDetails)
-    console.log(this.taskDesc)
-  }
+    setTaskDetails(task:Task){
+      this.taskDetails=task;
+      this.taskDesc=this.taskDetails.description;
+      console.log(this.taskDesc)
+     window.localStorage.setItem('des',this.taskDesc)
+    }
+    getTaskDetails():string
+    {
+    return window.localStorage.getItem('des') as string;
+    }
+  
 }
+
