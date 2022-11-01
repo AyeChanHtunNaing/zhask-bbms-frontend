@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Task } from "../models/Task";
 import { TaskService } from "../services/task.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import Swal from "sweetalert2";
+
 @Component({
   selector: "app-card",
   templateUrl: "./task.component.html",
@@ -22,9 +24,9 @@ export class CardComponent implements OnInit {
 
   }
   ngOnInit() {
-    
+
   }
-  
+
   dragend(ev:any)
   {
     this.title=window.localStorage.getItem('title') as string;
@@ -39,13 +41,30 @@ export class CardComponent implements OnInit {
 
   }
   delete(taskId:number){
-      let decision=confirm("Are you sure to delete Note?");
-      if(decision==true){
-    this.taskService.deleteTask(taskId).subscribe(data => {
-      location.reload()
-    })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.taskService.deleteTask(taskId).subscribe(data => {
+
+        })
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        setTimeout(function(){
+          window.location.reload();
+        }, 1000);
       }
 
+    })
     }
     setTaskDetails(task:Task){
       this.taskDetails=task;
@@ -57,6 +76,9 @@ export class CardComponent implements OnInit {
     {
     return window.localStorage.getItem('des') as string;
     }
-  
+
+  showActivity() {
+    alert("activity")
+  }
 }
 

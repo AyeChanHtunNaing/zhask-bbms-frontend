@@ -26,6 +26,7 @@ import { CardComponent } from './task/task.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,6 @@ import { CardComponent } from './task/task.component';
     ActivateAccountComponent,
     ListComponent,
     CardComponent,
-
 
   ],
   imports: [

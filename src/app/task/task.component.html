@@ -1,4 +1,4 @@
-<div class="card d-flex justify-content-between p-3 flex-row" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
+<div class="card d-flex justify-content-between p-3 flex-row" (dblclick)="showActivity()" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
   <div>
     {{card.description}}
   </div>
@@ -24,11 +24,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      
+
           <div class="mb-3">
             <input [value]="getTaskDetails()" class="form-control" id="editDescription" name="taskDesc">
           </div>
-       
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
