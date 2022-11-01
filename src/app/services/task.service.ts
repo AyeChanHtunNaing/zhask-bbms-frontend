@@ -26,6 +26,10 @@ export class TaskService{
    {
     return this.httpClient.put(`${this.baseURL}/${taskId}`,task)
    }
+  updateTaskDescription(taskId:number,task:Task):Observable<Object>{
+
+    return this.httpClient.put(`${this.baseURL}/${taskId}`,task);
+  }
     deleteTask(taskId:number):Observable<Object>{
       return this.httpClient.delete(`${this.baseURL}/${taskId}`);
     }

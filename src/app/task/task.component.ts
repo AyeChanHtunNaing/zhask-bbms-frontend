@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
 import { Task } from "../models/Task";
 import { TaskService } from "../services/task.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -12,9 +12,11 @@ import Swal from "sweetalert2";
 export class CardComponent implements OnInit {
   @Input() card!: Task;
   @Input() title!:string;
+  @ViewChild('updatedescription') updatedescription!:ElementRef;
   isView: boolean=false;
   taskDetails!:Task;
   taskDesc!:string;
+  task=new Task()
   editForm!:FormGroup;
 
   constructor(private taskService:TaskService,private fb:FormBuilder,) {
@@ -36,10 +38,29 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('taskId',this.card.id+"");
     window.localStorage.setItem('description',this.card.description);
   }
-  update(task:Task){
-    alert("update"+this.card.description)
 
+
+  updateTaskDescription(){
+    const value=this.updatedescription.nativeElement.value;
+    console.log(value)
+    this.task.description=value;
+    console.log(this.task.description)
+    this.taskService.updateTaskDescription(this.card.id,this.task).subscribe(data=>{
+      console.log(data);
+    })
+
+    setTimeout(function(){
+      window.location.reload();
+    }, 900);
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Updated Successfully',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
+
   delete(taskId:number){
     Swal.fire({
       title: 'Are you sure?',
@@ -56,7 +77,7 @@ export class CardComponent implements OnInit {
         })
         Swal.fire(
           'Deleted!',
-          'Your file has been deleted.',
+          'Your task has been deleted.',
           'success'
         )
         setTimeout(function(){
