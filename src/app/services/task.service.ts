@@ -10,7 +10,7 @@ import { TaskList } from '../models/TaskList';
 export class TaskService{
 
     private baseURL = "http://localhost:8080/api/v1/task";
-    private baseURLForTaskList = "http://localhost:8080/api/v1/gettasklist";
+    private baseURLForTaskDescription = "http://localhost:8080/api/v1/taskDescription";
     constructor(private httpClient: HttpClient) {
     }
 
@@ -26,9 +26,9 @@ export class TaskService{
    {
     return this.httpClient.put(`${this.baseURL}/${taskId}`,task)
    }
-  updateTaskDescription(taskId:number,task:Task):Observable<Object>{
+  updateTaskDescription(taskId:string,task:Task):Observable<Object>{
 
-    return this.httpClient.put(`${this.baseURL}/${taskId}`,task);
+    return this.httpClient.put(`${this.baseURLForTaskDescription}/${taskId}`,task);
   }
     deleteTask(taskId:number):Observable<Object>{
       return this.httpClient.delete(`${this.baseURL}/${taskId}`);

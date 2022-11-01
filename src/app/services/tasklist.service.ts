@@ -8,15 +8,18 @@ import { TaskList } from '../models/TaskList';
   })
 export class TaskListService {
     private baseURL = "http://localhost:8080/api/v1/tasklist";
-    constructor(private httpClient: HttpClient) { 
-    
+    constructor(private httpClient: HttpClient) {
+
     }
     getTaskList(boardId : number): Observable<TaskList[]>{
         return this.httpClient.get<TaskList[]>(`${this.baseURL}/${boardId}`);
       }
-    
+
       createTaskList(tasklist : TaskList): Observable<Object>{
         return this.httpClient.post(`${this.baseURL}`, tasklist);
+      }
+      deleteTaskList(taskListId:number):Observable<Object>{
+        return this.httpClient.delete(`${this.baseURL}/${taskListId}`);
       }
       // getTaskListById(boardId: number): Observable<TaskList>{
       //   return this.httpClient.get<TaskList>(`${this.baseURL}/${boardId}`);

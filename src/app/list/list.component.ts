@@ -3,19 +3,22 @@ import { Task } from "../models/Task";
 import { TaskList } from "../models/TaskList";
 import { TaskService } from "../services/task.service";
 import { TitleStrategy } from "@angular/router";
+import Swal from "sweetalert2";
+import {TaskListService} from "../services/tasklist.service";
 @Component({
   selector: "app-list",
   templateUrl: "./list.component.html",
   styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
+  taskListDetails!:TaskList;
   @Input() tasklist!: TaskList;
   displayAddCard = false;
   task : Task = new Task();
   tasks:Task[]=[];
   tasklistModel : TaskList = new TaskList();
   taskId!:string;
-  constructor(private taskService : TaskService) {}
+  constructor(private taskService : TaskService,private taskListService:TaskListService) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
@@ -85,7 +88,38 @@ export class ListComponent implements OnInit {
       this.tasks=data;
     })
   }
+  delete(taskId:number){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.taskListService.deleteTaskList(taskId).subscribe(data => {
 
+        })
+        Swal.fire(
+          'Deleted!',
+          'Your task has been deleted.',
+          'success'
+        )
+
+      }
+
+    })
+  }
+  setTaskListDetails(taskList:TaskList){
+    this.taskListDetails=taskList;
+    window.localStorage.setItem('des',this.taskListDetails.title)
+  }
+  getTaskListDetails():string
+  {
+    return window.localStorage.getItem('des') as string;
+  }
 
 }
 

@@ -45,7 +45,7 @@ export class CardComponent implements OnInit {
     console.log(value)
     this.task.description=value;
     console.log(this.task.description)
-    this.taskService.updateTaskDescription(this.card.id,this.task).subscribe(data=>{
+    this.taskService.updateTaskDescription(this.getId(),this.task).subscribe(data=>{
       console.log(data);
     })
 
@@ -92,11 +92,15 @@ export class CardComponent implements OnInit {
       this.taskDesc=this.taskDetails.description;
       console.log(this.taskDesc)
      window.localStorage.setItem('des',this.taskDesc)
+      window.localStorage.setItem('id',this.taskDetails.id+"")
     }
     getTaskDetails():string
     {
     return window.localStorage.getItem('des') as string;
     }
+   getId():string{
+     return window.localStorage.getItem('id') as string;
+   }
 
   showActivity() {
     alert("activity")
