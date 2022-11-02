@@ -26,7 +26,7 @@ export class TaskService{
    {
     return this.httpClient.put(`${this.baseURL}/${taskId}`,task)
    }
-  updateTaskDescription(taskId:string,task:Task):Observable<Object>{
+   updateTaskDescription(taskId:string,task:Task):Observable<Object>{
 
     return this.httpClient.put(`${this.baseURLForTaskDescription}/${taskId}`,task);
   }

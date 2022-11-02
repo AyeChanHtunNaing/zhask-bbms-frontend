@@ -5,6 +5,7 @@ import { TaskService } from "../services/task.service";
 import { TitleStrategy } from "@angular/router";
 import Swal from "sweetalert2";
 import {TaskListService} from "../services/tasklist.service";
+import { Board } from "../models/board";
 @Component({
   selector: "app-list",
   templateUrl: "./list.component.html",
@@ -18,6 +19,8 @@ export class ListComponent implements OnInit {
   tasks:Task[]=[];
   tasklistModel : TaskList = new TaskList();
   taskId!:string;
+  board : Board = new Board();
+
   constructor(private taskService : TaskService,private taskListService:TaskListService) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
@@ -59,6 +62,8 @@ export class ListComponent implements OnInit {
     this.tasklistModel.id=this.tasklist.id;
     this.taskId=window.localStorage.getItem('taskId') as string;
     this.task.taskList=this.tasklistModel;
+    this.board.id=Number(window.localStorage.getItem('boardId'));
+    this.task.board=this.board;
     this.taskService.updateTask(this.taskId,this.task).subscribe(data=>
     {
     });
@@ -69,13 +74,15 @@ export class ListComponent implements OnInit {
   }
   dragstart(ev:any)
   {
-    window.localStorage.setItem('title',this.tasklist.title)
+    window.localStorage.setItem('title',this.tasklist.title);
     //alert(this.tasklist.title)
   }
   onEnter(value: string) {
     this.tasklistModel.id=this.tasklist.id;
     this.task.description=value;
     this.task.taskList=this.tasklistModel;
+    this.board.id=Number(window.localStorage.getItem('boardId'));
+    this.task.board=this.board;
     this.taskService.createTask(this.task).subscribe(res => {
         location.reload();
         console.log(res);
@@ -89,6 +96,9 @@ export class ListComponent implements OnInit {
     })
   }
   delete(taskId:number){
+    setTimeout(function(){
+      window.location.reload();
+    }, 900);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -97,20 +107,23 @@ export class ListComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
+
     }).then((result) => {
       if (result.isConfirmed) {
         this.taskListService.deleteTaskList(taskId).subscribe(data => {
-
+          
         })
+        
         Swal.fire(
           'Deleted!',
           'Your task has been deleted.',
           'success'
         )
-
+        setTimeout(function(){
+          window.location.reload();
+        }, 1000);
       }
-
-    })
+    });
   }
   setTaskListDetails(taskList:TaskList){
     this.taskListDetails=taskList;

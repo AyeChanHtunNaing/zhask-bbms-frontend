@@ -8,6 +8,8 @@ import { Board } from '../models/board';
   })
 export class BoardService {
     private baseURL = "http://localhost:8080/api/v1/board";
+    private baseURLForTaskByBoardId = "http://localhost:8080/api/v1/showalltaskbyboard";
+
     constructor(private httpClient: HttpClient) { 
     
     }
@@ -16,11 +18,14 @@ export class BoardService {
         return this.httpClient.get<Board[]>(`${this.baseURL}/${workspaceId}`);
       }
     
-      createBoard(board : Board): Observable<Object>{
+    createBoard(board : Board): Observable<Object>{
         return this.httpClient.post(`${this.baseURL}`, board);
       }
-      getWorkspaceById(userId: string): Observable<Workspace>{
+    getWorkspaceById(userId : string): Observable<Workspace>{
         return this.httpClient.get<Workspace>(`${this.baseURL}/${userId}`);
       }
+    getTaskByBoardId(boardId : number):Observable<Task[]>{
+      return this.httpClient.get<Task[]>(`${this.baseURLForTaskByBoardId}/${boardId}`);
+    }
       
 }

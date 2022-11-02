@@ -6,6 +6,8 @@ import { Board } from '../models/board';
 import { TaskList } from '../models/TaskList';
 import {InviteMember} from "../models/invitemember";
 import {InvitememberService} from "../services/invitemember.service";
+import { BoardService } from '../services/board.service';
+
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -35,6 +37,7 @@ export class BoardComponent implements OnInit {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   
+
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -54,21 +57,28 @@ export class BoardComponent implements OnInit {
   tasklist:TaskList=new TaskList();
   listName!: string;
   board:Board=new Board();
-  constructor(private formBuilder: FormBuilder,private tasklistService:TaskListService,private invitememberService:InvitememberService,private route:ActivatedRoute) {
+  count !: number;
+
+  constructor(private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
+              ,private invitememberService:InvitememberService,private route:ActivatedRoute) {
     this.inviteForm = this.formBuilder.group({
       email: ['',[this.commaSepEmail ]],
     });
   }
+
   setMockData(): void {
      this.tasklistService.getTaskList(this.board.id).subscribe(data => {
       this.tasklists  = data;
     });
   }
 
-  ngOnInit() {
+  ngOnInit() {   
     this.board.id=this.route.snapshot.params['boardId'];
+    window.localStorage.setItem('count',this.count+"")
     this.tasklist.board=this.board;
     this.setMockData();
+    window.localStorage.setItem('boardId',this.board.id+"");
+
   }
   onInviteSubmit() {
 

@@ -1,13 +1,13 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Workspace } from '../models/workspace';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { WorkspaceService } from '../services/workspace.service';
 import { EmailResponse } from '../message/emailresponse';
 import { InviteMember } from '../models/invitemember';
 import { InvitememberService } from '../services/invitemember.service';
 import { Board } from '../models/board';
 import { BoardService } from '../services/board.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Count } from '../models/count';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -27,9 +27,10 @@ export class WorkspaceComponent implements OnInit {
   invitemember:InviteMember=new InviteMember();
   registerForm!: FormGroup;
   inviteForm!:FormGroup;
-
-
+  counts:Count[]=[]
+  countOfTaskAndMember:Count[]=[]
   submitted = false;
+  
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -117,17 +118,26 @@ export class WorkspaceComponent implements OnInit {
         }
       );
       alert("Process successfully done")
-      this.getBoard();
     }
   }
   getBoard()
   {
     this.boardService.getBoard(this.workspace.id).subscribe(data => {
       this.boards = data;
+      for(let i=0;i<this.boards.length;i++)
+      {
+       this.boardService.getTaskByBoardId(this.boards[i].id).subscribe(d=>
+        {
+          let c=new Count();
+          c.boardId=this.boards[i].id;
+          c.countOfTask=d.length;
+          this.counts[i]=c
+        });
+      }
     });
+   this.countOfTaskAndMember=this.counts;
   }
   ngOnInit() {
-    //this.board.workSpace.id=this.route.snapshot.params['workspaceId'];
     this.workspace.id=this.route.snapshot.params['workspaceId'];
     this.board.workSpace=this.workspace;
     this.getBoard();

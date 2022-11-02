@@ -69,18 +69,22 @@
   </div>
   <!-- board -->
   <div class="board-div">
-    <div class="list-menu mt-5" *ngFor="let item of boards"  (click)="goTotaskLists(item.id)">
+    <div class="list-menu mt-5" *ngFor="let item of boards;let i=index"  (click)="goTotaskLists(item.id)">
+     <div *ngFor="let count of countOfTaskAndMember;let j=index">
+      <div *ngIf="i==j">
       <a  class="list-menu-item" >
         <div class="column mt-3">
           <div class="card shadow-sm">
             <h3 class="text-color">Board {{item.id}}</h3>
             <p class="text-dark">{{item.name}}</p>
             <p>{{item.description}}</p>
-            <p class="fs-6 text-end"><i class='bx bxs-user-circle fs-6'></i> 10 &nbsp; <i class='bx bx-task fs-6' ></i> 15</p>
+            <p class="fs-6 text-end"><i class='bx bxs-user-circle fs-6'></i> 10 &nbsp; <i class='bx bx-task fs-6' >{{count.countOfTask}}</i> </p>
 
           </div>
         </div>
       </a>
+    </div>
+  </div>
     </div>
   </div>
   <!-- board end -->
