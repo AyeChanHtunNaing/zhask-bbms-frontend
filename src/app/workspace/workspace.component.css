@@ -59,7 +59,12 @@
 .align{
   left:10px;
 }
-
+.bg-color{
+  background: #406595;
+}
+.card{
+  height:175px;
+}
 
 
 
