@@ -25,6 +25,7 @@ import {ActivateAccountComponent} from "./activate-account/activate-account.comp
 import { ListComponent } from './list/list.component';
 import { CardComponent } from './task/task.component';
 import { NotActivatedComponent } from './not-activated/not-activated.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -50,6 +51,7 @@ import { NotActivatedComponent } from './not-activated/not-activated.component';
     ListComponent,
     CardComponent,
     NotActivatedComponent,
+    ResetPasswordComponent,
 
   ],
   imports: [

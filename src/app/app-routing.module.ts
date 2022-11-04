@@ -13,6 +13,7 @@ import {WorkspaceComponent} from "./workspace/workspace.component";
 import {BoardComponent} from "./board/board.component";
 import {ActivateAccountComponent} from "./activate-account/activate-account.component";
 import {NotActivatedComponent} from "./not-activated/not-activated.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -29,7 +30,7 @@ const routes: Routes = [
   {path: 'board/:boardId', component: BoardComponent},
   {path: 'activated-account', component: ActivateAccountComponent},
   {path: 'token-expired', component: NotActivatedComponent},
-
+  {path: 'reset-password', component: ResetPasswordComponent},
 ];
 
 @NgModule({
