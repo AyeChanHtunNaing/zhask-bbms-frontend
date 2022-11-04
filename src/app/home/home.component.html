@@ -8,7 +8,7 @@
     Create New Workspace
   </button>
   <div class="form-group">
-    <input type="text" class="form-control"  placeholder="search workspace..." [(ngModel)]="searchTerm" >
+    <input type="text" class="frm-control"  placeholder="search workspace..." [(ngModel)]="searchTerm" >
   </div>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -21,7 +21,7 @@
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="name" class="form-label">Workspace Name</label>
-              <input type="text" class="form-control" [(ngModel)]="workspace.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+              <input type="text" class="form-control"  [(ngModel)]="workspace.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
               <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                 <div *ngIf="f.name.errors?.['required']">Name is required</div>
               </div>
