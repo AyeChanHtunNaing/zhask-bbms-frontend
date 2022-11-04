@@ -15,13 +15,17 @@ export class TaskListService {
         return this.httpClient.get<TaskList[]>(`${this.baseURL}/${boardId}`);
       }
 
-      createTaskList(tasklist : TaskList): Observable<Object>{
+    createTaskList(tasklist : TaskList): Observable<Object>{
         return this.httpClient.post(`${this.baseURL}`, tasklist);
       }
-      deleteTaskList(taskListId:number):Observable<Object>{
+
+    updateTaskList(taskListId:string,taskList:TaskList):Observable<Object>{
+      return this.httpClient.put(`${this.baseURL}/${taskListId}`,taskList);
+    }
+
+    deleteTaskList(taskListId:number):Observable<Object>{
         return this.httpClient.delete(`${this.baseURL}/${taskListId}`);
       }
-      // getTaskListById(boardId: number): Observable<TaskList>{
-      //   return this.httpClient.get<TaskList>(`${this.baseURL}/${boardId}`);
-      // }
+      
+
 }

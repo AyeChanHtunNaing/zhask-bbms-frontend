@@ -2,12 +2,15 @@
 <div class="body" [ngClass]="getBodyClass()">
   <div class="display">
     <button type="button" class="btn btn-color me-3 my-2 invite" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-      <i class="bi bi-person-plus"></i>
+      <i class="bi bi-person-plus"></i> 
     </button>
   <app-list *ngFor="let list of tasklists" [tasklist]="list"></app-list>
   <div class="add">
-  <input type="text" class="input" [(ngModel)]="listName" placeholder="Add Title" (keyup.enter)="addList(listName)">
-  <span class="btn" (click)="addList(listName)">Add New List</span>
+  <form [formGroup]="addListForm">
+    <input type="text" class="input"  class="form-control" [(ngModel)]="listName" formControlName="listName" placeholder="Add Title"  name="listName" (keyup.enter)="addList(listName);">
+  </form>
+  
+  <span class="btn" (click)="addList(listName);">Add New List</span>
   </div>
 
     <!-- invite member -->

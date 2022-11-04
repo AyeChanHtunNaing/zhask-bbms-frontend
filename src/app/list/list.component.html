@@ -1,7 +1,7 @@
 <div class="list" (dragover)="allowDrop($event)" (dragend)="dragstart($event)" (drop)="drop($event)" >
   <div class="list__title"><strong>{{tasklist.title}}</strong>
   <div *ngIf="tasklist.title!='ToDo' && tasklist.title!='Doing' && tasklist.title!='Done'" class="text-end fs-6">
-    <i class="bi bi-pencil-square fs-6" (click)="setTaskListDetails(tasklist)"  data-bs-toggle="modal" data-bs-target="#editModal"></i>
+    <i class="bi bi-pencil-square fs-6" (click)="setTaskListDetails(tasklist)"  data-bs-toggle="modal" data-bs-target="#editTaskModal"></i>
     <i class="bi bi-x-square fs-6 mx-3" (click)="delete(tasklist.id)"></i>
   </div>
   </div>
@@ -14,4 +14,27 @@
   <br>
   <span class="list__newcard fs-6 text-primary" (click)="toggleDisplayAddCard();">Add a card... <i class='bx bx-add-to-queue'></i></span>
 
+   <!-- edit modal starts -->
+   <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModalLabel">Edit TaskList</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <input #updatetitle [value]="getTaskListDetails()" class="form-control" id="editDescription" name="taskDesc">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-color" (click)="updateTaskListTitle()">Update TaskList</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- edit modal ends -->
 </div>

@@ -7,6 +7,7 @@ import { TaskList } from '../models/TaskList';
 import {InviteMember} from "../models/invitemember";
 import {InvitememberService} from "../services/invitemember.service";
 import { BoardService } from '../services/board.service';
+import Swal from 'sweetalert2';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -23,8 +24,8 @@ export class BoardComponent implements OnInit {
   //form
 
   inviteForm!:FormGroup;
+  addListForm!:FormGroup;
   submitted = false;
-  
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -64,6 +65,9 @@ export class BoardComponent implements OnInit {
     this.inviteForm = this.formBuilder.group({
       email: ['',[this.commaSepEmail ]],
     });
+    this.addListForm = this.formBuilder.group({
+      listName: ['',[Validators.required ]],
+    });
   }
 
   setMockData(): void {
@@ -101,17 +105,30 @@ export class BoardComponent implements OnInit {
     }
   }
   addList(listName: string) {
-  this.tasklist.title=listName;
-  this.tasklistService.createTaskList(this.tasklist)
-  .subscribe(res => {
-
-      location.reload();
-
-    },
-    err => {
-
-    });
-
-    this.listName=" ";
-  }
+    console.log(listName)
+    if(listName!="" && listName!=null)
+    {
+      this.tasklist.title=listName;
+      this.tasklistService.createTaskList(this.tasklist)
+      .subscribe(res => {
+    
+          location.reload();
+    
+        },
+        err => {
+    
+        });
+    
+        this.listName=" ";
+      }
+      else
+      {
+        Swal.fire({
+          icon: 'error',
+          title: 'No Input',
+          text: 'Please fill the data'
+        });
+      }
+    }
+  
 }

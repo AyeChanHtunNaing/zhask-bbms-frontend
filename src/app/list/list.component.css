@@ -28,3 +28,7 @@ input{
   background: #fff;
   box-shadow:none;
 }
+.btn-color{
+  background-color: #406595;
+  color:#fff
+}

@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from "@angular/core";
 import { Task } from "../models/Task";
 import { TaskList } from "../models/TaskList";
 import { TaskService } from "../services/task.service";
@@ -14,7 +14,9 @@ import { Board } from "../models/board";
 export class ListComponent implements OnInit {
   taskListDetails!:TaskList;
   @Input() tasklist!: TaskList;
+  @ViewChild('updatetitle') updatetitle!:ElementRef;
   displayAddCard = false;
+  taskList : TaskList = new TaskList();
   task : Task = new Task();
   tasks:Task[]=[];
   tasklistModel : TaskList = new TaskList();
@@ -77,8 +79,12 @@ export class ListComponent implements OnInit {
     window.localStorage.setItem('title',this.tasklist.title);
     //alert(this.tasklist.title)
   }
+  getId():string{
+    return window.localStorage.getItem('id') as string;
+  }
   onEnter(value: string) {
-    this.tasklistModel.id=this.tasklist.id;
+    if(value!=""&& value!=null){
+      this.tasklistModel.id=this.tasklist.id;
     this.task.description=value;
     this.task.taskList=this.tasklistModel;
     this.board.id=Number(window.localStorage.getItem('boardId'));
@@ -90,10 +96,17 @@ export class ListComponent implements OnInit {
       err => {
         console.log(err);
       });
-    this.taskService.getTask(this.tasklist.id).subscribe(data=>
-    {
+    this.taskService.getTask(this.tasklist.id).subscribe(data=>{
       this.tasks=data;
-    })
+    });
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'No Input',
+        text: 'Please fill the data'
+      });
+    }
+    
   }
   delete(taskId:number){
   
@@ -123,13 +136,35 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
   setTaskListDetails(taskList:TaskList){
     this.taskListDetails=taskList;
     window.localStorage.setItem('des',this.taskListDetails.title)
+    window.localStorage.setItem('id',this.taskListDetails.id+"");
   }
-  getTaskListDetails():string
-  {
+
+  getTaskListDetails():string{
     return window.localStorage.getItem('des') as string;
+  }
+
+  updateTaskListTitle(){
+    const value=this.updatetitle.nativeElement.value;
+    console.log(value);
+    this.taskList.title=value;
+    this.taskListService.updateTaskList(this.getId(),this.taskList).subscribe(data=>{
+      console.log(data);
+    })
+
+    setTimeout(function(){
+      window.location.reload();
+    }, 900);
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Updated Successfully',
+      showConfirmButton: false,
+      timer: 1500
+    });
   }
 }
 
