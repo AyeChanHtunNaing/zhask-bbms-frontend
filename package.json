@@ -23,6 +23,7 @@
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
     "boxicons": "^2.1.4",
+    "ng2-search-filter": "^0.5.1",
     "rxjs": "~7.5.0",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.6.5",

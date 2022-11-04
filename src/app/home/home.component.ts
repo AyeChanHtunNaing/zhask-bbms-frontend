@@ -18,6 +18,8 @@ interface SideNavToggle {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit ,OnChanges{
+
+  searchTerm!: string;
   isSideNavCollapsed = false;
   screenWidths = 0;
   workspace : Workspace =new Workspace();

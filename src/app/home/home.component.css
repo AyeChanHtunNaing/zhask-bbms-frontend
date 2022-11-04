@@ -37,11 +37,19 @@
   .column{
     width:100%;
   }
+  .form-control{
+    margin-top: 50px;
+    border-radius: 10px;
+    width: 250px;
+    margin-left: 135px;
+  }
+
 }
 @media only screen and (max-width: 775px) {
   .column{
     width:75%;
   }
+
 }
 @media only screen and (min-width: 1200px) {
   .board-div{
@@ -60,5 +68,11 @@
   display:table;
   clear: both;
 }
+.form-control{
+  border-radius: 10px;
+  width: 250px;
+  margin-left: 135px;
+}
+
 
 

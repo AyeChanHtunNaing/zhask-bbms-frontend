@@ -1,9 +1,15 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css">
+
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
+
   <button type="button" class="btn btn-color me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Create New Workspace
   </button>
+  <div class="form-group">
+    <input type="text" class="form-control"  placeholder="search workspace..." [(ngModel)]="searchTerm" >
+  </div>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -46,7 +52,7 @@
 
   <!-- board -->
   <div class="board-div">
-    <div class="list-menu mt-5" *ngFor="let item of workspaces"  (click)="goToBoard(item.id)">
+    <div class="list-menu mt-5" *ngFor="let item of workspaces | filter:searchTerm"  (click)="goToBoard(item.id)">
       <a  class="list-menu-item" >
         <div class="column mt-3">
           <div class="card shadow-sm">
