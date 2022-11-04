@@ -1,6 +1,7 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
+
   <div class="text-end">
     <button type="button" class="btn btn-color me-3 my-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
       Invite Member  <i class="bi bi-person-plus"></i>
@@ -8,7 +9,9 @@
     <button type="button" class="btn btn-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Create New Board <i class="bi bi-clipboard"></i>
     </button>
-
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control"  placeholder="search workspace..." [(ngModel)]="searchTerm" >
   </div>
   <!-- workspace -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -69,7 +72,7 @@
   </div>
   <!-- board -->
   <div class="board-div">
-    <div class="list-menu mt-5" *ngFor="let item of boards;let i=index"  (click)="goTotaskLists(item.id)">
+    <div class="list-menu mt-5" *ngFor="let item of boards | filter:searchTerm;let i=index"  (click)="goTotaskLists(item.id)">
      <div *ngFor="let count of countOfTaskAndMember;let j=index">
       <div *ngIf="i==j">
       <a  class="list-menu-item" >

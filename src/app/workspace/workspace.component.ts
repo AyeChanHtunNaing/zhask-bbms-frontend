@@ -19,6 +19,7 @@ interface SideNavToggle {
   styleUrls: ['./workspace.component.css']
 })
 export class WorkspaceComponent implements OnInit {
+  searchTerm: any;
   isSideNavCollapsed = false;
   screenWidths = 0;
   workspace : Workspace = new Workspace();
@@ -30,7 +31,7 @@ export class WorkspaceComponent implements OnInit {
   counts:Count[]=[]
   countOfTaskAndMember:Count[]=[]
   submitted = false;
-  
+
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -72,6 +73,7 @@ export class WorkspaceComponent implements OnInit {
     token:''
 
   }
+
 
   get f() {
     return this.registerForm.controls;
