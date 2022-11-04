@@ -16,7 +16,7 @@ export class CardComponent implements OnInit {
   isView: boolean=false;
   taskDetails!:Task;
   taskDesc!:string;
-  task=new Task()
+  task=new Task();
   editForm!:FormGroup;
 
   constructor(private taskService:TaskService,private fb:FormBuilder,) {
@@ -39,12 +39,11 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('description',this.card.description);
   }
 
-
   updateTaskDescription(){
     const value=this.updatedescription.nativeElement.value;
-    console.log(value)
+    console.log(value);
     this.task.description=value;
-    console.log(this.task.description)
+    console.log(this.task.description);
     this.taskService.updateTaskDescription(this.getId(),this.task).subscribe(data=>{
       console.log(data);
     })
@@ -58,7 +57,7 @@ export class CardComponent implements OnInit {
       title: 'Updated Successfully',
       showConfirmButton: false,
       timer: 1500
-    })
+    });
   }
 
   delete(taskId:number){
@@ -74,7 +73,7 @@ export class CardComponent implements OnInit {
       if (result.isConfirmed) {
         this.taskService.deleteTask(taskId).subscribe(data => {
 
-        })
+        });
         Swal.fire(
           'Deleted!',
           'Your task has been deleted.',
@@ -85,25 +84,25 @@ export class CardComponent implements OnInit {
         }, 1000);
       }
 
-    })
+    });
     }
     setTaskDetails(task:Task){
       this.taskDetails=task;
       this.taskDesc=this.taskDetails.description;
-      console.log(this.taskDesc)
-     window.localStorage.setItem('des',this.taskDesc)
-      window.localStorage.setItem('id',this.taskDetails.id+"")
+      console.log(this.taskDesc);
+      window.localStorage.setItem('des',this.taskDesc);
+      window.localStorage.setItem('id',this.taskDetails.id+"");
     }
-    getTaskDetails():string
-    {
-    return window.localStorage.getItem('des') as string;
+    getTaskDetails():string{
+      return window.localStorage.getItem('des') as string;
     }
-   getId():string{
+
+    getId():string{
      return window.localStorage.getItem('id') as string;
    }
 
   showActivity() {
-    alert("activity")
+    alert("activity");
   }
 }
 

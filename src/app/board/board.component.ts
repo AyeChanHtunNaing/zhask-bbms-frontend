@@ -57,7 +57,7 @@ export class BoardComponent implements OnInit {
   tasklist:TaskList=new TaskList();
   listName!: string;
   board:Board=new Board();
-  count !: number;
+  count!: number;
 
   constructor(private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
               ,private invitememberService:InvitememberService,private route:ActivatedRoute) {

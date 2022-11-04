@@ -96,9 +96,7 @@ export class ListComponent implements OnInit {
     })
   }
   delete(taskId:number){
-    setTimeout(function(){
-      window.location.reload();
-    }, 900);
+  
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -133,6 +131,5 @@ export class ListComponent implements OnInit {
   {
     return window.localStorage.getItem('des') as string;
   }
-
 }
 
