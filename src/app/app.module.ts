@@ -24,6 +24,7 @@ import { BoardComponent } from './board/board.component';
 import {ActivateAccountComponent} from "./activate-account/activate-account.component";
 import { ListComponent } from './list/list.component';
 import { CardComponent } from './task/task.component';
+import { NotActivatedComponent } from './not-activated/not-activated.component';
 
 
 
@@ -48,6 +49,7 @@ import { CardComponent } from './task/task.component';
     ActivateAccountComponent,
     ListComponent,
     CardComponent,
+    NotActivatedComponent,
 
   ],
   imports: [

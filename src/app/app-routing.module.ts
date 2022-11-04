@@ -12,6 +12,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import {WorkspaceComponent} from "./workspace/workspace.component";
 import {BoardComponent} from "./board/board.component";
 import {ActivateAccountComponent} from "./activate-account/activate-account.component";
+import {NotActivatedComponent} from "./not-activated/not-activated.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -27,7 +28,7 @@ const routes: Routes = [
   {path: 'workspace/:workspaceId', component: WorkspaceComponent},
   {path: 'board/:boardId', component: BoardComponent},
   {path: 'activated-account', component: ActivateAccountComponent},
-
+  {path: 'token-expired', component: NotActivatedComponent},
 
 ];
 
