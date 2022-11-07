@@ -17,6 +17,7 @@ export class CalendarComponent implements OnInit {
   // add some events
   events:any=[
     {title:'Task Start',date:'2022-11-08', color:'#406595'},
+    {title:'Task Due',date:'2022-11-08', color:'#FF0000'},
     {title:'Task Start',date:'2022-11-11', color:'#406595'},
     {title:'Task Due',date:'2022-11-28', color:'#FF0000'},
   ];
