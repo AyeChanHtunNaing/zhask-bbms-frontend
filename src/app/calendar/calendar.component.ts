@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit,ViewChild} from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
+import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -12,10 +13,27 @@ interface SideNavToggle {
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+  modalRef?:BsModalRef;
+  // add some events
+  events:any=[
+    {title:'Task Start',date:'2022-11-08', color:'#406595'},
+    {title:'Task Start',date:'2022-11-11', color:'#406595'},
+    {title:'Task Due',date:'2022-11-28', color:'#FF0000'},
+  ];
+  title!:string;
+  taskDate!:string;
   calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth'
+    initialView: 'dayGridMonth',
+    events:this.events,
+    eventClick:this.handleDateClick.bind(this),
   };
 
+  config={
+    animated:true
+  };
+
+  @ViewChild('template') template !:string;
+  // side nav
   isSideNavCollapsed = false;
   screenWidths = 0;
   @Input() collapsed = false;
@@ -34,9 +52,16 @@ export class CalendarComponent implements OnInit {
     }
     return styleClass;
   }
-  constructor() { }
+  constructor(private modalService:BsModalService) { }
 
   ngOnInit(): void {
   }
+  handleDateClick(arg:any){
+    console.log(arg);
+    console.log(arg.event._def.title);
+    this.title=arg.event._def.title;
+    this.taskDate=arg.event.start;
+    this.modalRef=this.modalService.show(this.template,this.config);
 
+  }
 }

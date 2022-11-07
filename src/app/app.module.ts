@@ -7,6 +7,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // a plugin!
+import {ModalModule} from "ngx-bootstrap/modal";
 
 import { AppComponent } from './app.component';
 import { BodyComponent } from './body/body.component';
@@ -71,7 +72,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FormsModule,
     HttpClientModule,
     Ng2SearchPipeModule,
-    FullCalendarModule // register FullCalendar with you app
+    FullCalendarModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
