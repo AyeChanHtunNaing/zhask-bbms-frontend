@@ -4,6 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from "@fullcalendar/interaction"; // a plugin!
+
 import { AppComponent } from './app.component';
 import { BodyComponent } from './body/body.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -27,6 +31,10 @@ import { CardComponent } from './task/task.component';
 import { NotActivatedComponent } from './not-activated/not-activated.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 
 
@@ -62,7 +70,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatCardModule,
     FormsModule,
     HttpClientModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    FullCalendarModule // register FullCalendar with you app
   ],
   providers: [],
   bootstrap: [AppComponent]

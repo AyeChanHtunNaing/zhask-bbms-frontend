@@ -1,12 +1,13 @@
 {
-  "name": "sidenav",
+  "name": "bbms",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "postinstall": "node remove-css-imports.js"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +21,9 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@fullcalendar/angular": "^5.11.2",
+    "@fullcalendar/daygrid": "^5.11.3",
+    "@fullcalendar/interaction": "^5.11.3",
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
     "boxicons": "^2.1.4",

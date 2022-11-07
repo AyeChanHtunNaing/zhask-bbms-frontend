@@ -1,5 +1,18 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-  <p>Hi thel lay :3 Nga calendar par</p>
+
+  <div class="row box">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Events</li>
+      </ol>
+    </nav>
+    <div class="col-md-5 mt-3">
+      <h1 class="text-muted mb-6 text-center">View Events in Calendar Mode</h1>
+      <hr>
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
 </div>

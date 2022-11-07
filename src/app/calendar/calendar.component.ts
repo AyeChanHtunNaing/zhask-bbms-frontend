@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
+
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -7,9 +9,13 @@ interface SideNavToggle {
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth'
+  };
+
   isSideNavCollapsed = false;
   screenWidths = 0;
   @Input() collapsed = false;
