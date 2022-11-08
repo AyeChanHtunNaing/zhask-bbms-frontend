@@ -24,9 +24,9 @@
 
                 <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign up your account</h3>
                 <div class="form-outline mb-4">
-                  <label class="form-label" for="form2Example17">Name</label>
+                  <label class="form-label" for="names">Name</label>
 
-                  <input type="text" class="form-control" [(ngModel)]="user.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+                  <input type="text" class="form-control" [(ngModel)]="user.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}">
                   <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                     <div *ngIf="f.name.errors?.['required']">Name is required</div>
                   </div>
@@ -41,7 +41,7 @@
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="password">Password</label>
-                  <input type="password" class="form-control" [(ngModel)]="user.password"  formControlName="password" id="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors}" >
+                  <input type="password" class="form-control" [(ngModel)]="user.password"  formControlName="password" id="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors}" [minlength]="8">
                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                     <div *ngIf="f.password.errors?.['required']">Password is required</div>
                   </div>
