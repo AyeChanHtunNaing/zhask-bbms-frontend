@@ -72,16 +72,25 @@
   </div>
   <!-- board -->
   <div class="board-div">
-    <div class="list-menu mt-5" *ngFor="let item of boards | filter:searchTerm;let i=index"  (click)="goTotaskLists(item.id)">
+    <div class="list-menu mt-5" *ngFor="let item of boards | filter:searchTerm;let i=index"  (dblclick)="goTotaskLists(item.id)">
      <div *ngFor="let count of countOfTaskAndMember;let j=index">
       <div *ngIf="i==j">
       <a  class="list-menu-item" >
         <div class="column mt-3">
           <div class="card shadow-sm">
+            <!-- board card start -->
+            <div class="row">
+            <div class="col-12">
             <h1 class="text-color">{{item.name}}</h1>
             <p class="text-start">{{item.description}}</p>
             <p class="fs-6 text-end" style="margin-top: 45px"><i class='bx bxs-user-circle fs-5'>10</i>  &nbsp; <i class='bx bx-task fs-5' >{{count.countOfTask}}</i> </p>
-
+          </div>
+              <div class="col-3 mx-3 d-flex">
+                <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editBoardModal"></i>
+                <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteBoard()"></i>
+              </div>
+            </div>
+            <!-- board  card end -->
           </div>
         </div>
       </a>
@@ -90,4 +99,27 @@
     </div>
   </div>
   <!-- board end -->
+  <!-- edit modal starts -->
+  <div class="modal fade" id="editBoardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="EditBoardModalLabel">Edit Board</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <input #updatedescription [value]="getBoardDetails()" class="form-control" id="editDescription" name="boardDesc">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-color" (click)="updateBoardDescription()">Update Board</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- edit modal ends -->
 </div>

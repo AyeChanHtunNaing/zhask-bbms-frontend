@@ -8,6 +8,7 @@ import { Board } from '../models/board';
 import { BoardService } from '../services/board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Count } from '../models/count';
+import {Task} from "../models/Task";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -19,6 +20,8 @@ interface SideNavToggle {
   styleUrls: ['./workspace.component.css']
 })
 export class WorkspaceComponent implements OnInit {
+  BoardDetails!:Board;
+  boardDesc!:string;
   searchTerm: any;
   isSideNavCollapsed = false;
   screenWidths = 0;
@@ -75,10 +78,13 @@ export class WorkspaceComponent implements OnInit {
   }
 
 
+
   get f() {
     return this.registerForm.controls;
   }
-
+  deleteBoard(){
+    alert("delete")
+  }
   onRegisterSubmit() {
 
     this.submitted = true;
@@ -148,4 +154,17 @@ export class WorkspaceComponent implements OnInit {
   goTotaskLists(baordId:number){
     this.router.navigate(['board', baordId]);
   }
+  updateBoardDescription() {
+    alert("update")
+  }
+  setBoardDetails(board:Board){
+    this.BoardDetails=board;
+    this.boardDesc=this.BoardDetails.description;
+    window.localStorage.setItem('des',this.boardDesc);
+    window.localStorage.setItem('id',this.BoardDetails.id+"");
+  }
+  getBoardDetails():string{
+    return window.localStorage.getItem('des') as string;
+  }
+
 }
