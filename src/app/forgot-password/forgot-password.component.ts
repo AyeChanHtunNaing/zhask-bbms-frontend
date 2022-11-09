@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { user } from '../models/user';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -12,7 +13,7 @@ export class ForgotPasswordComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
   user:user=new user();
-  constructor(private formBuilder: FormBuilder,private router : Router) {
+  constructor(private formBuilder: FormBuilder, private router : Router, private service : UserService) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required]],
     });
@@ -29,7 +30,18 @@ export class ForgotPasswordComponent implements OnInit {
     }
     //True if all the fields are filled
     if (this.submitted) {
-      alert("email htae tr mhan dl")
+      // alert("email htae tr mhan tl")
+      this.service.forgotPsw(this.user).subscribe(
+        responseData =>{
+          if(responseData == false){
+            alert("Failed!")
+          }else{
+            alert("Please, Confirm From Your Email")
+            //
+            // this.router.navigate(['reset-password']);
+          }
+        }
+      );
     }
   }
 

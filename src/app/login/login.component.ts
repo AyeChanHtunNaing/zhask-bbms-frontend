@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { user } from '../models/user';
-import { LoginService } from '../services/login.service';
+import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
   user:user=new user();
-  constructor(private formBuilder: FormBuilder,private router : Router,private service: LoginService) {
+  constructor(private formBuilder: FormBuilder,private router : Router,private service: UserService) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]],

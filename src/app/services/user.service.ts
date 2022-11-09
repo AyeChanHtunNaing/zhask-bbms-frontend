@@ -6,7 +6,7 @@ import { user } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class UserService {
 
   private baseURL = "http://localhost:8080";
 
@@ -19,5 +19,13 @@ export class LoginService {
 
   addUser(usr : user ):Observable<user>{
     return this.http.post<user>(`${this.baseURL}/signup`,usr);
+  }
+
+  forgotPsw(usr : user ):Observable<boolean>{
+    return this.http.post<boolean>(`${this.baseURL}/forgot_psw`,usr);
+  }
+
+  resetPsw(usr : user ):Observable<boolean>{
+    return this.http.post<boolean>(`${this.baseURL}/reset_psw`,usr);
   }
 }
