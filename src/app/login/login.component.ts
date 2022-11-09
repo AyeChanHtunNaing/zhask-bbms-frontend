@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { user } from '../models/user';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
   user:user=new user();
-  constructor(private formBuilder: FormBuilder,private router : Router) {
+  constructor(private formBuilder: FormBuilder,private router : Router,private service: LoginService) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -33,7 +34,18 @@ export class LoginComponent implements OnInit {
     }
     //True if all the fields are filled
     if (this.submitted) {
-      alert("login ya twr p")
+      // alert("login ya twr p")
+      this.service.login(this.user).subscribe(
+        responseData => {
+          if(responseData.status != 200){
+            console.log("Invalide Email or Password.");
+          }else{
+            this.router.navigate(['home']);
+          }
+          //window.sessionStorage.setItem("loginuser",JSON.stringify(responseData));
+        }, error => {
+          console.log(error);
+        });
     }
   }
 

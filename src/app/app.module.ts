@@ -23,7 +23,7 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import {MatCardModule} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { BoardComponent } from './board/board.component';
 import {ActivateAccountComponent} from "./activate-account/activate-account.component";
@@ -31,6 +31,8 @@ import { ListComponent } from './list/list.component';
 import { CardComponent } from './task/task.component';
 import { NotActivatedComponent } from './not-activated/not-activated.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RequestInterceptInterceptor } from './interceptors/request-intercept.interceptor';
+import { ResponseInterceptInterceptor } from './interceptors/response-intercept.interceptor';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -75,7 +77,14 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FullCalendarModule,
     ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS , useClass : RequestInterceptInterceptor,multi : true
+    },
+    {
+      provide : HTTP_INTERCEPTORS , useClass : ResponseInterceptInterceptor,multi : true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
