@@ -6,6 +6,7 @@ import { EmailResponse } from '../message/emailresponse';
 import { InviteMember } from '../models/invitemember';
 import { InvitememberService } from '../services/invitemember.service';
 import { Router } from '@angular/router';
+import {Task} from "../models/Task";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -18,7 +19,8 @@ interface SideNavToggle {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit ,OnChanges{
-
+  workspaceDetails!:Workspace;
+  workspaceDesc!:string;
   searchTerm!: string;
   isSideNavCollapsed = false;
   screenWidths = 0;
@@ -115,6 +117,21 @@ export class HomeComponent implements OnInit ,OnChanges{
 
   goToBoard(workspaceId:number){
     this.router.navigate(['workspace', workspaceId]);
+  }
+  deleteWorkspace(){
+    alert("delete workspace")
+  }
+  setWorkspaceDetails(workspace:Workspace){
+    this.workspaceDetails=workspace;
+    this.workspaceDesc=this.workspaceDetails.description;
+    window.localStorage.setItem('des',this.workspaceDesc);
+    window.localStorage.setItem('id',this.workspaceDetails.id+"");
+  }
+  getWorkspaceDetails():string{
+    return window.localStorage.getItem('des') as string;
+  }
+  updateWorkspaceDescription(){
+    alert("update")
   }
 }
 
