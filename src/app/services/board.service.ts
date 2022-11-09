@@ -28,4 +28,11 @@ export class BoardService {
       return this.httpClient.get<Task[]>(`${this.baseURLForTaskByBoardId}/${boardId}`);
     }
       
+    updateBoardById(boardId: string,board : Board):Observable<Board>{
+      return this.httpClient.put<Board>(`${this.baseURL}/${boardId}`,board);
+    }
+
+    deleteBoardById(boardId: number):Observable<Board>{
+      return this.httpClient.delete<Board>(`${this.baseURL}/${boardId}`);
+    }
 }

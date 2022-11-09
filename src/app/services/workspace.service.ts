@@ -10,7 +10,7 @@ export class WorkspaceService {
     constructor(private httpClient: HttpClient) { 
     
     }
-    getWorkspace(): Observable<Workspace[]>{
+      getWorkspace(): Observable<Workspace[]>{
         return this.httpClient.get<Workspace[]>(`${this.baseURL}`);
       }
     
@@ -19,5 +19,13 @@ export class WorkspaceService {
       }
       getWorkspaceById(userId: string): Observable<Workspace>{
         return this.httpClient.get<Workspace>(`${this.baseURL}/${userId}`);
+      }
+
+      updateWorkspaceById(workspaceId: string,workspace : Workspace):Observable<Workspace>{
+        return this.httpClient.put<Workspace>(`${this.baseURL}/${workspaceId}`,workspace);
+      }
+  
+      deleteWorkspaceById(workspaceId: number):Observable<Workspace>{
+        return this.httpClient.delete<Workspace>(`${this.baseURL}/${workspaceId}`);
       }
 }

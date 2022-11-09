@@ -82,9 +82,7 @@ export class CardComponent implements OnInit {
         setTimeout(function(){
           window.location.reload();
         }, 1000);
-      }
-
-    });
+      }});
     }
     setTaskDetails(task:Task){
       this.taskDetails=task;

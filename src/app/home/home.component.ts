@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import { Workspace } from '../models/workspace';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { WorkspaceService } from '../services/workspace.service';
@@ -7,6 +7,7 @@ import { InviteMember } from '../models/invitemember';
 import { InvitememberService } from '../services/invitemember.service';
 import { Router } from '@angular/router';
 import {Task} from "../models/Task";
+import Swal from 'sweetalert2';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit ,OnChanges{
   workspaces:Workspace[]=[];
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+  @ViewChild('updatedescription') updatedescription!:ElementRef;
 
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
@@ -118,21 +120,74 @@ export class HomeComponent implements OnInit ,OnChanges{
   goToBoard(workspaceId:number){
     this.router.navigate(['workspace', workspaceId]);
   }
-  deleteWorkspace(){
-    alert("delete workspace")
-  }
+
   setWorkspaceDetails(workspace:Workspace){
     this.workspaceDetails=workspace;
-    this.workspaceDesc=this.workspaceDetails.description;
+    this.workspaceDesc=this.workspaceDetails.name;
     window.localStorage.setItem('des',this.workspaceDesc);
     window.localStorage.setItem('id',this.workspaceDetails.id+"");
   }
+
   getWorkspaceDetails():string{
     return window.localStorage.getItem('des') as string;
   }
-  updateWorkspaceDescription(){
-    alert("update")
+
+  getId():string{
+    return window.localStorage.getItem('id') as string;
   }
+
+  updateWorkspaceDescription(){
+    const value=this.updatedescription.nativeElement.value;
+    console.log(value);
+    this.workspace.name=value;
+    console.log(this.workspace.name);
+    console.log(this.getId());
+    this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
+    console.log(data);
+    })
+
+    // setTimeout(function(){
+    //   window.location.reload();
+    // }, 900);
+   
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Updated Successfully',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    this.getWorkspaces();
+  }
+
+  deleteWorkspace(workspaceId : number){
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.workspaceService.deleteWorkspaceById(workspaceId).subscribe(data => {
+
+        });
+        
+        Swal.fire(
+          'Deleted!',
+          'Your task has been deleted.',
+          'success'
+        )
+        // setTimeout(function(){
+        //   //window.location.reload();
+        // }, 1000);
+      }});
+      this.getWorkspaces();
+}
+
 }
 
 

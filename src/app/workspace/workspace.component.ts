@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { Workspace } from '../models/workspace';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailResponse } from '../message/emailresponse';
@@ -9,6 +9,7 @@ import { BoardService } from '../services/board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Count } from '../models/count';
 import {Task} from "../models/Task";
+import Swal from 'sweetalert2';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -34,6 +35,7 @@ export class WorkspaceComponent implements OnInit {
   counts:Count[]=[]
   countOfTaskAndMember:Count[]=[]
   submitted = false;
+  @ViewChild('updatedescription') updatedescription!:ElementRef;
 
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
@@ -77,14 +79,10 @@ export class WorkspaceComponent implements OnInit {
 
   }
 
-
-
   get f() {
     return this.registerForm.controls;
   }
-  deleteBoard(){
-    alert("delete")
-  }
+  
   onRegisterSubmit() {
 
     this.submitted = true;
@@ -128,6 +126,7 @@ export class WorkspaceComponent implements OnInit {
       alert("Process successfully done")
     }
   }
+
   getBoard()
   {
     this.boardService.getBoard(this.workspace.id).subscribe(data => {
@@ -145,6 +144,7 @@ export class WorkspaceComponent implements OnInit {
     });
    this.countOfTaskAndMember=this.counts;
   }
+
   ngOnInit() {
     this.workspace.id=this.route.snapshot.params['workspaceId'];
     this.board.workSpace=this.workspace;
@@ -154,17 +154,71 @@ export class WorkspaceComponent implements OnInit {
   goTotaskLists(baordId:number){
     this.router.navigate(['board', baordId]);
   }
-  updateBoardDescription() {
-    alert("update")
-  }
+ 
   setBoardDetails(board:Board){
     this.BoardDetails=board;
-    this.boardDesc=this.BoardDetails.description;
+    this.boardDesc=this.BoardDetails.name;
     window.localStorage.setItem('des',this.boardDesc);
     window.localStorage.setItem('id',this.BoardDetails.id+"");
   }
+
   getBoardDetails():string{
     return window.localStorage.getItem('des') as string;
   }
 
+  getId():string{
+    return window.localStorage.getItem('id') as string;
+  }
+
+  updateBoardDescription(){
+    const value=this.updatedescription.nativeElement.value;
+    console.log(value);
+    this.board.name=value;
+    console.log(this.board.name);
+    console.log(this.getId());
+    this.boardService.updateBoardById(this.getId(),this.board).subscribe(data=>{
+    console.log(data);
+    })
+
+    // setTimeout(function(){
+    //   window.location.reload();
+    // }, 900);
+   
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Updated Successfully',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    this.getBoard();
+  }
+
+  deleteBoard(boardId : number){
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.boardService.deleteBoardById(boardId).subscribe(data => {
+
+        });
+        
+        Swal.fire(
+          'Deleted!',
+          'Your task has been deleted.',
+          'success'
+        )
+        // setTimeout(function(){
+        //   //window.location.reload();
+        // }, 1000);
+      }});
+      this.getBoard();
+}
 }
