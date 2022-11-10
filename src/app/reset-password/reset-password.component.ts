@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { user } from '../models/user';
+import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { UserService } from '../services/user.service';
 export class ResetPasswordComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
-  user:user=new user();
+  user:User=new User();
   constructor(private formBuilder: FormBuilder, private router : Router, private service : UserService) {
     this.registerForm = this.formBuilder.group({
       password: ['', [Validators.required]],

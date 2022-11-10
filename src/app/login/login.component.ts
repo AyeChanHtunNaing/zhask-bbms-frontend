@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { user } from '../models/user';
+import { User} from '../models/user';
 import { UserService } from '../services/user.service';
 
 
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   registerForm!: FormGroup;
   submitted = false;
-  user:user=new user();
+  user:User=new User();
   constructor(private formBuilder: FormBuilder,private router : Router,private service: UserService) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required]],
@@ -38,14 +38,13 @@ export class LoginComponent implements OnInit {
       // alert("login ya twr p")
       this.service.login(this.user).subscribe(
         responseData => {
-          if(responseData.status != 200){
-            console.log("Invalide Email or Password.");
-          }else{
+          window.localStorage.setItem('userId',responseData.id+"")
             this.router.navigate(['home']);
-          }
+             
           //window.sessionStorage.setItem("loginuser",JSON.stringify(responseData));
         }, error => {
           console.log(error);
+          console.log("Invalide Email or Password.");
         });
     }
   }

@@ -8,8 +8,8 @@ import { Board } from '../models/board';
 import { BoardService } from '../services/board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Count } from '../models/count';
-import {Task} from "../models/Task";
 import Swal from 'sweetalert2';
+import { User } from '../models/user';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;

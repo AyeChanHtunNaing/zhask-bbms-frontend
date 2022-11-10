@@ -6,12 +6,12 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { user } from '../models/user';
+import { User } from '../models/user';
 
 @Injectable()
 export class RequestInterceptInterceptor implements HttpInterceptor {
 
-  User = new user();
+  User = new User();
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

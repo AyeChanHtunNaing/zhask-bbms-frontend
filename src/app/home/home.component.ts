@@ -8,6 +8,7 @@ import { InvitememberService } from '../services/invitemember.service';
 import { Router } from '@angular/router';
 import {Task} from "../models/Task";
 import Swal from 'sweetalert2';
+import { User } from '../models/user';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -28,6 +29,8 @@ export class HomeComponent implements OnInit ,OnChanges{
   workspace : Workspace =new Workspace();
   invitemember:InviteMember=new InviteMember();
   workspaces:Workspace[]=[];
+  users:User[]=[];
+  user:User=new User();
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   @ViewChild('updatedescription') updatedescription!:ElementRef;
@@ -74,6 +77,9 @@ export class HomeComponent implements OnInit ,OnChanges{
   get f() {
     return this.registerForm.controls;
   }
+  getUserId():number | null{
+    return window.localStorage.getItem('userId') as number | null;
+  }
   onSubmit() {
 
     this.submitted = true;
@@ -84,6 +90,9 @@ export class HomeComponent implements OnInit ,OnChanges{
     //True if all the fields are filled
     if(this.submitted)
     {
+      this.user.id=this.getUserId() as number;
+      this.users.push(this.user);
+      this.workspace.users=this.users;
       this.workspaceService.createWorkspace(this.workspace)
         .subscribe(res => {
 
@@ -108,7 +117,8 @@ export class HomeComponent implements OnInit ,OnChanges{
   }
   getWorkspaces()
   {
-    this.workspaceService.getWorkspace().subscribe(data => {
+    let userId=this.getUserId() as number;
+    this.workspaceService.getWorkspace(userId).subscribe(data => {
       this.workspaces = data;
     });
   }

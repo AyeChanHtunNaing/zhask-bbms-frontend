@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { user } from '../models/user';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,20 +12,20 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  login(user:user){
+  login(user:User):Observable<User>{
     window.sessionStorage.setItem("loginuser",JSON.stringify(user));
-    return this.http.get(`${this.baseURL}/`, { observe: 'response',withCredentials: true });
+    return this.http.get<User>(`${this.baseURL}/`);
   }
 
-  addUser(usr : user ):Observable<user>{
-    return this.http.post<user>(`${this.baseURL}/signup`,usr);
+  addUser(usr : User ):Observable<User>{
+    return this.http.post<User>(`${this.baseURL}/signup`,usr);
   }
 
-  forgotPsw(usr : user ):Observable<boolean>{
+  forgotPsw(usr : User ):Observable<boolean>{
     return this.http.post<boolean>(`${this.baseURL}/forgot_psw`,usr);
   }
 
-  resetPsw(usr : user ):Observable<boolean>{
+  resetPsw(usr : User ):Observable<boolean>{
     return this.http.post<boolean>(`${this.baseURL}/reset_psw`,usr);
   }
 }

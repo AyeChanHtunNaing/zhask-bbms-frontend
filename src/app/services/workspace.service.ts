@@ -10,14 +10,14 @@ export class WorkspaceService {
     constructor(private httpClient: HttpClient) { 
     
     }
-      getWorkspace(): Observable<Workspace[]>{
-        return this.httpClient.get<Workspace[]>(`${this.baseURL}`);
+      getWorkspace(userId:number): Observable<Workspace[]>{
+        return this.httpClient.get<Workspace[]>(`${this.baseURL}/${userId}`);
       }
     
       createWorkspace(workspace:Workspace): Observable<Object>{
         return this.httpClient.post(`${this.baseURL}`, workspace);
       }
-      getWorkspaceById(userId: string): Observable<Workspace>{
+      getWorkspaceById(userId: number): Observable<Workspace>{
         return this.httpClient.get<Workspace>(`${this.baseURL}/${userId}`);
       }
 

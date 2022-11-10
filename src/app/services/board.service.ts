@@ -25,7 +25,7 @@ export class BoardService {
         return this.httpClient.get<Workspace>(`${this.baseURL}/${userId}`);
       }
     getTaskByBoardId(boardId : number):Observable<Task[]>{
-      return this.httpClient.get<Task[]>(`${this.baseURLForTaskByBoardId}/${boardId}`);
+      return this.httpClient.get<Task[]>(`${this.baseURL}/showalltaskbyboard/${boardId}`);
     }
       
     updateBoardById(boardId: string,board : Board):Observable<Board>{

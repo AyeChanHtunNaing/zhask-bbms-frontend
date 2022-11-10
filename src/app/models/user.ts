@@ -1,4 +1,4 @@
-export class user {
+export class User {
   id!:number;
   name!:string;
   email!:string;
