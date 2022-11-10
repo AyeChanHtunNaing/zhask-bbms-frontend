@@ -35,6 +35,8 @@ export class WorkspaceComponent implements OnInit {
   counts:Count[]=[]
   countOfTaskAndMember:Count[]=[]
   submitted = false;
+  users:User[]=[];
+  user:User=new User();
   @ViewChild('updatedescription') updatedescription!:ElementRef;
 
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
@@ -82,7 +84,9 @@ export class WorkspaceComponent implements OnInit {
   get f() {
     return this.registerForm.controls;
   }
-  
+  getUserId():number | null{
+    return window.localStorage.getItem('userId') as number | null;
+  }
   onRegisterSubmit() {
 
     this.submitted = true;
@@ -93,6 +97,9 @@ export class WorkspaceComponent implements OnInit {
     //True if all the fields are filled
     if(this.submitted)
     {
+      this.user.id=this.getUserId() as number;
+      this.users.push(this.user);
+      this.board.users=this.users;
       this.boardService.createBoard(this.board)
         .subscribe(res => {
 

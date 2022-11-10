@@ -1,3 +1,4 @@
+import { User } from "./user";
 import { Workspace } from "./workspace";
 
 export class Board{
@@ -7,4 +8,5 @@ export class Board{
     countOfTask !: number;
     createAt !: Date;
     workSpace !: Workspace;
+    users:Array<User>=[];
 }

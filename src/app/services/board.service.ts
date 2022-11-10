@@ -19,6 +19,8 @@ export class BoardService {
       }
     
     createBoard(board : Board): Observable<Object>{
+      console.log(board);
+      
         return this.httpClient.post(`${this.baseURL}`, board);
       }
     getWorkspaceById(userId : string): Observable<Workspace>{
