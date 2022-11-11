@@ -31,7 +31,7 @@ export const navbarData = [
         label: 'Friends'
     },
     {
-        routeLink: '/login',
+        routeLink: '/logout',
         icon: 'bx bx-log-out icon',
         label: 'Logout'
     },

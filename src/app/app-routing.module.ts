@@ -14,6 +14,7 @@ import {BoardComponent} from "./board/board.component";
 import {ActivateAccountComponent} from "./activate-account/activate-account.component";
 import {NotActivatedComponent} from "./not-activated/not-activated.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'friend', component: FriendsComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LogoutComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'workspace/:workspaceId', component: WorkspaceComponent},
