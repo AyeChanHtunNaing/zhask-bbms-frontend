@@ -27,7 +27,7 @@ export class RequestInterceptInterceptor implements HttpInterceptor {
     let auth = JSON.parse(window.sessionStorage.getItem('Authorization') || 'null')
       if (auth) {
       Authorization = auth;
-      window.sessionStorage.removeItem('Authorization');
+      // window.sessionStorage.removeItem('Authorization');
      }
 
      if((this.User && this.User.email && this.User.password) || (auth)){

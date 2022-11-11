@@ -6,6 +6,7 @@ import { TitleStrategy } from "@angular/router";
 import Swal from "sweetalert2";
 import {TaskListService} from "../services/tasklist.service";
 import { Board } from "../models/board";
+import { User } from "../models/user";
 @Component({
   selector: "app-list",
   templateUrl: "./list.component.html",
@@ -22,7 +23,8 @@ export class ListComponent implements OnInit {
   tasklistModel : TaskList = new TaskList();
   taskId!:string;
   board : Board = new Board();
-
+   user:User=new User();
+   users:User[]=[];
   constructor(private taskService : TaskService,private taskListService:TaskListService) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
@@ -36,6 +38,9 @@ export class ListComponent implements OnInit {
   allowDrop($event:any) {
     $event.preventDefault();
 
+  }
+  getUserId():number | null{
+    return window.localStorage.getItem('userId') as number | null;
   }
   drop($event:any) {
     $event.preventDefault();
@@ -89,6 +94,9 @@ export class ListComponent implements OnInit {
     this.task.taskList=this.tasklistModel;
     this.board.id=Number(window.localStorage.getItem('boardId'));
     this.task.board=this.board;
+    this.user.id=this.getUserId() as number;
+      this.users.push(this.user);
+      this.task.users=this.users;
     this.taskService.createTask(this.task).subscribe(res => {
         location.reload();
         console.log(res);
