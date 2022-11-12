@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from "@angular/core";
-import { Task } from "../models/Task";
-import { TaskList } from "../models/TaskList";
+import { Task } from "../models/task";
+import { TaskList } from "../models/tasklist";
 import { TaskService } from "../services/task.service";
 import { TitleStrategy } from "@angular/router";
 import Swal from "sweetalert2";
@@ -40,7 +40,7 @@ export class ListComponent implements OnInit {
 
   }
   getUserId():number | null{
-    return window.localStorage.getItem('userId') as number | null;
+    return window.sessionStorage.getItem('userId') as number | null;
   }
   drop($event:any) {
     $event.preventDefault();

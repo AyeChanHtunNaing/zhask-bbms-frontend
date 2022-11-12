@@ -1,5 +1,5 @@
 import { Board } from "./board";
-import { TaskList } from "./TaskList";
+import { TaskList } from "./tasklist";
 import { User } from "./user";
 
 export class Task {

@@ -38,7 +38,12 @@ export class LoginComponent implements OnInit {
       // alert("login ya twr p")
       this.service.login(this.user).subscribe(
         responseData => {
-          window.localStorage.setItem('userId',responseData.id+"")
+          window.sessionStorage.setItem('userId',responseData.id+"")
+          window.sessionStorage.setItem('userName',responseData.name)
+        //  window.localStorage.setItem('currentUser', responseData.token);
+      
+      // const expireDate = new Date(new Date().getTime() + (1000 * 1000000));
+      // localStorage.setItem('dateExpiration', expireDate.toString());
             this.router.navigate(['home']);
              
           //window.sessionStorage.setItem("loginuser",JSON.stringify(responseData));

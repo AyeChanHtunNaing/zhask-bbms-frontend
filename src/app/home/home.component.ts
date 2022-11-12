@@ -6,7 +6,7 @@ import { EmailResponse } from '../message/emailresponse';
 import { InviteMember } from '../models/invitemember';
 import { InvitememberService } from '../services/invitemember.service';
 import { Router } from '@angular/router';
-import {Task} from "../models/Task";
+import {Task} from "../models/task";
 import Swal from 'sweetalert2';
 import { User } from '../models/user';
 
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit ,OnChanges{
     return this.registerForm.controls;
   }
   getUserId():number | null{
-    return window.localStorage.getItem('userId') as number | null;
+    return window.sessionStorage.getItem('userId') as number | null;
   }
   onSubmit() {
 

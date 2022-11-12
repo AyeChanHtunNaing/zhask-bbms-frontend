@@ -15,10 +15,11 @@ import {ActivateAccountComponent} from "./activate-account/activate-account.comp
 import {NotActivatedComponent} from "./not-activated/not-activated.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import { LogoutComponent } from './logout/logout.component';
+import { AuthGuard } from './guard/app-authguard';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomeComponent,canActivate:[AuthGuard]},
   {path: 'report', component: ReportComponent},
   {path: 'notification', component: NotificationComponent},
   {path: 'calendar', component: CalendarComponent},
