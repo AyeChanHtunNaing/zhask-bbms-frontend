@@ -94,6 +94,10 @@ export class BoardComponent implements OnInit {
     //True if all the fields are filled
     if(this.submitted)
     {
+      this.invitemember.id=window.sessionStorage.getItem('userId') as string;
+      this.invitemember.name=window.sessionStorage.getItem('userName') as string;
+      this.invitemember.url="workspace";
+      this.invitemember.workspaceId=this.board.id;
       this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
         },
         err=>

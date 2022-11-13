@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
@@ -7,13 +7,19 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class UserService {
-
+  rememberme!: boolean
   private baseURL = "http://localhost:8080";
 
   constructor(private http: HttpClient) { }
 
   login(user:User):Observable<User>{
     window.sessionStorage.setItem("loginuser",JSON.stringify(user));
+    // this.rememberme=true;
+    // let headers = new HttpHeaders();
+    // headers = headers.append('Authorization', 'Basic ' + btoa(user.name + ':' + user.password));
+    // headers = headers.append('X-Requested-With', 'XMLHttpRequest'); // to suppress 401 browser popup
+
+    // const params = new HttpParams().append('remember-me', (this.rememberme ? 'true' : 'false' ));
     return this.http.get<User>(`${this.baseURL}/`);
   }
 
