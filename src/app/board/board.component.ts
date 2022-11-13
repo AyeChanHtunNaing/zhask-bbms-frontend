@@ -84,8 +84,8 @@ export class BoardComponent implements OnInit {
     window.localStorage.setItem('boardId',this.board.id+"");
 
   }
-  onInviteSubmit() {
 
+  onInviteSubmit() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.inviteForm.invalid) {
@@ -96,7 +96,7 @@ export class BoardComponent implements OnInit {
     {
       this.invitemember.id=window.sessionStorage.getItem('userId') as string;
       this.invitemember.name=window.sessionStorage.getItem('userName') as string;
-      this.invitemember.url="workspace";
+      this.invitemember.url="board";
       this.invitemember.workspaceId=this.board.id;
       this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
         },
@@ -108,6 +108,7 @@ export class BoardComponent implements OnInit {
       this.ngOnInit()
     }
   }
+  
   addList(listName: string) {
     console.log(listName)
     if(listName!="" && listName!=null)

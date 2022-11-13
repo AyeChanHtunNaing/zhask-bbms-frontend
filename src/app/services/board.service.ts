@@ -14,8 +14,8 @@ export class BoardService {
     
     }
     
-    getBoard(workspaceId : number): Observable<Board[]>{
-        return this.httpClient.get<Board[]>(`${this.baseURL}/${workspaceId}`);
+    getBoard(workspaceId : number , userId : string): Observable<Board[]>{
+        return this.httpClient.get<Board[]>(`${this.baseURL}/${workspaceId}/${userId}`);
       }
     
     createBoard(board : Board): Observable<Object>{

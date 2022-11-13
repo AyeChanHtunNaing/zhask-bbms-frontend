@@ -141,7 +141,7 @@ export class WorkspaceComponent implements OnInit {
 
   getBoard()
   {
-    this.boardService.getBoard(this.workspace.id).subscribe(data => {
+    this.boardService.getBoard(this.workspace.id,window.sessionStorage.getItem('userId') as string).subscribe(data => {
       this.boards = data;
       for(let i=0;i<this.boards.length;i++)
       {
