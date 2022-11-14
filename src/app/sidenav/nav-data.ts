@@ -17,7 +17,7 @@ export const navbarData = [
     },
     {
         routeLink: '/favorite',
-        icon: 'fal fa-bell',
+        icon: 'bx bxs-star',
         label: 'Favorite'
     },
     {
