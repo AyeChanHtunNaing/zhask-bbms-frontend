@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { Task } from "../models/task";
-import { TaskList } from "../models/taskList";
+import { TaskList } from "../models/TaskList";
 import { TaskService } from "../services/task.service";
 import Swal from "sweetalert2";
 import {TaskListService} from "../services/tasklist.service";
@@ -115,10 +115,10 @@ export class ListComponent implements OnInit {
         text: 'Please fill the data'
       });
     }
-    
+
   }
   delete(taskId:number){
-  
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -131,9 +131,9 @@ export class ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.taskListService.deleteTaskList(taskId).subscribe(data => {
-          
+
         })
-        
+
         Swal.fire(
           'Deleted!',
           'Your task has been deleted.',

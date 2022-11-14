@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { TaskList } from '../models/taskList';
+import {TaskList} from "../models/TaskList";
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +26,6 @@ export class TaskListService {
     deleteTaskList(taskListId:number):Observable<Object>{
         return this.httpClient.delete(`${this.baseURL}/${taskListId}`);
       }
-      
+
 
 }

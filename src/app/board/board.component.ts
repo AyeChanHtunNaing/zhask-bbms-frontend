@@ -3,7 +3,7 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
 import { TaskListService } from '../services/tasklist.service';
 import { ActivatedRoute } from '@angular/router';
 import { Board } from '../models/board';
-import { TaskList } from '../models/taskList';
+import {TaskList} from '../models/TaskList';
 import {InviteMember} from "../models/invitemember";
 import {InvitememberService} from "../services/invitemember.service";
 import { BoardService } from '../services/board.service';
@@ -37,7 +37,7 @@ export class BoardComponent implements OnInit {
   screenWidths = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
-  
+
 
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
@@ -76,7 +76,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  ngOnInit() {   
+  ngOnInit() {
     this.board.id=this.route.snapshot.params['boardId'];
     window.localStorage.setItem('count',this.count+"")
     this.tasklist.board=this.board;
@@ -108,7 +108,7 @@ export class BoardComponent implements OnInit {
       this.ngOnInit()
     }
   }
-  
+
   addList(listName: string) {
     console.log(listName)
     if(listName!="" && listName!=null)
@@ -116,14 +116,14 @@ export class BoardComponent implements OnInit {
       this.tasklist.title=listName;
       this.tasklistService.createTaskList(this.tasklist)
       .subscribe(res => {
-    
+
           location.reload();
-    
+
         },
         err => {
-    
+
         });
-    
+
         this.listName=" ";
       }
       else
@@ -135,5 +135,5 @@ export class BoardComponent implements OnInit {
         });
       }
     }
-  
+
 }
