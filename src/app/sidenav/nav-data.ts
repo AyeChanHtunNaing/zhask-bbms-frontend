@@ -18,7 +18,7 @@ export const navbarData = [
     {
         routeLink: '/favorite',
         icon: 'bx bxs-star',
-        label: 'Favorite'
+        label: 'Favorites'
     },
     {
         routeLink: '/calendar',
@@ -30,6 +30,11 @@ export const navbarData = [
         icon: 'fal fa-users',
         label: 'Friends'
     },
+  {
+    routeLink: '/chat',
+    icon: 'bx bxs-chat',
+    label: 'Chat'
+  },
     {
         routeLink: '/logout',
         icon: 'bx bx-log-out icon',

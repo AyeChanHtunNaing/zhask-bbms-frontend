@@ -32,6 +32,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { RequestInterceptInterceptor } from './interceptors/request-intercept.interceptor';
 import { ResponseInterceptInterceptor } from './interceptors/response-intercept.interceptor';
 import { FavoriteComponent } from './favorite/favorite.component';
+import { ChatComponent } from './chat/chat.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -60,6 +61,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NotActivatedComponent,
     ResetPasswordComponent,
     FavoriteComponent,
+    ChatComponent,
 
   ],
   imports: [

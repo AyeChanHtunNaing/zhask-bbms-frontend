@@ -16,6 +16,7 @@ import {ResetPasswordComponent} from "./reset-password/reset-password.component"
 import { LogoutComponent } from './logout/logout.component';
 import { AuthGuard } from './guard/app-authguard';
 import {FavoriteComponent} from "./favorite/favorite.component";
+import {ChatComponent} from "./chat/chat.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -33,7 +34,8 @@ const routes: Routes = [
   {path: 'activated-account', component: ActivateAccountComponent},
   {path: 'token-expired', component: NotActivatedComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
-  {path:'favorite',component:FavoriteComponent}
+  {path:'favorite',component:FavoriteComponent},
+  {path:'chat',component:ChatComponent}
 ];
 
 @NgModule({
