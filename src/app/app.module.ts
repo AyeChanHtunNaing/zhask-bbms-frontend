@@ -13,7 +13,6 @@ import { BodyComponent } from './body/body.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { ReportComponent } from './report/report.component';
-import { NotificationComponent } from './notification/notification.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FriendsComponent } from './friends/friends.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -32,6 +31,7 @@ import { NotActivatedComponent } from './not-activated/not-activated.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RequestInterceptInterceptor } from './interceptors/request-intercept.interceptor';
 import { ResponseInterceptInterceptor } from './interceptors/response-intercept.interceptor';
+import { FavoriteComponent } from './favorite/favorite.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -46,7 +46,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     HomeComponent,
     HomeComponent,
     ReportComponent,
-    NotificationComponent,
     CalendarComponent,
     FriendsComponent,
     ProfileComponent,
@@ -60,6 +59,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CardComponent,
     NotActivatedComponent,
     ResetPasswordComponent,
+    FavoriteComponent,
 
   ],
   imports: [

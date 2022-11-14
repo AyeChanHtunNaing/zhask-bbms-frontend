@@ -16,9 +16,9 @@ export const navbarData = [
         label: 'Profile'
     },
     {
-        routeLink: '/notification',
+        routeLink: '/favorite',
         icon: 'fal fa-bell',
-        label: 'Notifications'
+        label: 'Favorite'
     },
     {
         routeLink: '/calendar',
