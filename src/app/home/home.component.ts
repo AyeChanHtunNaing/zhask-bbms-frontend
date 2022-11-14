@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit ,OnChanges{
     // setTimeout(function(){
     //   window.location.reload();
     // }, 900);
-   
+
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit ,OnChanges{
         this.workspaceService.deleteWorkspaceById(workspaceId).subscribe(data => {
 
         });
-        
+
         Swal.fire(
           'Deleted!',
           'Your task has been deleted.',
@@ -197,7 +197,10 @@ export class HomeComponent implements OnInit ,OnChanges{
       }});
       this.getWorkspaces();
 }
-
+  changed() {
+    console.log(this.workspace.isChecked)
+    this.workspace.isChecked=true;
+  }
 }
 
 

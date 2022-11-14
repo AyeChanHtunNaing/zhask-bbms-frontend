@@ -5,5 +5,6 @@ export class Workspace {
  name !: string;
  description !: string;
  users:Array<User>=[];
+ isChecked!:boolean;
 }
 
