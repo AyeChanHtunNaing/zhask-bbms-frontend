@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
-import { Task } from "../models/task";
+import { Task } from "../models/Task";
 import { TaskList } from "../models/TaskList";
 import { TaskService } from "../services/task.service";
 import Swal from "sweetalert2";
