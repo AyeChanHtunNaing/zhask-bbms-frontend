@@ -17,13 +17,13 @@ export class ResponseInterceptInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-   
+
     return next.handle(request).pipe(
       map(
       (res) => {
        if(res instanceof HttpResponse){
         if(res.headers.get('Authorization')){
-       sessionStorage.setItem('Authorization',JSON.stringify(res.headers.get('Authorization')));
+          localStorage.setItem('Authorization',JSON.stringify(res.headers.get('Authorization')));
         }
       }
        return res;

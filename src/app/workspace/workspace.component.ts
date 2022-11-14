@@ -85,7 +85,7 @@ export class WorkspaceComponent implements OnInit {
     return this.registerForm.controls;
   }
   getUserId():number | null{
-    return window.sessionStorage.getItem('userId') as number | null;
+    return window.localStorage.getItem('userId') as number | null;
   }
   onRegisterSubmit() {
 
@@ -98,7 +98,7 @@ export class WorkspaceComponent implements OnInit {
     if(this.submitted)
     {
       this.user.id=this.getUserId() as number;
-      this.board.createdBy=window.sessionStorage.getItem('userEmail') as string;
+      this.board.createdBy=window.localStorage.getItem('userEmail') as string;
       this.users.push(this.user);
       this.board.users=this.users;
       this.boardService.createBoard(this.board)
@@ -124,8 +124,8 @@ export class WorkspaceComponent implements OnInit {
     //True if all the fields are filled
     if(this.submitted)
     {
-      this.invitemember.id=window.sessionStorage.getItem('userId') as string;
-      this.invitemember.name=window.sessionStorage.getItem('userName') as string;
+      this.invitemember.id=window.localStorage.getItem('userId') as string;
+      this.invitemember.name=window.localStorage.getItem('userName') as string;
       this.invitemember.url="workspace";
       this.invitemember.workspaceId=this.workspace.id;
       this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
@@ -136,18 +136,18 @@ export class WorkspaceComponent implements OnInit {
           alert("error"+err)
         }
       );
-      
+
     }
   }
 
   getBoard()
   {
-    this.boardService.getBoard(this.workspace.id,window.sessionStorage.getItem('userId') as string).subscribe(data => {
+    this.boardService.getBoard(this.workspace.id,window.localStorage.getItem('userId') as string).subscribe(data => {
       this.boards = data;
       for(let i=0;i<this.boards.length;i++)
       {
        this.boardService.getTaskByBoardId(this.boards[i].id).subscribe(d=>
-        { 
+        {
           let c=new Count();
           c.boardId=this.boards[i].id;
           c.countOfTask=d.length;
@@ -167,7 +167,7 @@ export class WorkspaceComponent implements OnInit {
   goTotaskLists(baordId:number){
     this.router.navigate(['board', baordId]);
   }
- 
+
   setBoardDetails(board:Board){
     this.BoardDetails=board;
     this.boardDesc=this.BoardDetails.name;
@@ -196,7 +196,7 @@ export class WorkspaceComponent implements OnInit {
     // setTimeout(function(){
     //   window.location.reload();
     // }, 900);
-   
+
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -222,7 +222,7 @@ export class WorkspaceComponent implements OnInit {
         this.boardService.deleteBoardById(boardId).subscribe(data => {
 
         });
-        
+
         Swal.fire(
           'Deleted!',
           'Your task has been deleted.',

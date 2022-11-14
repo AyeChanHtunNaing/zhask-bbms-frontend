@@ -40,7 +40,7 @@ export class ListComponent implements OnInit {
 
   }
   getUserId():number | null{
-    return window.sessionStorage.getItem('userId') as number | null;
+    return window.localStorage.getItem('userId') as number | null;
   }
   drop($event:any) {
     $event.preventDefault();
@@ -93,7 +93,7 @@ export class ListComponent implements OnInit {
     this.task.description=value;
     this.task.taskList=this.tasklistModel;
     this.board.id=Number(window.localStorage.getItem('boardId'));
-    this.task.createdBy=window.sessionStorage.getItem('userEmail') as string;
+    this.task.createdBy=window.localStorage.getItem('userEmail') as string;
     this.task.board=this.board;
     this.user.id=this.getUserId() as number;
     this.users.push(this.user);

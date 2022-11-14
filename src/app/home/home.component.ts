@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit ,OnChanges{
     return this.registerForm.controls;
   }
   getUserId():number | null{
-    return window.sessionStorage.getItem('userId') as number | null;
+    return window.localStorage.getItem('userId') as number | null;
   }
   onSubmit() {
 
@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit ,OnChanges{
       this.user.id=this.getUserId() as number;
       this.users.push(this.user);
       this.workspace.users=this.users;
-      this.workspace.createdBy=window.sessionStorage.getItem('userEmail') as string;
+      this.workspace.createdBy=window.localStorage.getItem('userEmail') as string;
       this.workspaceService.createWorkspace(this.workspace) .subscribe(res => {
 
             location.reload();

@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
         private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUser =sessionStorage.getItem('Authorization');
+        const currentUser =localStorage.getItem('Authorization');
         if (currentUser) {
             // authorised so return true
             //this.router.navigate('/home')
