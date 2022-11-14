@@ -5,7 +5,7 @@ export class Board{
     id !: number;
     name !: string;
     description !: string;
-    //countOfTask !: number;
+    createdBy !:string;
     createAt !: Date;
     workSpace !: Workspace;
     users:Array<User>=[];

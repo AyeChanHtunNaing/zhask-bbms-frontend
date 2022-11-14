@@ -38,8 +38,11 @@ export class LoginComponent implements OnInit {
       // alert("login ya twr p")
       this.service.login(this.user).subscribe(
         responseData => {
-          window.sessionStorage.setItem('userId',responseData.id+"")
-          window.sessionStorage.setItem('userName',responseData.name)
+          window.sessionStorage.setItem('userId',responseData.id+"");
+          window.sessionStorage.setItem('userName',responseData.name);
+          window.sessionStorage.setItem('userEmail',responseData.email);
+          console.log(responseData.email);
+          
         //  window.localStorage.setItem('currentUser', responseData.token);
       
       // const expireDate = new Date(new Date().getTime() + (1000 * 1000000));

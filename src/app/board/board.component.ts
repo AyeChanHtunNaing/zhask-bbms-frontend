@@ -3,7 +3,7 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
 import { TaskListService } from '../services/tasklist.service';
 import { ActivatedRoute } from '@angular/router';
 import { Board } from '../models/board';
-import { TaskList } from '../models/tasklist';
+import { TaskList } from '../models/taskList';
 import {InviteMember} from "../models/invitemember";
 import {InvitememberService} from "../services/invitemember.service";
 import { BoardService } from '../services/board.service';

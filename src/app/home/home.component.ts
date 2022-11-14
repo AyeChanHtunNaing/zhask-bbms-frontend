@@ -1,12 +1,11 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import { Workspace } from '../models/workspace';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { WorkspaceService } from '../services/workspace.service';
 import { EmailResponse } from '../message/emailresponse';
 import { InviteMember } from '../models/invitemember';
 import { InvitememberService } from '../services/invitemember.service';
 import { Router } from '@angular/router';
-import {Task} from "../models/task";
 import Swal from 'sweetalert2';
 import { User } from '../models/user';
 
@@ -93,8 +92,8 @@ export class HomeComponent implements OnInit ,OnChanges{
       this.user.id=this.getUserId() as number;
       this.users.push(this.user);
       this.workspace.users=this.users;
-      this.workspaceService.createWorkspace(this.workspace)
-        .subscribe(res => {
+      this.workspace.createdBy=window.sessionStorage.getItem('userEmail') as string;
+      this.workspaceService.createWorkspace(this.workspace) .subscribe(res => {
 
             location.reload();
 

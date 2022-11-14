@@ -1,12 +1,12 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { Task } from "../models/task";
-import { TaskList } from "../models/tasklist";
+import { TaskList } from "../models/taskList";
 import { TaskService } from "../services/task.service";
-import { TitleStrategy } from "@angular/router";
 import Swal from "sweetalert2";
 import {TaskListService} from "../services/tasklist.service";
 import { Board } from "../models/board";
 import { User } from "../models/user";
+
 @Component({
   selector: "app-list",
   templateUrl: "./list.component.html",
@@ -89,14 +89,15 @@ export class ListComponent implements OnInit {
   }
   onEnter(value: string) {
     if(value!=""&& value!=null){
-      this.tasklistModel.id=this.tasklist.id;
+    this.tasklistModel.id=this.tasklist.id;
     this.task.description=value;
     this.task.taskList=this.tasklistModel;
     this.board.id=Number(window.localStorage.getItem('boardId'));
+    this.task.createdBy=window.sessionStorage.getItem('userEmail') as string;
     this.task.board=this.board;
     this.user.id=this.getUserId() as number;
-      this.users.push(this.user);
-      this.task.users=this.users;
+    this.users.push(this.user);
+    this.task.users=this.users;
     this.taskService.createTask(this.task).subscribe(res => {
         location.reload();
         console.log(res);
