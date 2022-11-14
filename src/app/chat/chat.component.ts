@@ -14,6 +14,7 @@ interface SideNavToggle {
 export class ChatComponent implements OnInit {
 
   username=window.sessionStorage.getItem('userName')
+  message!:string;
   isSideNavCollapsed = false;
   screenWidths = 0;
   @Input() collapsed = false;
@@ -54,6 +55,7 @@ export class ChatComponent implements OnInit {
 
   send() {
     this.service.sendMessage(this.form.value)
+    this.message="";
   }
 
 
