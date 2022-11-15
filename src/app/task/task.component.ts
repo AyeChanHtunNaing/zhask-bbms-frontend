@@ -3,6 +3,8 @@ import { Task } from "../models/Task";
 import { TaskService } from "../services/task.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
+import {MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
+import {ActivityComponent} from "../activity/activity.component";
 
 @Component({
   selector: "app-card",
@@ -10,6 +12,7 @@ import Swal from "sweetalert2";
   styleUrls: ["./task.component.css"],
 })
 export class CardComponent implements OnInit {
+  modalRef: MdbModalRef<ActivityComponent> | null = null;
   @Input() card!: Task;
   @Input() title!:string;
   @ViewChild('updatedescription') updatedescription!:ElementRef;
@@ -19,7 +22,7 @@ export class CardComponent implements OnInit {
   task=new Task();
   editForm!:FormGroup;
 
-  constructor(private taskService:TaskService,private fb:FormBuilder,) {
+  constructor(private taskService:TaskService,private fb:FormBuilder,private modalService: MdbModalService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
@@ -100,7 +103,11 @@ export class CardComponent implements OnInit {
    }
 
   showActivity() {
-    alert("activity");
+    this.modalRef = this.modalService.open(ActivityComponent,{
+      data: { title: 'Custom title' },
+      modalClass: 'modal-xl'
+    })
+
   }
 }
 

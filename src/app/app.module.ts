@@ -33,7 +33,8 @@ import { RequestInterceptInterceptor } from './interceptors/request-intercept.in
 import { ResponseInterceptInterceptor } from './interceptors/response-intercept.interceptor';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { ChatComponent } from './chat/chat.component';
-
+import { ActivityComponent } from './activity/activity.component';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
@@ -62,6 +63,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ResetPasswordComponent,
     FavoriteComponent,
     ChatComponent,
+    ActivityComponent,
 
   ],
   imports: [
@@ -72,6 +74,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatCardModule,
     FormsModule,
     HttpClientModule,
+    MdbModalModule,
     Ng2SearchPipeModule,
     FullCalendarModule,
     ModalModule.forRoot()
