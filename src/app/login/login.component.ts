@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
           //window.sessionStorage.setItem("loginuser",JSON.stringify(responseData));
         }, error => {
           console.log(error);
-          console.log("Invalide Email or Password.");
+          console.log("Invalid Email or Password.");
         });
     }
   }

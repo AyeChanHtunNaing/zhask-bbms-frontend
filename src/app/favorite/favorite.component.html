@@ -1,1 +1,24 @@
-<p>favorite works!</p>
+<app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+<div class="body" [ngClass]="getBodyClass()">
+  <h1 class="text-color">Favorites <i class='bx bx-star' ></i> </h1>
+  <div class="d-block">
+  <h3 class="text-start text-color fw-bolder">Workspaces</h3>
+  <!-- workspace -->
+  <div class="board-div">
+    <div class="list-menu" *ngFor="let item of workspaces">
+      <a  class="list-menu-item" >
+        <div class="column mt-3">
+          <div class="card shadow-sm">
+            <div class="row">
+              <div class="col-12">
+                <h3 class="text-color">{{item.name}}</h3>
+                <p class="text-muted text-start">{{item.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  </div>
+</div>
