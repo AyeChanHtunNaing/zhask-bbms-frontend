@@ -196,9 +196,8 @@ export class HomeComponent implements OnInit ,OnChanges{
       }});
       this.getWorkspaces();
 }
-  changed() {
-    console.log(this.workspace.isChecked)
-    this.workspace.isChecked=true;
+  changed(event) {
+    console.log(event.target.checked)
   }
 }
 

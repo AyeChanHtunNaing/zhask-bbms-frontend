@@ -58,7 +58,7 @@
           <div class="card shadow-sm">
             <div class="row">
               <div class="col-12">
-                <input class="star mt-2" type="checkbox" title="bookmark page" [(ngModel)]="workspace.isChecked" (ngModelChange)="changed()"><br/>
+                <input class="star mt-2" type="checkbox" title="bookmark page" (change)="changed($event)"><br/>
             <h3 class="text-color">Workspace {{item.id}}</h3>
             <p class="text-dark">{{item.name}}</p>
             <p>{{item.description}}</p>

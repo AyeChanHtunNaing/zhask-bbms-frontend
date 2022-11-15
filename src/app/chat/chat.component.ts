@@ -13,7 +13,7 @@ interface SideNavToggle {
 })
 export class ChatComponent implements OnInit {
 
-  username=window.sessionStorage.getItem('userName')
+  username=window.localStorage.getItem('userName')
   message!:string;
   isSideNavCollapsed = false;
   screenWidths = 0;
