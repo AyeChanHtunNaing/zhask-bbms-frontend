@@ -3,7 +3,7 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-
+<h1>Hello {{username}}</h1>
   <button type="button" class="btn btn-color me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Create New Workspace
   </button>
@@ -34,13 +34,6 @@
 
               </div>
             </div>
-            <div class="mb-3">
-              <label for="invite" class="form-label">Invite people <span class="text-danger">(optional)</span></label>
-              <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"   id="invite">
-              <div *ngIf="submitted" class="invalid-feedback">
-                <div>Invalid Email</div>
-              </div>
-            </div>
             <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
           </form>
         </div>
@@ -57,10 +50,11 @@
           <div class="card shadow-sm">
             <div class="row">
               <div class="col-12">
-                <input class="star mt-2" type="checkbox" title="bookmark page" (change)="changed($event)"><br/>
-            <h3 class="text-color">Workspace {{item.id}}</h3>
-            <p class="text-dark">{{item.name}}</p>
-            <p>{{item.description}}</p>
+                <input class="star mt-2" type="checkbox" title="bookmark page" [checked]="checkWorkspace(item)" (change)="changed($event,item.id)">
+                <br/>
+
+            <h3 class="text-color">{{item.name}}</h3>
+            <p class="text-dark text-start">{{item.description}}</p>
               </div>
               <div class="col-3 mx-3 d-flex">
                 <i class="bi bi-pencil-square fs-6" (click)="setWorkspaceDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editWorkspaceModal"></i>

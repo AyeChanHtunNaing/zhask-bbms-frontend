@@ -19,66 +19,75 @@ interface SideNavToggle {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit ,OnChanges{
-  workspaceDetails!:Workspace;
-  workspaceDesc!:string;
+export class HomeComponent implements OnInit ,OnChanges {
+  workspaceDetails!: Workspace;
+  workspaceDesc!: string;
   searchTerm!: string;
   isSideNavCollapsed = false;
   screenWidths = 0;
-  workspace : Workspace =new Workspace();
-  invitemember:InviteMember=new InviteMember();
-  workspaces:Workspace[]=[];
-  users:User[]=[];
-  user:User=new User();
+  workspace: Workspace = new Workspace();
+  invitemember: InviteMember = new InviteMember();
+  workspaces: Workspace[] = [];
+  users: User[] = [];
+  user: User = new User();
+  username= window.localStorage.getItem('userName');
   @Input() collapsed = false;
   @Input() screenWidth = 0;
-  @ViewChild('updatedescription') updatedescription!:ElementRef;
+  @ViewChild('updatedescription') updatedescription!: ElementRef;
 
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
+
 // Validation
 
   registerForm!: FormGroup;
   submitted = false;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
-    const emails = control.value.split(',').map((e: string)=>e.trim());
+    const emails = control.value.split(',').map((e: string) => e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
-    return forbidden ? { 'email': { value: control.value } } : null;
+    return forbidden ? {'email': {value: control.value}} : null;
   };
-  constructor( private formBuilder: FormBuilder,private workspaceService: WorkspaceService,private invitememberService:InvitememberService
-              ,private router : Router){
+
+  constructor(private formBuilder: FormBuilder, private workspaceService: WorkspaceService, private invitememberService: InvitememberService
+    , private router: Router) {
     this.registerForm = this.formBuilder.group({
-      email: ['',[this.commaSepEmail ]],
+      email: ['', [this.commaSepEmail]],
       name: ['', [Validators.required]],
       desc: ['', [Validators.required]],
     });
 
   }
+
   ngOnChanges(changes: SimpleChanges): void {
 
   }
-  emailresponse:EmailResponse={
-    token:''
+
+  emailresponse: EmailResponse = {
+    token: ''
 
   }
+
   getBodyClass(): string {
     let styleClass = '';
-    if(this.collapsed && this.screenWidth > 768) {
+    if (this.collapsed && this.screenWidth > 768) {
       styleClass = 'body-trimmed';
-    } else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
+    } else if (this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
       styleClass = 'body-md-screen'
     }
     return styleClass;
   }
+
   //Add user form actions
   get f() {
     return this.registerForm.controls;
   }
-  getUserId():number | null{
+
+  getUserId(): number | null {
     return window.localStorage.getItem('userId') as number | null;
   }
+
   onSubmit() {
 
     this.submitted = true;
@@ -87,25 +96,23 @@ export class HomeComponent implements OnInit ,OnChanges{
       return;
     }
     //True if all the fields are filled
-    if(this.submitted)
-    {
-      this.user.id=this.getUserId() as number;
+    if (this.submitted) {
+      this.user.id = this.getUserId() as number;
       this.users.push(this.user);
-      this.workspace.users=this.users;
-      this.workspace.createdBy=window.localStorage.getItem('userEmail') as string;
-      this.workspaceService.createWorkspace(this.workspace) .subscribe(res => {
+      this.workspace.users = this.users;
+      this.workspace.createdBy = window.localStorage.getItem('userEmail') as string;
+      this.workspaceService.createWorkspace(this.workspace).subscribe(res => {
 
-            location.reload();
+          location.reload();
 
-          },
-          err => {
-
-          });
-
-      this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
         },
-        err=>
-        {
+        err => {
+
+        });
+
+      this.invitememberService.inviteMember(this.invitemember).subscribe(res => {
+        },
+        err => {
 
         }
       )
@@ -114,45 +121,51 @@ export class HomeComponent implements OnInit ,OnChanges{
     }
 
   }
-  getWorkspaces()
-  {
-    let userId=this.getUserId() as number;
+
+  getWorkspaces() {
+    let userId = this.getUserId() as number;
     this.workspaceService.getWorkspace(userId).subscribe(data => {
       this.workspaces = data;
     });
   }
+
   ngOnInit() {
     this.getWorkspaces();
 
   }
 
-  goToBoard(workspaceId:number){
+  goToBoard(workspaceId: number) {
     this.router.navigate(['workspace', workspaceId]);
   }
 
-  setWorkspaceDetails(workspace:Workspace){
-    this.workspaceDetails=workspace;
-    this.workspaceDesc=this.workspaceDetails.name;
-    window.localStorage.setItem('des',this.workspaceDesc);
-    window.localStorage.setItem('id',this.workspaceDetails.id+"");
+  setWorkspaceDetails(workspace: Workspace) {
+    this.workspaceDetails = workspace;
+    this.workspaceDesc = this.workspaceDetails.name;
+    window.localStorage.setItem('des', this.workspaceDesc);
+    window.localStorage.setItem('id', this.workspaceDetails.id + "");
   }
 
-  getWorkspaceDetails():string{
+  getWorkspaceDetails(): string {
     return window.localStorage.getItem('des') as string;
   }
 
-  getId():string{
+  getId(): string {
     return window.localStorage.getItem('id') as string;
   }
 
-  updateWorkspaceDescription(){
-    const value=this.updatedescription.nativeElement.value;
+  updateWorkspaceDescription() {
+    const value = this.updatedescription.nativeElement.value;
     console.log(value);
-    this.workspace.name=value;
+    this.workspace.name = value;
     console.log(this.workspace.name);
     console.log(this.getId());
+<<<<<<< HEAD
     this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
       this.ngOnInit();
+=======
+    this.workspaceService.updateWorkspaceById(this.getId(), this.workspace).subscribe(data => {
+      console.log(data);
+>>>>>>> 2741c71c9c67b2750b88f8635fd86f273ba2901d
     })
 
     // setTimeout(function(){
@@ -168,7 +181,7 @@ export class HomeComponent implements OnInit ,OnChanges{
     });
   }
 
-  deleteWorkspace(workspaceId : number){
+  deleteWorkspace(workspaceId: number) {
 
     Swal.fire({
       title: 'Are you sure?',
@@ -192,11 +205,29 @@ export class HomeComponent implements OnInit ,OnChanges{
         // setTimeout(function(){
         //   //window.location.reload();
         // }, 1000);
-      }});
-      this.getWorkspaces();
-}
-  changed(event) {
+      }
+    });
+    this.getWorkspaces();
+  }
+
+  changed(event, id: number) {
     console.log(event.target.checked)
+    if (event.target.checked == true) {
+      this.workspaceService.setFavWorkspace(id.toString(), this.workspace).subscribe(data => {
+        console.log(data);
+      })
+    }
+  }
+
+  checkWorkspace(item: Workspace) {
+     console.log(item.marked)
+     console.log(item)
+      let check = false;
+      if (item.marked) {
+        check = true;
+      }
+
+    return check;
   }
 }
 
