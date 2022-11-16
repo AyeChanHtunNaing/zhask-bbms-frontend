@@ -66,6 +66,13 @@
     left:175px;
   }
 }
+.card:hover{
+  transform: scale(1.1);
+  transition: all linear 200ms;
+  z-index: 1;
+  box-shadow: 1px 1px 10px rgba(0,0,0,.3);
+  cursor: pointer;
+}
 
 .row{
   margin:0 -5px;

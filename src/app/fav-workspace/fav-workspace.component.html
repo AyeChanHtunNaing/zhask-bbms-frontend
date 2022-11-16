@@ -1,17 +1,11 @@
 <h3 class="text-start text-color fw-bolder">Workspaces</h3>
 <!-- workspace -->
-<div class="board-div">
+<div class="container d-flex flex-wrap align-items-center">
   <div class="list-menu" *ngFor="let item of workspaces">
-    <a  class="list-menu-item" >
-      <div class="column mt-3">
-        <div class="card shadow-sm">
-          <div class="row">
-            <div class="col-12">
-              <h3 class="text-color">{{item.name}}</h3>
-              <p class="text-muted text-start">{{item.description}}</p>
-            </div>
-          </div>
-        </div>
+    <a  class="list-menu-item">
+      <div class="m-2 card">
+        <h3 class="text-color">{{item.name}}</h3>
+        <p class="text-muted text-start">{{item.description}}</p>
       </div>
     </a>
   </div>

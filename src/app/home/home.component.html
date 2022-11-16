@@ -3,7 +3,7 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-<h1>Hello {{username}}</h1>
+<h1 class="text-color">Hello! Happy {{today}} {{username}}</h1>
   <button type="button" class="btn btn-color me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Create New Workspace
   </button>
@@ -44,15 +44,15 @@
   </div>
   <!-- board -->
   <div class="board-div">
+
     <div class="list-menu mt-5" *ngFor="let item of workspaces | filter:searchTerm"  (dblclick)="goToBoard(item.id)">
       <a  class="list-menu-item" >
         <div class="column mt-3">
-          <div class="card shadow-sm">
+          <div class="card shadow-sm border-primary">
             <div class="row">
               <div class="col-12">
                 <input class="star mt-2" type="checkbox" title="bookmark page" [checked]="checkWorkspace(item)" (change)="changed($event,item.id)">
                 <br/>
-
             <h3 class="text-color">{{item.name}}</h3>
             <p class="text-dark text-start">{{item.description}}</p>
               </div>

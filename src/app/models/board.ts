@@ -9,4 +9,5 @@ export class Board{
     createAt !: Date;
     workSpace !: Workspace;
     users:Array<User>=[];
+    marked!:boolean;
 }

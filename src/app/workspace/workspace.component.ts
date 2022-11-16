@@ -86,7 +86,7 @@ export class WorkspaceComponent implements OnInit {
   }
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
-  
+
   }
   onRegisterSubmit() {
 
@@ -235,4 +235,24 @@ export class WorkspaceComponent implements OnInit {
       }});
       this.getBoard();
 }
+  changed(event, id: number) {
+    console.log(this.board)
+    console.log(event.target.checked)
+    if (event.target.checked == true) {
+      this.boardService.setFavBoard(id.toString(), this.board).subscribe(data => {
+        console.log(data);
+      })
+    }
+  }
+
+  checkBoard(item: Board) {
+    console.log(item.marked)
+    console.log(item)
+    let check = false;
+    if (item.marked) {
+      check = true;
+    }
+
+    return check;
+  }
 }

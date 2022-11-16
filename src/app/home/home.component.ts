@@ -31,6 +31,10 @@ export class HomeComponent implements OnInit ,OnChanges {
   users: User[] = [];
   user: User = new User();
   username= window.localStorage.getItem('userName');
+
+   date = new Date; // get current date
+   current = this.date.getDay();
+   today=this.checkDay();
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   @ViewChild('updatedescription') updatedescription!: ElementRef;
@@ -225,6 +229,24 @@ export class HomeComponent implements OnInit ,OnChanges {
       }
 
     return check;
+  }
+  checkDay(){
+    if(this.current==1){
+       return "Monday"
+    }
+    if(this.current==2){
+      return "Tuesday"
+    }
+    if(this.current==3){
+      return "Wednesday"
+    }
+    if(this.current==4){
+      return "Thursday"
+    }
+    if(this.current==5){
+      return "Friday"
+    }
+    return "Weekend"
   }
 }
 

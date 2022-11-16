@@ -9,18 +9,26 @@ import { Board } from '../models/board';
 export class BoardService {
     private baseURL = "http://localhost:8080/api/v1/board";
     private baseURLForTaskByBoardId = "http://localhost:8080/api/v1/showalltaskbyboard";
+    private favURL="http://localhost:8080/api/v1/favorite"
+    constructor(private httpClient: HttpClient) {
 
-    constructor(private httpClient: HttpClient) { 
-    
     }
-    
-    getBoard(workspaceId : number , userId : number): Observable<Board[]>{
+
+  getFavBoard(userId : number): Observable<Board[]>{
+    return this.httpClient.get<Board[]>(`${this.favURL}/board/${userId}`);
+  }
+  setFavBoard(boardId: string,board : Board):Observable<Board>{
+    return this.httpClient.put<Board>(`${this.favURL}/board/${boardId}`,board);
+  }
+
+
+  getBoard(workspaceId : number , userId : number): Observable<Board[]>{
         return this.httpClient.get<Board[]>(`${this.baseURL}/${workspaceId}/${userId}`);
       }
-    
+
     createBoard(board : Board): Observable<Object>{
       console.log(board);
-      
+
         return this.httpClient.post(`${this.baseURL}`, board);
     }
     getWorkspaceById(userId : string): Observable<Workspace>{
@@ -29,7 +37,7 @@ export class BoardService {
     getTaskByBoardId(boardId : number):Observable<Task[]>{
       return this.httpClient.get<Task[]>(`${this.baseURL}/showalltaskbyboard/${boardId}`);
     }
-    
+
     getBoardByUserId(userId: number):Observable<Board[]>{
       return this.httpClient.get<Board[]>(`${this.baseURL}/showAllBoardByUserId/${userId}`);
     }
