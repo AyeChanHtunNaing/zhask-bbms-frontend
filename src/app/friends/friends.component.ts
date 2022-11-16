@@ -1,4 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { User } from '../models/user';
+import { UserService } from '../services/user.service';
+import { WorkspaceService } from '../services/workspace.service';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -14,6 +17,8 @@ export class FriendsComponent implements OnInit {
   screenWidths = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+  userName:Array<User>=[];
+  currentUser!:string;
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -28,9 +33,35 @@ export class FriendsComponent implements OnInit {
     }
     return styleClass;
   }
-  constructor() { }
 
-  ngOnInit(): void {
+  constructor(private workspaceService : WorkspaceService , private userService : UserService) { }
+
+  getUserId():number | null{
+    return window.localStorage.getItem('userId') as number | null;
+  
   }
 
+  ngOnInit(): void {
+    let set = new Set();
+    this.currentUser=window.localStorage.getItem('userName') as string;
+    this.workspaceService.getWorkspace(this.getUserId() as number).subscribe(data=>{
+      for(let i=0;i<data.length;i++){
+        for(let j=0;j<data[i].users.length;j++){
+          set.add(data[i].users[j].id);
+          // console.log(data[i].users[j].id);    
+        }
+       }
+       for(let entry of set){
+        this.userService.getUserNameByUserId(entry as number).subscribe(data=>{
+          this.userName.push(data);
+        });
+
+      }
+    });
+   console.log(this.userName);
+   
+    
+  }
 }
+
+

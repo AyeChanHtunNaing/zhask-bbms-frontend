@@ -40,7 +40,9 @@ export class LoginComponent implements OnInit {
         responseData => {
           window.localStorage.setItem('userId',responseData.id+"");
           window.localStorage.setItem('userName',responseData.name);
+          window.localStorage.setItem('name',responseData.userName);
           window.localStorage.setItem('userEmail',responseData.email);
+          window.localStorage.setItem('createAt',responseData.createAt+"");
           console.log(responseData.email);
 
         //  window.localStorage.setItem('currentUser', responseData.token);
