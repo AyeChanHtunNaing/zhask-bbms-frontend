@@ -11,15 +11,21 @@ export class LogoutComponent implements OnInit {
   constructor(private router : Router, private service : UserService) { }
 
   ngOnInit(): void {
-    localStorage.removeItem('Authorization');
+
+      console.log(this.logout());
+      localStorage.removeItem('Authorization');
+      alert("Success!")
+     this.router.navigate(['login']);
+
+  }
+
+  logout() {
     this.service.logout().subscribe(
       responseData =>{
-        if(responseData == false){
-          alert("Failed!")
-        }else{
-          alert("Success!")
-          this.router.navigate(['login']);
-        }
+        console.log(responseData);
+      },
+      err => {
+        console.log(err);
       }
     );
   }

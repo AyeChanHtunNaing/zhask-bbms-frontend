@@ -35,8 +35,8 @@ export class UserService {
     return this.http.post<boolean>(`${this.baseURL}/reset_psw`,usr);
   }
 
-  logout():Observable<boolean>{
-    return this.http.get<boolean>(`${this.baseURL}/logout`,);
+  logout():Observable<Object>{
+    return this.http.get(`${this.baseURL}/temp_logout`);
   }
 
   getUserNameByUserId(userId : number):Observable<User>{
