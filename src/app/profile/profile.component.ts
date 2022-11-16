@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
         this.pict = event.target.result;
       }
     }
-    
+
   }
 
   onSubmit(){
@@ -77,12 +77,12 @@ export class ProfileComponent implements OnInit {
    this.userService.updateUserByUserId(this.user).subscribe(data=>
     {
       console.log(data);
-      
+
     }
    )
   }
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
-  
+
   }
 }
