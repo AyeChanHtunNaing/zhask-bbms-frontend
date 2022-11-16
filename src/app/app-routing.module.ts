@@ -17,6 +17,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { AuthGuard } from './guard/app-authguard';
 import {FavoriteComponent} from "./favorite/favorite.component";
 import {ChatComponent} from "./chat/chat.component";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -35,7 +36,8 @@ const routes: Routes = [
   {path: 'token-expired', component: NotActivatedComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path:'favorite',component:FavoriteComponent},
-  {path:'chat',component:ChatComponent}
+  {path:'chat',component:ChatComponent},
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
