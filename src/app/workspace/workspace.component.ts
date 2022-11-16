@@ -152,6 +152,9 @@ export class WorkspaceComponent implements OnInit {
           let c=new Count();
           c.boardId=this.boards[i].id;
           c.countOfTask=d.length;
+          this.boardService.getBoardMemberByBoardId(this.boards[i].id).subscribe(f=>{
+            c.countOfMember=f.users.length;
+          });
           this.counts[i]=c
         });
       }

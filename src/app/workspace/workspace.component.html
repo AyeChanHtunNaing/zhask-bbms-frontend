@@ -85,7 +85,7 @@
 
             <h1 class="text-color">{{item.name}}</h1>
             <p class="text-start">{{item.description}}</p>
-            <p class="fs-6 text-end" style="margin-top: 45px"><i class='bx bxs-user-circle fs-5'>10</i>  &nbsp; <i class='bx bx-task fs-5' >{{count.countOfTask}}</i> </p>
+            <p class="fs-6 text-end" style="margin-top: 45px"><i class='bx bxs-user-circle fs-5'>{{count.countOfMember}}</i>  &nbsp; <i class='bx bx-task fs-5' >{{count.countOfTask}}</i> </p>
           </div>
               <div class="col-3 mx-3 d-flex">
                 <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editBoardModal"></i>

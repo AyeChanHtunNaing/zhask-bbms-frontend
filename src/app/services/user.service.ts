@@ -34,4 +34,12 @@ export class UserService {
   resetPsw(usr : User ):Observable<boolean>{
     return this.http.post<boolean>(`${this.baseURL}/reset_psw`,usr);
   }
+
+  getUserNameByUserId(userId : number):Observable<User>{
+    return this.http.get<User>(`${this.baseURL}/showUserNameByUserId/${userId}`);
+  }
+
+  updateUserByUserId(user : User):Observable<boolean>{
+    return this.http.put<boolean>(`${this.baseURL}/updateprofile`,user);
+  }
 }

@@ -33,8 +33,10 @@ export class BoardService {
     getBoardByUserId(userId: number):Observable<Board[]>{
       return this.httpClient.get<Board[]>(`${this.baseURL}/showAllBoardByUserId/${userId}`);
     }
-
-    // selectUsersInBoard()
+    
+    getBoardMemberByBoardId(boardId : number):Observable<Board>{
+      return this.httpClient.get<Board>(`${this.baseURL}/generateBoardMemberByBoardId/${boardId}`);
+    }
 
     updateBoardById(boardId: string,board : Board):Observable<Board>{
       return this.httpClient.put<Board>(`${this.baseURL}/${boardId}`,board);
@@ -43,4 +45,5 @@ export class BoardService {
     deleteBoardById(boardId: number):Observable<Board>{
       return this.httpClient.delete<Board>(`${this.baseURL}/${boardId}`);
     }
+
 }
