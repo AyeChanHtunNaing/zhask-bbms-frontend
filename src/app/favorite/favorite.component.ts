@@ -1,6 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Workspace} from "../models/workspace";
-import {WorkspaceService} from "../services/workspace.service";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -11,8 +9,7 @@ interface SideNavToggle {
   styleUrls: ['./favorite.component.css']
 })
 export class FavoriteComponent implements OnInit {
-  workspace: Workspace = new Workspace();
-  workspaces: Workspace[] = [];
+
   isSideNavCollapsed = false;
   screenWidths = 0;
   @Input() collapsed = false;
@@ -31,18 +28,9 @@ export class FavoriteComponent implements OnInit {
     }
     return styleClass;
   }
-  constructor(private workspaceService: WorkspaceService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getWorkspaces()
   }
-  getUserId(): number | null {
-    return window.localStorage.getItem('userId') as number | null;
-  }
-  getWorkspaces() {
-    let userId = this.getUserId() as number;
-    this.workspaceService.getFavWorkspace(userId).subscribe(data => {
-      this.workspaces = data;
-    });
-  }
+
 }

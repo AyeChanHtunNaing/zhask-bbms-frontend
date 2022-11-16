@@ -35,6 +35,8 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { ChatComponent } from './chat/chat.component';
 import { ActivityComponent } from './activity/activity.component';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { FavBoardComponent } from './fav-board/fav-board.component';
+import { FavWorkspaceComponent } from './fav-workspace/fav-workspace.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
@@ -64,6 +66,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FavoriteComponent,
     ChatComponent,
     ActivityComponent,
+    FavBoardComponent,
+    FavWorkspaceComponent,
 
   ],
   imports: [

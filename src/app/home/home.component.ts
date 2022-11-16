@@ -159,13 +159,10 @@ export class HomeComponent implements OnInit ,OnChanges {
     this.workspace.name = value;
     console.log(this.workspace.name);
     console.log(this.getId());
-<<<<<<< HEAD
+
     this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
       this.ngOnInit();
-=======
-    this.workspaceService.updateWorkspaceById(this.getId(), this.workspace).subscribe(data => {
-      console.log(data);
->>>>>>> 2741c71c9c67b2750b88f8635fd86f273ba2901d
+
     })
 
     // setTimeout(function(){
