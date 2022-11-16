@@ -152,7 +152,7 @@ export class HomeComponent implements OnInit ,OnChanges{
     console.log(this.workspace.name);
     console.log(this.getId());
     this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
-    console.log(data);
+      this.ngOnInit();
     })
 
     // setTimeout(function(){
@@ -166,7 +166,6 @@ export class HomeComponent implements OnInit ,OnChanges{
       showConfirmButton: false,
       timer: 1500
     });
-    this.getWorkspaces();
   }
 
   deleteWorkspace(workspaceId : number){
@@ -182,7 +181,7 @@ export class HomeComponent implements OnInit ,OnChanges{
     }).then((result) => {
       if (result.isConfirmed) {
         this.workspaceService.deleteWorkspaceById(workspaceId).subscribe(data => {
-
+          this.ngOnInit();
         });
 
         Swal.fire(

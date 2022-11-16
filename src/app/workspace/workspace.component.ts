@@ -86,6 +86,7 @@ export class WorkspaceComponent implements OnInit {
   }
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
+  
   }
   onRegisterSubmit() {
 
@@ -142,7 +143,7 @@ export class WorkspaceComponent implements OnInit {
 
   getBoard()
   {
-    this.boardService.getBoard(this.workspace.id,window.localStorage.getItem('userId') as string).subscribe(data => {
+    this.boardService.getBoard(this.workspace.id,this.getUserId()as number).subscribe(data => {
       this.boards = data;
       for(let i=0;i<this.boards.length;i++)
       {
@@ -190,7 +191,7 @@ export class WorkspaceComponent implements OnInit {
     console.log(this.board.name);
     console.log(this.getId());
     this.boardService.updateBoardById(this.getId(),this.board).subscribe(data=>{
-    console.log(data);
+      this.ngOnInit();
     })
 
     // setTimeout(function(){
@@ -220,7 +221,7 @@ export class WorkspaceComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.boardService.deleteBoardById(boardId).subscribe(data => {
-
+          this.ngOnInit();
         });
 
         Swal.fire(

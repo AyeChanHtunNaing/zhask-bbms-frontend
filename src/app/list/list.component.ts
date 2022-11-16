@@ -35,13 +35,16 @@ export class ListComponent implements OnInit {
       this.tasks=data;
     })
   }
+  
   allowDrop($event:any) {
     $event.preventDefault();
 
   }
+
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
   }
+
   drop($event:any) {
     $event.preventDefault();
     const data = $event.dataTransfer.getData("text");

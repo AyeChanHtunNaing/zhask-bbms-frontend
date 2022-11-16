@@ -14,7 +14,7 @@ export class BoardService {
     
     }
     
-    getBoard(workspaceId : number , userId : string): Observable<Board[]>{
+    getBoard(workspaceId : number , userId : number): Observable<Board[]>{
         return this.httpClient.get<Board[]>(`${this.baseURL}/${workspaceId}/${userId}`);
       }
     
@@ -22,14 +22,20 @@ export class BoardService {
       console.log(board);
       
         return this.httpClient.post(`${this.baseURL}`, board);
-      }
+    }
     getWorkspaceById(userId : string): Observable<Workspace>{
         return this.httpClient.get<Workspace>(`${this.baseURL}/${userId}`);
-      }
+    }
     getTaskByBoardId(boardId : number):Observable<Task[]>{
       return this.httpClient.get<Task[]>(`${this.baseURL}/showalltaskbyboard/${boardId}`);
     }
-      
+    
+    getBoardByUserId(userId: number):Observable<Board[]>{
+      return this.httpClient.get<Board[]>(`${this.baseURL}/showAllBoardByUserId/${userId}`);
+    }
+
+    // selectUsersInBoard()
+
     updateBoardById(boardId: string,board : Board):Observable<Board>{
       return this.httpClient.put<Board>(`${this.baseURL}/${boardId}`,board);
     }

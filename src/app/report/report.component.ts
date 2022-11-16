@@ -1,4 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { ThirdPartyDraggable } from '@fullcalendar/interaction';
+import { BoardService } from '../services/board.service';
+import { WorkspaceService } from '../services/workspace.service';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -11,6 +14,8 @@ interface SideNavToggle {
 export class ReportComponent implements OnInit {
   isSideNavCollapsed = false;
   screenWidths = 0;
+  workspaceCount !: number;
+  boardCount : number = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   onToggleSideNav(data: SideNavToggle): void {
@@ -27,9 +32,31 @@ export class ReportComponent implements OnInit {
     }
     return styleClass;
   }
-  constructor() { }
+  constructor(private workspaceService : WorkspaceService , private boardService : BoardService) { }
+
+  getUserId():number | null{
+    return window.localStorage.getItem('userId') as number | null;
+  
+  }
 
   ngOnInit(): void {
+   
+    this.workspaceService.getWorkspace(this.getUserId() as number).subscribe(data=>{
+      this.workspaceCount=data.length;
+
+      for(let i=0;i<data.length;i++){
+        
+        this.boardService.getBoard(data[i].id,this.getUserId()as number).subscribe(f=>{
+          
+          // console.log(data[i].id);        
+          this.boardCount=f.length+this.boardCount;
+          // console.log(f.length);
+          
+        });   
+      }
+      
+    });
+    
   }
 
 }

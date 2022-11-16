@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'logout', component: LogoutComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'workspace/:workspaceId', component: WorkspaceComponent},
+  {path: 'workspace/:workspaceId', component: WorkspaceComponent,canActivate:[AuthGuard]},
   {path: 'board/:boardId', component: BoardComponent},
   {path: 'activated-account', component: ActivateAccountComponent},
   {path: 'token-expired', component: NotActivatedComponent},
