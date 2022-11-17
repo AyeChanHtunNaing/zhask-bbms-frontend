@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   createAt!:string;
   pict :any;
   profile: any = File;
+  formdata :any;
   user:User=new User();
   @ViewChild('name') uname!:ElementRef;
   @ViewChild('username') uusername!:ElementRef;
@@ -44,15 +45,36 @@ export class ProfileComponent implements OnInit {
   constructor(private userService:UserService) { }
 
   ngOnInit(): void {
+    this.formdata = new FormData();
    this.names=window.localStorage.getItem('name') as string;
    this.userName=window.localStorage.getItem('userName') as string;
    this.email=window.localStorage.getItem('userEmail') as string;
    this.createAt=window.localStorage.getItem('createAt') as string;
+   this.userService.getUserNameByUserId(this.getUserId() as number).subscribe(data=>
+    {
+         this.user=data;
+         const b = window.atob(data.profile);
+         const c = new ArrayBuffer(b.length);
+         const z = new Uint8Array(c);
+         for(let i = 0 ; i < b.length ;i++){
+           z[i] = b.charCodeAt(i); 
+         }
+         console.log(data.pictureName+" "+data.profile);
+         const blob = new Blob([z],{type: 'image/jpeg'})
+         const file = new File([blob],data.pictureName || '',{type:'image/jpeg'})
+         this.profile = file;
+         var read = new FileReader();
+         read.readAsDataURL(file);
+         read.onload=(event : any)=>{
+           this.pict = event.target.result;
+         }  
+    })
   }
   selectpic(e : any){
     if(e.target.files){
       var read = new FileReader();
       this.profile = e.target.files[0];
+      this.user.pictureName=e.target.files[0].name;
       console.log(this.profile);
       read.readAsDataURL(e.target.files[0]);
       read.onload=(event : any)=>{
@@ -71,9 +93,19 @@ export class ProfileComponent implements OnInit {
    this.user.name=value;
    this.user.userName=value1;
    this.user.email=value2;
-   this.user.createAt=value3;
+  // this.user.createAt=value3;
    this.user.profile=this.pict;
    this.user.id=this.getUserId() as number;
+  // this.user.profiles=this.profile;
+   //this.formdata.append('users', JSON.stringify(this.user));
+    this.formdata.append('file',this.profile);
+    console.log(this.profile);
+    
+    this.userService.uploadProfile(this.formdata).subscribe(data=>
+      {
+      //console.log(data);
+      
+      });
    this.userService.updateUserByUserId(this.user).subscribe(data=>
     {
       console.log(data);

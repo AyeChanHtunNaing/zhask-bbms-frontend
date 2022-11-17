@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
+import { Board } from '../models/board';
+import { Workspace } from '../models/workspace';
 import { BoardService } from '../services/board.service';
 import { WorkspaceService } from '../services/workspace.service';
 interface SideNavToggle {
@@ -15,6 +17,9 @@ export class ReportComponent implements OnInit {
   isSideNavCollapsed = false;
   screenWidths = 0;
   workspaceCount !: number;
+  isClick:string="workspace";
+  workspaces:Workspace[]=[];
+  boards:Board[]=[];
   boardCount : number = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
@@ -40,10 +45,10 @@ export class ReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+   this.isClick="workspace";
     this.workspaceService.getWorkspace(this.getUserId() as number).subscribe(data=>{
       this.workspaceCount=data.length;
-
+      this.workspaces=data;
       for(let i=0;i<data.length;i++){
         
         this.boardService.getBoard(data[i].id,this.getUserId()as number).subscribe(f=>{
@@ -51,6 +56,11 @@ export class ReportComponent implements OnInit {
           // console.log(data[i].id);        
           this.boardCount=f.length+this.boardCount;
           // console.log(f.length);
+          for(let j=0;j<f.length;j++)
+          {
+            this.boards.push(f[j]);
+          }
+          
           
         });   
       }
@@ -58,5 +68,8 @@ export class ReportComponent implements OnInit {
     });
     
   }
-
+ isClicks(target:string)
+ {
+ this.isClick=target;
+ }
 }

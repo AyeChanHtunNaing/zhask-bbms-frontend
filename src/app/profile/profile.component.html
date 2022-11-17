@@ -1,10 +1,9 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
-
 <div class="body" [ngClass]="getBodyClass()">
   <div class="container w-75 h-75 d-flex mx-auto mt-5">
     <div class="row">
       <div class="col-md-5 mt-5">
-        <img src="./assets/images/pikachu.png" class="img-fluid rounded-circle mx-5" alt="profile pic" width="300px" height="300px">
+        <img [src]="pict" class="img-fluid rounded-circle mx-5" alt="profile pic" width="300px" height="300px">
         <label for="pic" class="btn btn-primary">Choose Picture</label>
         <input type="file" id="pic" name="pic" class="d-none" (change)="selectpic($event)" accept="image/*">
       </div>
@@ -12,19 +11,20 @@
         <form class="mx-5" (ngSubmit)="onSubmit()">
           <div class="form-outline mb-4">
             <label class="form-label" for="name">Name</label>
-            <input type="text" #name class="form-control" id="name" [value]="names">
+            <input type="text" #name class="form-control" id="user.name" [value]="names">
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="uname">User Name</label>
-            <input #username type="text" class="form-control" id="uname" [value]="userName">
+            <input #username type="text" class="form-control" id="uname" [value]="user.userName">
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="email">Email address</label>
-            <input type="email" #useremail class="form-control" id="email" [value]="email" readonly>
+            <input type="email" #useremail class="form-control" id="email" [value]="user.email" readonly>
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="createdAt">Member Since</label>
-            <input type="text" #createat class="form-control"  id="createdAt" [value]="createAt" readonly>
+          
+            <input type="text" #createat class="form-control"  id="createdAt" [value]="user.createAt" readonly>
           </div>
           <button type="submit" class="btn btn-color btn-lg btn-block" >Update Profile</button>
         </form>

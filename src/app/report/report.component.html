@@ -6,10 +6,10 @@
   <main class="py-6 bg-surface-secondary mt-5">
     <div class="container-fluid">
       <!-- Card stats -->
-      <div class="row g-6 mb-6">
+      <div class="row g-6 mb-6" >
         <div class="col-xl-3 col-sm-6 col-12">
           <div class="card shadow border-0">
-            <div class="card-body">
+            <div class="card-body" (click)="isClicks('workspace')">
               <div class="row">
                 <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Workspaces</span> <span class="h3 font-bold mb-0">{{workspaceCount}}</span> </div>
 
@@ -17,9 +17,9 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-sm-6 col-12">
+        <div class="col-xl-3 col-sm-6 col-12" >
           <div class="card shadow border-0">
-            <div class="card-body">
+            <div class="card-body" (click)="isClicks('board')">
               <div class="row">
                 <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Boards</span> <span class="h3 font-bold mb-0">{{boardCount}}</span> </div>
 
@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-sm-6 col-12">
+        <div class="col-xl-3 col-sm-6 col-12" (click)="isClicks('task')">
           <div class="card shadow border-0">
             <div class="card-body">
               <div class="row">
@@ -61,18 +61,20 @@
           <th></th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-          <td>1 </td>
-          <td>Hi </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>2 </td>
-          <td>Hello </td>
+        <tbody *ngIf="isClick=='workspace'">
+        <tr *ngFor="let w of workspaces;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{w.name}} </td>
           <td></td>
         </tr>
         </tbody>
+        <tbody *ngIf="isClick=='board'">
+          <tr *ngFor="let b of boards;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{b.name}} </td>
+            <td></td>
+          </tr>
+          </tbody>
       </table>
     </div>
   </main>

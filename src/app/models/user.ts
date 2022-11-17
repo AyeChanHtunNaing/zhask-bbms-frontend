@@ -5,7 +5,7 @@ export class User {
   password!:string
   token!:string;
   userName!:string;
-  createAt!:Date;
+  createAt!:string;
   profile!:string;
   pictureName!:string;
 }

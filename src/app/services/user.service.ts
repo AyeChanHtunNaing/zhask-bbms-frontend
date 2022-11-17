@@ -39,7 +39,11 @@ export class UserService {
     return this.http.get<User>(`${this.baseURL}/showUserNameByUserId/${userId}`);
   }
 
-  updateUserByUserId(user : User):Observable<boolean>{
+  updateUserByUserId(user : any):Observable<boolean>{
     return this.http.put<boolean>(`${this.baseURL}/updateprofile`,user);
+  }
+  uploadProfile(file:any):Observable<boolean>
+  {
+    return this.http.put<boolean>(`${this.baseURL}/uploadProfile`,file);
   }
 }

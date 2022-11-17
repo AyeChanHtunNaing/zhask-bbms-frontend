@@ -38,13 +38,11 @@ export class LoginComponent implements OnInit {
       // alert("login ya twr p")
       this.service.login(this.user).subscribe(
         responseData => {
-          console.log(responseData.name)
-          console.log(responseData.createAt)
           window.localStorage.setItem('userId',responseData.id+"");
           window.localStorage.setItem('userName',responseData.userName);
           window.localStorage.setItem('name',responseData.name);
           window.localStorage.setItem('userEmail',responseData.email);
-          window.localStorage.setItem('createAt',responseData.createAt+"");
+         // window.localStorage.setItem('createAt',responseData.createAt+"");
           console.log(responseData.email);
 
         //  window.localStorage.setItem('currentUser', responseData.token);
