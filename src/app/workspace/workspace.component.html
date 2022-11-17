@@ -72,33 +72,28 @@
   </div>
   <!-- board -->
   <div class="board-div">
-    <div class="list-menu mt-5" *ngFor="let item of boards | filter:searchTerm;let i=index"  (dblclick)="goTotaskLists(item.id)">
-     <div *ngFor="let count of countOfTaskAndMember;let j=index">
-      <div *ngIf="i==j">
-      <a  class="list-menu-item" >
-        <div class="column mt-3">
-          <div class="card shadow-sm border-primary">
-            <!-- board card start -->
-            <div class="row">
+    <div class="container d-flex flex-wrap align-items-center">
+      <div class="list-menu mt-5" *ngFor="let item of boards | filter:searchTerm;let i=index"  (dblclick)="goTotaskLists(item.id)">
+        <div *ngFor="let count of countOfTaskAndMember;let j=index">
+          <div *ngIf="i==j">
+        <a  class="list-menu-item">
+          <div class="m-2 card">
             <div class="col-12">
-             <input class="star mt-2 d-flex justify-content-start" type="checkbox" title="bookmark page" [checked]="checkBoard(item)" (change)="changed($event,item.id)">
+              <input class="star mt-2 d-flex justify-content-start" type="checkbox" title="bookmark page" [checked]="checkBoard(item)" (change)="changed($event,item.id)">
               <br/>
 
-            <h1 class="text-color">{{item.name}}</h1>
-            <p class="text-start">{{item.description}}</p>
-            <p class="fs-6 text-end" style="margin-top: 45px"><i class='bx bxs-user-circle fs-5'>{{count.countOfMember}}</i>  &nbsp; <i class='bx bx-task fs-5' >{{count.countOfTask}}</i> </p>
-          </div>
-              <div class="col-3 mx-3 d-flex">
-                <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editBoardModal"></i>
-                <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteBoard(item.id)"></i>
-              </div>
+              <h1 class="text-color">{{item.name}}</h1>
+              <p class="text-start">{{item.description}}</p>
+              <p class="fs-6 text-end" style="margin-top: 45px"><i class='bx bxs-user-circle fs-5'>{{count.countOfMember}}</i>  <i class='bx bx-task fs-5 mx-2' >{{count.countOfTask}}</i> </p>
             </div>
-            <!-- board  card end -->
+            <div class="col-3 mx-3 d-flex">
+              <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editBoardModal"></i>
+              <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteBoard(item.id)"></i>
+            </div>
+
           </div>
-        </div>
-      </a>
-    </div>
-  </div>
+        </a>
+      </div>
     </div>
   </div>
   <!-- board end -->

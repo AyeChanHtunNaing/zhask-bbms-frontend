@@ -58,8 +58,9 @@ export class ProfileComponent implements OnInit {
          const c = new ArrayBuffer(b.length);
          const z = new Uint8Array(c);
          for(let i = 0 ; i < b.length ;i++){
-           z[i] = b.charCodeAt(i); 
+           z[i] = b.charCodeAt(i);
          }
+         console.log(data)
          console.log(data.pictureName+" "+data.profile);
          const blob = new Blob([z],{type: 'image/jpeg'})
          const file = new File([blob],data.pictureName || '',{type:'image/jpeg'})
@@ -68,7 +69,7 @@ export class ProfileComponent implements OnInit {
          read.readAsDataURL(file);
          read.onload=(event : any)=>{
            this.pict = event.target.result;
-         }  
+         }
     })
   }
   selectpic(e : any){
@@ -101,11 +102,11 @@ export class ProfileComponent implements OnInit {
    //this.formdata.append('users', JSON.stringify(this.user));
     this.formdata.append('file',this.profile);
     console.log(this.profile);
-    
+
     this.userService.uploadProfile(this.formdata).subscribe(data=>
       {
-      //console.log(data);
-      
+       console.log("this is user photo upload")
+
       });
    this.userService.updateUserByUserId(this.user).subscribe(data=>
     {

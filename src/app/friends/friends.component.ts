@@ -10,14 +10,14 @@ interface SideNavToggle {
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
-  styleUrls: ['./friends.component.scss']
+  styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
   isSideNavCollapsed = false;
   screenWidths = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
-  userName:Array<User>=[];
+  users:Array<User>=[];
   currentUser!:string;
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
@@ -38,7 +38,7 @@ export class FriendsComponent implements OnInit {
 
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
-  
+
   }
 
   ngOnInit(): void {
@@ -48,19 +48,19 @@ export class FriendsComponent implements OnInit {
       for(let i=0;i<data.length;i++){
         for(let j=0;j<data[i].users.length;j++){
           set.add(data[i].users[j].id);
-          // console.log(data[i].users[j].id);    
+          // console.log(data[i].users[j].id);
         }
        }
        for(let entry of set){
         this.userService.getUserNameByUserId(entry as number).subscribe(data=>{
-          this.userName.push(data);
+          this.users.push(data);
         });
 
       }
     });
-   console.log(this.userName);
-   
-    
+   console.log(this.users);
+
+
   }
 }
 

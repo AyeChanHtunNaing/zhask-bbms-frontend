@@ -1,7 +1,7 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="body" [ngClass]="getBodyClass()">
 <div class="report-div">
-  <button type="button" class="btn btn-outline-primary">Generate Report</button>
+  <button type="button" class="btn btn-outline-primary float-end">Generate Report</button>
 
   <main class="py-6 bg-surface-secondary mt-5">
     <div class="container-fluid">
@@ -51,7 +51,9 @@
     </div>
     <hr/>
     <!-- detail -->
-    <h2 style="text-align: left" class="text-color">Title</h2>
+    <h2 style="text-align: left" class="text-color" *ngIf="isClick=='workspace'">Workspaces</h2>
+    <h2 style="text-align: left" class="text-color" *ngIf="isClick=='board'">Boards</h2>
+    <h2 style="text-align: left" class="text-color" *ngIf="isClick=='task'">Tasks</h2>
     <div class="table-responsive">
       <table class="table table-hover table-nowrap">
         <thead class="thead-light">
