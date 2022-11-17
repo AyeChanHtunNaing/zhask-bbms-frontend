@@ -38,6 +38,8 @@ import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { FavBoardComponent } from './fav-board/fav-board.component';
 import { FavWorkspaceComponent } from './fav-workspace/fav-workspace.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PersonalBoardComponent } from './personal-board/personal-board.component';
+import { SharedBoardComponent } from './shared-board/shared-board.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
@@ -70,6 +72,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FavBoardComponent,
     FavWorkspaceComponent,
     PageNotFoundComponent,
+    PersonalBoardComponent,
+    SharedBoardComponent,
 
   ],
   imports: [
