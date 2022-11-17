@@ -2,7 +2,11 @@
 <!-- board -->
 <div class="board-div">
   <div class="container d-flex flex-wrap align-items-center">
+    <div *ngIf="workspaces.length==0">
+      There is no shared workspaces dude
+    </div>
     <div class="list-menu" *ngFor="let item of workspaces | filter:searchTerm"  (dblclick)="goToBoard(item.id)">
+      <\
       <div *ngIf="userEmail!=item.createdBy">
         <a  class="list-menu-item">
           <div class="m-2 card">

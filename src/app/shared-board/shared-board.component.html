@@ -3,7 +3,9 @@
 <!-- board -->
 <div class="board-div">
   <div class="container d-flex flex-wrap align-items-center">
-
+    <div *ngIf="boards.length==0">
+      There is no shared board dude
+    </div>
     <div class="list-menu mt-5" *ngFor="let item of boards | filter:searchTerm;let i=index"  (dblclick)="goTotaskLists(item.id)">
       <div *ngFor="let count of countOfTaskAndMember;let j=index">
         <div *ngIf="i==j">
