@@ -10,6 +10,10 @@
   <div class="form-group">
     <input type="text" class="frm-control"  placeholder="search workspace..." [(ngModel)]="searchTerm" >
   </div>
+  <app-personal-workspace></app-personal-workspace>
+  <hr/>
+  <app-shared-workspace></app-shared-workspace>
+  <!-- workspace modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -42,27 +46,8 @@
       </div>
     </div>
   </div>
-  <!-- board -->
-  <div class="container d-flex flex-wrap align-items-center">
-    <div class="list-menu" *ngFor="let item of workspaces | filter:searchTerm"  (dblclick)="goToBoard(item.id)">
-      <a  class="list-menu-item">
-        <div class="m-2 card">
-        <div class="col-12">
-          <input class="star" type="checkbox" title="bookmark page" [checked]="checkWorkspace(item)" (change)="changed($event,item.id)">
-          <br/>
-          <h3 class="text-color">{{item.name}}</h3>
-          <p class="text-dark text-start">{{item.description}}</p>
-        </div>
-        <div class="col-3 mx-3 d-flex">
-          <i class="bi bi-pencil-square fs-6" (click)="setWorkspaceDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editWorkspaceModal"></i>
-          <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteWorkspace(item.id)"></i>
-        </div>
-        </div>
-      </a>
-    </div>
-  </div>
+  <!-- workspace modal -->
 
-  <!-- board end -->
   <!-- edit modal starts -->
   <div class="modal fade" id="editWorkspaceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
