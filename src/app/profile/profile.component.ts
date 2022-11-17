@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   pict :any;
   profile: any = File;
   formdata :any;
+  formuser:any;
   user:User=new User();
   @ViewChild('name') uname!:ElementRef;
   @ViewChild('username') uusername!:ElementRef;
@@ -99,7 +100,7 @@ export class ProfileComponent implements OnInit {
    this.user.profile=this.pict;
    this.user.id=this.getUserId() as number;
   // this.user.profiles=this.profile;
-   //this.formdata.append('users', JSON.stringify(this.user));
+    
     this.formdata.append('file',this.profile);
     console.log(this.profile);
 
@@ -108,7 +109,10 @@ export class ProfileComponent implements OnInit {
        console.log("this is user photo upload")
 
       });
-   this.userService.updateUserByUserId(this.user).subscribe(data=>
+      this.formdata.append('username',this.user.userName);
+      this.formdata.append('name',this.user.name);
+      this.formdata.append('userid',this.user.id);
+   this.userService.updateUserByUserId(this.formdata).subscribe(data=>
     {
       console.log(data);
 
