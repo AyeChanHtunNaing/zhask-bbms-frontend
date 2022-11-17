@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { User} from '../models/user';
 import { UserService } from '../services/user.service';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -55,7 +56,13 @@ export class LoginComponent implements OnInit {
         }, error => {
           console.log(error);
           console.log("Invalid Email or Password.");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Username or Password does not match!',
+          })
         });
+
     }
   }
 

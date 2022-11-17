@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
+import Swal from "sweetalert2";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -109,6 +110,14 @@ export class ProfileComponent implements OnInit {
    this.userService.updateUserByUserId(this.user).subscribe(data=>
     {
       console.log(data);
+
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Update Profile successfully',
+        showConfirmButton: false,
+        timer: 1500
+      })
 
     }
    )

@@ -44,14 +44,13 @@
   </div>
   <!-- board -->
   <div class="board-div">
-
     <div class="list-menu mt-5" *ngFor="let item of workspaces | filter:searchTerm"  (dblclick)="goToBoard(item.id)">
       <a  class="list-menu-item" >
         <div class="column mt-3">
           <div class="card shadow-sm border-primary">
             <div class="row">
               <div class="col-12">
-                <input class="star mt-2" type="checkbox" title="bookmark page" [checked]="checkWorkspace(item)" (change)="changed($event,item.id)">
+                <input class="star" type="checkbox" title="bookmark page" [checked]="checkWorkspace(item)" (change)="changed($event,item.id)">
                 <br/>
             <h3 class="text-color">{{item.name}}</h3>
             <p class="text-dark text-start">{{item.description}}</p>
