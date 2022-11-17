@@ -48,6 +48,6 @@ export class UserService {
   }
   uploadProfile(file:any):Observable<boolean>
   {
-    return this.http.put<boolean>(`${this.baseURL}/uploadProfile`,file);
+    return this.http.post<boolean>(`${this.baseURL}/uploadProfile`,file);
   }
 }
