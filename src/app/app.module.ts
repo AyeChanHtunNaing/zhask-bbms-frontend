@@ -43,6 +43,8 @@ import { SharedBoardComponent } from './shared-board/shared-board.component';
 import { PersonalWorkspaceComponent } from './personal-workspace/personal-workspace.component';
 import { SharedWorkspaceComponent } from './shared-workspace/shared-workspace.component';
 import { NoDataComponent } from './no-data/no-data.component';
+import {BsDropdownModule} from "ngx-bootstrap/dropdown";
+import {NgxSpinnerModule} from "ngx-spinner";
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
@@ -93,7 +95,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MdbModalModule,
     Ng2SearchPipeModule,
     FullCalendarModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDropdownModule,
+    NgxSpinnerModule,
   ],
   providers: [
     {

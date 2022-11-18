@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { Workspace } from '../models/workspace';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailResponse } from '../message/emailresponse';
@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Count } from '../models/count';
 import Swal from 'sweetalert2';
 import { User } from '../models/user';
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {NgxSpinnerService} from "ngx-spinner";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -39,7 +41,7 @@ export class WorkspaceComponent implements OnInit {
   user:User=new User();
   @ViewChild('updatedescription') updatedescription!:ElementRef;
   userEmail=window.localStorage.getItem('userEmail');
-
+  modalRef!: BsModalRef;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -64,7 +66,7 @@ export class WorkspaceComponent implements OnInit {
     return styleClass;
   }
 
-  constructor( private formBuilder: FormBuilder,private boardService: BoardService,private invitememberService:InvitememberService
+  constructor( private formBuilder: FormBuilder,private spinner: NgxSpinnerService ,private modalService: BsModalService,private boardService: BoardService,private invitememberService:InvitememberService
                 ,private route : ActivatedRoute , private router : Router){
     this.registerForm = this.formBuilder.group({
 
@@ -143,7 +145,9 @@ export class WorkspaceComponent implements OnInit {
   }
 
   getBoard()
+
   {
+    this.spinner.show();
     this.boardService.getBoard(this.workspace.id,this.getUserId()as number).subscribe(data => {
       this.boards = data;
       for(let i=0;i<this.boards.length;i++)
@@ -158,9 +162,13 @@ export class WorkspaceComponent implements OnInit {
           });
           this.counts[i]=c
         });
+
       }
+
     });
+    this.spinner.hide();
    this.countOfTaskAndMember=this.counts;
+
   }
 
   ngOnInit() {
@@ -195,7 +203,10 @@ export class WorkspaceComponent implements OnInit {
     console.log(this.board.name);
     console.log(this.getId());
     this.boardService.updateBoardById(this.getId(),this.board).subscribe(data=>{
-      this.ngOnInit();
+      //this.ngOnInit();
+      setTimeout(function(){
+           window.location.reload();
+         }, 900);
     })
 
     // setTimeout(function(){
@@ -258,5 +269,8 @@ export class WorkspaceComponent implements OnInit {
     }
 
     return check;
+  }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }

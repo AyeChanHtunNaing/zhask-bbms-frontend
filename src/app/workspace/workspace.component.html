@@ -1,12 +1,17 @@
+<ngx-spinner size="medium"
+             color="#fff"
+             type="ball-scale-multiple" [fullScreen]="true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
 
   <div class="text-end">
-    <button type="button" class="btn btn-color me-3 my-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+    <button type="button" class="btn btn-color me-3 my-2" (click)="openModal(invite)">
       Invite Member  <i class="bi bi-person-plus"></i>
     </button>
-    <button type="button" class="btn btn-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-color" (click)="openModal(create)">
       Create New Board <i class="bi bi-clipboard"></i>
     </button>
   </div>
@@ -92,68 +97,6 @@
     </div>
   </div>
 
-
-
-
-
-  <!-- workspace modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title text-color fw-bold" id="exampleModalLabel">New Board</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
-            <div class="mb-3">
-              <label for="names" class="form-label">Board Name</label>
-              <input type="text" class="form-control" [(ngModel)]="board.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
-              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                <div *ngIf="f.name.errors?.['required']">Name is required</div>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="descs" class="form-label">Description</label>
-              <textarea class="form-control" id="descs" [(ngModel)]="board.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
-              <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
-                <div>Description is required</div>
-
-              </div>
-            </div>
-            <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- invite member -->
-  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title text-color fw-bold" id="exampleModalLabel1">Invite Members</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="inviteForm" (ngSubmit)="onInviteSubmit()">
-
-            <div class="mb-3">
-              <label for="invite" class="form-label">Invite people</label>
-              <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite">
-            </div>
-            <button type="submit" class="btn btn-color d-flex mx-auto">Invite</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- edit modal starts -->
   <div class="modal fade" id="editBoardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -177,4 +120,61 @@
     </div>
   </div>
   <!-- edit modal ends -->
+  <!-- invite member ng modal box start -->
+  <ng-template #invite>
+    <div class="modal-header">
+      <h2 class="modal-title text-color fw-bold">Invite Members</h2>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="inviteForm" (ngSubmit)="onInviteSubmit()">
+
+        <div class="mb-3">
+          <label for="invite" class="form-label">Invite people</label>
+          <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite">
+        </div>
+        <button type="submit" class="btn btn-color d-flex mx-auto">Invite</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-color" (click)="modalRef.hide()">Close</button>
+    </div>
+  </ng-template>
+  <!-- invite member ng modal box end -->
+  <!-- create board ng modal box start -->
+  <ng-template #create>
+    <div class="modal-header">
+      <h2 class="modal-title text-color fw-bold">New Board</h2>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+        <div class="mb-3">
+          <label for="names" class="form-label">Board Name</label>
+          <input type="text" class="form-control" [(ngModel)]="board.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors?.['required']">Name is required</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" [(ngModel)]="board.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
+          <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+            <div>Description is required</div>
+
+          </div>
+        </div>
+        <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-color" (click)="modalRef.hide()">Close</button>
+    </div>
+  </ng-template>
+  <!-- create board ng modal box end -->
+
 </div>
