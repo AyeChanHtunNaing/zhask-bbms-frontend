@@ -38,6 +38,7 @@ export class WorkspaceComponent implements OnInit {
   users:User[]=[];
   user:User=new User();
   @ViewChild('updatedescription') updatedescription!:ElementRef;
+  userEmail=window.localStorage.getItem('userEmail');
 
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
