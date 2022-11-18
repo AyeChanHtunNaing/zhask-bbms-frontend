@@ -10,9 +10,14 @@
   <div class="form-group">
     <input type="text" class="frm-control"  placeholder="search workspace..." [(ngModel)]="searchTerm" >
   </div>
+  <div *ngIf="workspaces.length==0">
+    <app-no-data></app-no-data>
+  </div>
+  <div *ngIf="workspaces.length!=0">
   <app-personal-workspace></app-personal-workspace>
   <hr/>
   <app-shared-workspace></app-shared-workspace>
+  </div>
   <!-- workspace modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

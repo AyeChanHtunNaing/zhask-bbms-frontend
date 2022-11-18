@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit ,OnChanges {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   @ViewChild('updatedescription') updatedescription!: ElementRef;
-
+  userEmail=window.localStorage.getItem('userEmail');
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;

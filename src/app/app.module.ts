@@ -42,6 +42,7 @@ import { PersonalBoardComponent } from './personal-board/personal-board.componen
 import { SharedBoardComponent } from './shared-board/shared-board.component';
 import { PersonalWorkspaceComponent } from './personal-workspace/personal-workspace.component';
 import { SharedWorkspaceComponent } from './shared-workspace/shared-workspace.component';
+import { NoDataComponent } from './no-data/no-data.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
@@ -78,6 +79,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SharedBoardComponent,
     PersonalWorkspaceComponent,
     SharedWorkspaceComponent,
+    NoDataComponent,
 
   ],
   imports: [

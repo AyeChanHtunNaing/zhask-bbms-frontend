@@ -13,9 +13,14 @@
   <div class="form-group">
     <input type="text" class="frm-control"  placeholder="search board..." [(ngModel)]="searchTerm" >
   </div>
+  <div *ngIf="boards.length==0">
+    <app-no-data></app-no-data>
+  </div>
+  <div *ngIf="boards.length!=0">
 <app-personal-board></app-personal-board>
   <hr/>
   <app-shared-board></app-shared-board>
+  </div>
 
 
 
