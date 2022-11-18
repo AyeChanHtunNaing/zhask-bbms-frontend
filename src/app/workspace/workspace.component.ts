@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef,Directive, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { Workspace } from '../models/workspace';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailResponse } from '../message/emailresponse';
@@ -39,9 +39,10 @@ export class WorkspaceComponent implements OnInit {
   submitted = false;
   users:User[]=[];
   user:User=new User();
-  @ViewChild('updatedescription') updatedescription!:ElementRef;
+  @ViewChild('updatedDescription') updatedescription!:ElementRef;
   userEmail=window.localStorage.getItem('userEmail');
   modalRef!: BsModalRef;
+  desc!:string;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -108,13 +109,12 @@ export class WorkspaceComponent implements OnInit {
       this.boardService.createBoard(this.board)
         .subscribe(res => {
 
-            location.reload();
-
+            this.modalRef.hide();
+            this.getBoard();
           },
           err => {
 
           });
-     // alert("Process successfully done")
       this.getBoard();
     }
   }
@@ -133,14 +133,20 @@ export class WorkspaceComponent implements OnInit {
       this.invitemember.url="workspace";
       this.invitemember.workspaceId=this.workspace.id;
       this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
-        alert("Process successfully done")
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Invited Successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.modalRef.hide();
       },
         err=>
         {
           alert("error"+err)
         }
       );
-
     }
   }
 
@@ -186,6 +192,7 @@ export class WorkspaceComponent implements OnInit {
     this.boardDesc=this.BoardDetails.name;
     window.localStorage.setItem('des',this.boardDesc);
     window.localStorage.setItem('id',this.BoardDetails.id+"");
+    this.desc=this.getBoardDetails();
   }
 
   getBoardDetails():string{
@@ -197,30 +204,29 @@ export class WorkspaceComponent implements OnInit {
   }
 
   updateBoardDescription(){
-    const value=this.updatedescription.nativeElement.value;
+   // const value=this.updatedescription.nativeElement.value;
+    const value=this.desc;
     console.log(value);
     this.board.name=value;
     console.log(this.board.name);
     console.log(this.getId());
     this.boardService.updateBoardById(this.getId(),this.board).subscribe(data=>{
-      //this.ngOnInit();
-      setTimeout(function(){
-           window.location.reload();
-         }, 900);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Updated Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.modalRef.hide()
+      this.getBoard();
     })
 
     // setTimeout(function(){
     //   window.location.reload();
     // }, 900);
 
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Updated Successfully',
-      showConfirmButton: false,
-      timer: 1500
-    });
-    this.getBoard();
+
   }
 
   deleteBoard(boardId : number){
@@ -272,5 +278,8 @@ export class WorkspaceComponent implements OnInit {
   }
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+  ngAfterViewInit() {
+    this.updatedescription.nativeElement.focus();
   }
 }

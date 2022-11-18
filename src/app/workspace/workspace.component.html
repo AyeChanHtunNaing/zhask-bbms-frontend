@@ -46,7 +46,7 @@
                       <p class="fs-6 text-end" style="margin-top: 45px"><i class='bx bxs-user-circle fs-5'>{{count.countOfMember}}</i>  <i class='bx bx-task fs-5 mx-2' >{{count.countOfTask}}</i> </p>
                     </div>
                     <div class="col-3 mx-3 d-flex">
-                      <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editBoardModal"></i>
+                      <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item);openModal(edit)"  style="color:#406595" ></i>
                       <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteBoard(item.id)"></i>
                     </div>
 
@@ -82,7 +82,7 @@
                       <p class="fs-6 text-end" style="margin-top: 45px"><i class='bx bxs-user-circle fs-5'>{{count.countOfMember}}</i>  <i class='bx bx-task fs-5 mx-2' >{{count.countOfTask}}</i> </p>
                     </div>
                     <div class="col-3 mx-3 d-flex">
-                      <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editBoardModal"></i>
+                      <i class="bi bi-pencil-square fs-6" (click)="setBoardDetails(item);openModal(edit)"  style="color:#406595" ></i>
                       <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteBoard(item.id)"></i>
                     </div>
 
@@ -97,29 +97,7 @@
     </div>
   </div>
 
-  <!-- edit modal starts -->
-  <div class="modal fade" id="editBoardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="EditBoardModalLabel">Edit Board</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <input #updatedescription [value]="getBoardDetails()" class="form-control" id="editDescription" name="boardDesc">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-color" (click)="updateBoardDescription()">Update Board</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- edit modal ends -->
+
   <!-- invite member ng modal box start -->
   <ng-template #invite>
     <div class="modal-header">
@@ -139,7 +117,6 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-color" (click)="modalRef.hide()">Close</button>
     </div>
   </ng-template>
   <!-- invite member ng modal box end -->
@@ -172,9 +149,28 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-color" (click)="modalRef.hide()">Close</button>
+
     </div>
   </ng-template>
   <!-- create board ng modal box end -->
-
+<!-- edit board ng modal box start -->
+  <ng-template #edit>
+    <div class="modal-header">
+      <h2 class="modal-title text-color fw-bold">Edit Board</h2>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <input [(ngModel)]="desc" class="form-control" id="editDescription" name="boardDesc">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-color" (click)="updateBoardDescription()">Update Board</button>
+    </div>
+  </ng-template>
+  <!-- edit board ng modal box end -->
 </div>
