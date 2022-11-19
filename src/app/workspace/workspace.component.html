@@ -18,10 +18,10 @@
   <div class="form-group">
     <input type="text" class="frm-control"  placeholder="search board..." [(ngModel)]="searchTerm" >
   </div>
-  <div *ngIf="boards.length==0">
+  <div *ngIf="isDataAvailable==false">
     <app-no-data></app-no-data>
   </div>
-  <div *ngIf="boards.length!=0">
+  <div *ngIf="isDataAvailable">
 
     <h3 class="text-color text-start fs-3 mt-3">Personal Board</h3>
 

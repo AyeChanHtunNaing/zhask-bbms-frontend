@@ -43,6 +43,7 @@ export class WorkspaceComponent implements OnInit {
   userEmail=window.localStorage.getItem('userEmail');
   modalRef!: BsModalRef;
   boardName!:string;
+  isDataAvailable:boolean=true;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -158,6 +159,7 @@ export class WorkspaceComponent implements OnInit {
     this.spinner.show();
     this.boardService.getBoard(this.workspace.id,this.getUserId()as number).subscribe(data => {
       this.boards = data;
+      this.isDataAvailable=this.boards.length>0;
       for(let i=0;i<this.boards.length;i++)
       {
        this.boardService.getTaskByBoardId(this.boards[i].id).subscribe(d=>
