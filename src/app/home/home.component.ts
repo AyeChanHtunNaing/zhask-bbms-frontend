@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild} from '@angular/core';
 import { Workspace } from '../models/workspace';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { WorkspaceService } from '../services/workspace.service';
@@ -8,6 +8,7 @@ import { InvitememberService } from '../services/invitemember.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { User } from '../models/user';
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -20,6 +21,7 @@ interface SideNavToggle {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit ,OnChanges {
+  workspaceName!:string;
   workspaceDetails!: Workspace;
   workspaceDesc!: string;
   searchTerm!: string;
@@ -31,13 +33,12 @@ export class HomeComponent implements OnInit ,OnChanges {
   users: User[] = [];
   user: User = new User();
   username= window.localStorage.getItem('userName');
-
+  modalRef!: BsModalRef;
    date = new Date; // get current date
    current = this.date.getDay();
    today=this.checkDay();
   @Input() collapsed = false;
   @Input() screenWidth = 0;
-  @ViewChild('updatedescription') updatedescription!: ElementRef;
   userEmail=window.localStorage.getItem('userEmail');
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
@@ -54,7 +55,7 @@ export class HomeComponent implements OnInit ,OnChanges {
     return forbidden ? {'email': {value: control.value}} : null;
   };
 
-  constructor(private formBuilder: FormBuilder, private workspaceService: WorkspaceService, private invitememberService: InvitememberService
+  constructor(private formBuilder: FormBuilder, private modalService: BsModalService,private workspaceService: WorkspaceService, private invitememberService: InvitememberService
     , private router: Router) {
     this.registerForm = this.formBuilder.group({
       email: ['', [this.commaSepEmail]],
@@ -106,9 +107,8 @@ export class HomeComponent implements OnInit ,OnChanges {
       this.workspace.users = this.users;
       this.workspace.createdBy = window.localStorage.getItem('userEmail') as string;
       this.workspaceService.createWorkspace(this.workspace).subscribe(res => {
-
-          location.reload();
-
+         this.modalRef.hide()
+        this.getWorkspaces()
         },
         err => {
 
@@ -147,6 +147,7 @@ export class HomeComponent implements OnInit ,OnChanges {
     this.workspaceDesc = this.workspaceDetails.name;
     window.localStorage.setItem('des', this.workspaceDesc);
     window.localStorage.setItem('id', this.workspaceDetails.id + "");
+    this.workspaceName=this.getWorkspaceDetails()
   }
 
   getWorkspaceDetails(): string {
@@ -158,14 +159,15 @@ export class HomeComponent implements OnInit ,OnChanges {
   }
 
   updateWorkspaceDescription() {
-    const value = this.updatedescription.nativeElement.value;
+    const value = this.workspaceName;
     console.log(value);
     this.workspace.name = value;
     console.log(this.workspace.name);
     console.log(this.getId());
 
     this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
-      this.ngOnInit();
+      this.modalRef.hide()
+      this.getWorkspaces()
 
     })
 
@@ -247,6 +249,10 @@ export class HomeComponent implements OnInit ,OnChanges {
       return "Friday"
     }
     return "Weekend"
+  }
+  openModal(template: TemplateRef<any>) {
+    this.workspace.name="";
+    this.modalRef = this.modalService.show(template);
   }
 }
 

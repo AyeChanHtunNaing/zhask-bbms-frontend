@@ -4,7 +4,7 @@
 
 <div class="body" [ngClass]="getBodyClass()">
 <h1 class="text-color">Hello! Happy {{today}} {{username}}</h1>
-  <button type="button" class="btn btn-color me-5 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <button type="button" class="btn btn-color me-5 btn-create" (click)="openModal(create)">
     Create New Workspace
   </button>
   <div class="form-group">
@@ -31,7 +31,7 @@
                   <p class="text-dark text-start">{{item.description}}</p>
                 </div>
                 <div class="col-3 mx-3 d-flex">
-                  <i class="bi bi-pencil-square fs-6" (click)="setWorkspaceDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editWorkspaceModal"></i>
+                  <i class="bi bi-pencil-square fs-6" (click)="setWorkspaceDetails(item);openModal(edit)"  style="color:#406595"></i>
                   <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteWorkspace(item.id)"></i>
                 </div>
               </div>
@@ -58,7 +58,7 @@
                   <p class="text-dark text-start">{{item.description}}</p>
                 </div>
                 <div class="col-3 mx-3 d-flex">
-                  <i class="bi bi-pencil-square fs-6" (click)="setWorkspaceDetails(item)"  style="color:#406595" data-bs-toggle="modal" data-bs-target="#editWorkspaceModal"></i>
+                  <i class="bi bi-pencil-square fs-6" (click)="setWorkspaceDetails(item);openModal(edit)"  style="color:#406595" ></i>
                   <i class="bi bi-trash fs-6 mx-3" style="color:#406595" (click)="deleteWorkspace(item.id)"></i>
                 </div>
               </div>
@@ -67,69 +67,61 @@
         </div>
       </div>
     </div>
-    <!--     formal method -->
-<!--  <app-personal-workspace></app-personal-workspace>-->
-<!--  <hr/>-->
-<!--  <app-shared-workspace></app-shared-workspace>-->
-<!--  formal way -->
 
   </div>
-  <!-- workspace modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title text-color fw-bold" id="exampleModalLabel">New Workspace</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="names" class="form-label">Workspace Name</label>
-              <input type="text" class="form-control"  [(ngModel)]="workspace.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
-              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                <div *ngIf="f.name.errors?.['required']">Name is required</div>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="descs" class="form-label">Description</label>
-              <textarea class="form-control" id="descs" [(ngModel)]="workspace.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
-              <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
-                <div>Description is required</div>
 
-              </div>
-            </div>
-            <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
+  <!-- workspace create ng modal start -->
+  <ng-template #create>
+    <div class="modal-header">
+      <h2 class="modal-title text-color fw-bold">New Workspace</h2>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
     </div>
-  </div>
-  <!-- workspace modal -->
+    <div class="modal-body">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="names" class="form-label">Workspace Name</label>
+          <input type="text" class="form-control"  [(ngModel)]="workspace.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors?.['required']">Name is required</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label  class="form-label">Description</label>
+          <textarea class="form-control"  [(ngModel)]="workspace.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
+          <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+            <div>Description is required</div>
 
-  <!-- edit modal starts -->
-  <div class="modal fade" id="editWorkspaceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="EditBoardModalLabel">Edit Workspace</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
         </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <input #updatedescription [value]="getWorkspaceDetails()" class="form-control" id="editDescription" name="boardDesc">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-color" (click)="updateWorkspaceDescription()">Update Workspace</button>
-        </div>
-      </div>
+        <button type="submit" class="btn btn-color d-flex mx-auto">Create</button>
+      </form>
     </div>
-  </div>
-  <!-- edit modal ends -->
+    <div class="modal-footer">
+
+    </div>
+  </ng-template>
+  <!-- workspace create ng modal end -->
+  <!-- edit workspace ng modal start -->
+  <ng-template #edit>
+    <div class="modal-header">
+      <h2 class="modal-title text-color fw-bold">Edit Workspace</h2>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label>Workspace Name</label>
+          <input [(ngModel)]="workspaceName" [value]="getWorkspaceDetails()" class="form-control" name="boardDesc">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-color" (click)="updateWorkspaceDescription()">Update Workspace</button>
+    </div>
+  </ng-template>
+  <!-- edit workspace ng modal end -->
 </div>
