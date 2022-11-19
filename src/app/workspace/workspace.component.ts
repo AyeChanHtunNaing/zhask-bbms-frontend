@@ -39,10 +39,10 @@ export class WorkspaceComponent implements OnInit {
   submitted = false;
   users:User[]=[];
   user:User=new User();
-  @ViewChild('updatedDescription') updatedescription!:ElementRef;
+//  @ViewChild('updatedDescription') updatedescription!:ElementRef;
   userEmail=window.localStorage.getItem('userEmail');
   modalRef!: BsModalRef;
-  desc!:string;
+  boardName!:string;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -108,14 +108,14 @@ export class WorkspaceComponent implements OnInit {
       this.board.users=this.users;
       this.boardService.createBoard(this.board)
         .subscribe(res => {
-
+            this.registerForm.reset();
             this.modalRef.hide();
             this.getBoard();
           },
           err => {
 
           });
-      this.getBoard();
+
     }
   }
   onInviteSubmit() {
@@ -153,6 +153,8 @@ export class WorkspaceComponent implements OnInit {
   getBoard()
 
   {
+    this.registerForm.reset()
+    this.boardName="";
     this.spinner.show();
     this.boardService.getBoard(this.workspace.id,this.getUserId()as number).subscribe(data => {
       this.boards = data;
@@ -192,7 +194,7 @@ export class WorkspaceComponent implements OnInit {
     this.boardDesc=this.BoardDetails.name;
     window.localStorage.setItem('des',this.boardDesc);
     window.localStorage.setItem('id',this.BoardDetails.id+"");
-    this.desc=this.getBoardDetails();
+    this.boardName=this.getBoardDetails();
   }
 
   getBoardDetails():string{
@@ -205,7 +207,7 @@ export class WorkspaceComponent implements OnInit {
 
   updateBoardDescription(){
    // const value=this.updatedescription.nativeElement.value;
-    const value=this.desc;
+    const value=this.boardName;
     console.log(value);
     this.board.name=value;
     console.log(this.board.name);
@@ -218,8 +220,10 @@ export class WorkspaceComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       });
+      this.registerForm.reset()
       this.modalRef.hide()
       this.getBoard();
+      this.boardName="";
     })
 
     // setTimeout(function(){
@@ -277,9 +281,8 @@ export class WorkspaceComponent implements OnInit {
     return check;
   }
   openModal(template: TemplateRef<any>) {
+    this.board.name="";
     this.modalRef = this.modalService.show(template);
   }
-  ngAfterViewInit() {
-    this.updatedescription.nativeElement.focus();
-  }
+
 }

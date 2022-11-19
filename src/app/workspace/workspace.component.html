@@ -23,7 +23,6 @@
   </div>
   <div *ngIf="boards.length!=0">
 
-   <!-- <app-personal-board></app-personal-board> -->
     <h3 class="text-color text-start fs-3 mt-3">Personal Board</h3>
 
     <!-- board -->
@@ -60,7 +59,7 @@
       </div>
     </div>
     <hr/>
-    <!-- <app-shared-board></app-shared-board> -->
+  <!-- shared board -->
     <h3 class="text-color text-start fs-3 mt-3">Shared Board</h3>
 
     <!-- board -->
@@ -164,7 +163,7 @@
     <div class="modal-body">
       <form>
         <div class="mb-3">
-          <input [(ngModel)]="desc" class="form-control" id="editDescription" name="boardDesc">
+          <input [(ngModel)]="boardName" class="form-control" id="editDescription" name="boardDesc">
         </div>
       </form>
     </div>
