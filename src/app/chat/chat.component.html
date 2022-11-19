@@ -5,8 +5,18 @@
       <li class="list-group-item text-white bg-color">Chat App</li>
 
       <li class="list-group-item text-start fs-6" *ngFor="let chat of chats">
-        <span class="font-weight-bolder mr-2 text-color mt-2">{{ chat.sender }} :</span>
-        <span class="mx-2">{{ chat.message }}</span>
+        <div *ngIf="chat.sender==username">
+          <div class="text-end">
+            <span class="font-weight-bolder mr-2 text-color mt-2">{{ chat.sender }} :</span>
+            <span class="mx-2">{{ chat.message }}</span>
+          </div>
+        </div>
+        <div *ngIf="chat.sender!=username">
+          <div class="text-start">
+            <span class="font-weight-bolder mr-2 text-color mt-2">{{ chat.sender }} :</span>
+            <span class="mx-2">{{ chat.message }}</span>
+          </div>
+        </div>
       </li>
 
     </ul>
