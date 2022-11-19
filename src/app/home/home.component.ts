@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit ,OnChanges {
   user: User = new User();
   username= window.localStorage.getItem('userName');
   modalRef!: BsModalRef;
+  isDataAvailable:boolean=true;
    date = new Date; // get current date
    current = this.date.getDay();
    today=this.checkDay();
@@ -130,6 +131,7 @@ export class HomeComponent implements OnInit ,OnChanges {
     let userId = this.getUserId() as number;
     this.workspaceService.getWorkspace(userId).subscribe(data => {
       this.workspaces = data;
+      this.isDataAvailable=this.workspaces.length>0;
     });
   }
 

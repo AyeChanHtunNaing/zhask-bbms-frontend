@@ -10,10 +10,10 @@
   <div class="form-group">
     <input type="text" class="frm-control"  placeholder="search workspace..." [(ngModel)]="searchTerm" >
   </div>
-  <div *ngIf="workspaces.length==0">
+  <div *ngIf="isDataAvailable==false">
     <app-no-data></app-no-data>
   </div>
-  <div *ngIf="workspaces.length!=0" >
+  <div *ngIf="isDataAvailable" >
     <h3 class="text-color text-start fs-3 mt-3">Personal Workspace</h3>
     <!-- board -->
     <div>
