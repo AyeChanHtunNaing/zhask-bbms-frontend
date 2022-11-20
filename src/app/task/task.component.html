@@ -1,41 +1,128 @@
-<div class="card d-flex justify-content-between p-3 flex-row mt-3" (dblclick)="showActivity()" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
+<div class="card d-flex justify-content-between p-3 flex-row mt-3" (click)="setTaskDetails(card);openModal(activity)" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
   <div>
     {{card.description}}
   </div>
-  <div *ngIf="title=='ToDo'" >
-    <i class="bi bi-pencil-square fs-6" (click)="setTaskDetails(card)"  data-bs-toggle="modal" data-bs-target="#editModal"></i>
-  </div>
-  <div *ngIf="title=='Doing'">
-    <i class="bi bi-pencil-square fs-6" (click)="setTaskDetails(card)"  data-bs-toggle="modal" data-bs-target="#editModal"></i>
-  </div>
-  <div *ngIf="title=='Done'">
-    <i class="bi bi-x-square fs-6 mx-3"  (click)="delete(card.id)"></i>
-  </div>
-  <div *ngIf="title!='ToDo' && title!='Doing' && title!='Done'">
-    <i class="bi bi-pencil-square fs-6" (click)="setTaskDetails(card)"  data-bs-toggle="modal" data-bs-target="#editModal"></i>
-    <i class="bi bi-x-square fs-6 mx-3" (click)="delete(card.id)"></i>
-  </div>
-  <!-- edit modal starts -->
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="editModalLabel">Edit Task</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+
+  <!-- activity ng modal start -->
+  <ng-template #activity>
+    <div class="modal-header">
+      <h2 class="modal-title text-color fw-bold">{{taskDesc}}</h2>
+      <div *ngIf="title=='ToDo'" >
+        <i class="bi bi-pencil-square fs-6" (click)="setTaskDetails(card);openModal(edit)" ></i>
+      </div>
+      <div *ngIf="title=='Doing'">
+        <i class="bi bi-pencil-square fs-6" (click)="setTaskDetails(card);openModal(edit)" ></i>
+      </div>
+      <div *ngIf="title=='Done'">
+        <i class="bi bi-x-square fs-6 mx-3"  (click)="delete(card.id)"></i>
+      </div>
+      <div *ngIf="title!='ToDo' && title!='Doing' && title!='Done'">
+        <i class="bi bi-pencil-square fs-6" (click)="setTaskDetails(card);openModal(edit)" ></i>
+        <i class="bi bi-x-square fs-6 mx-3" (click)="delete(card.id)"></i>
+      </div>
+      <button type="button" class="close pull-right" aria-label="Close" (dblclick)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-9">
           <form>
-            <div class="mb-3">
-              <input #updatedescription [value]="getTaskDetails()" class="form-control" id="editDescription" name="taskDesc">
+            <div class="form-group">
+              <label for="exampleFormControlFile"><span class="text-color fs-6"> <i class="bi bi-images"></i>Add Image</span></label>
+              <input type="file" class="form-control-file mx-2" id="exampleFormControlFile">
             </div>
           </form>
+          <form>
+            <!-- checkbox start -->
+            <div class="text-start mt-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  To Sleep
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                  To Code
+                </label>
+              </div>
+            </div>
+            <!-- checkbox end -->
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1"><span class="text-color fs-6"> <i class="bi bi-file-earmark mx-2"></i> Description</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlFile1"><span class="text-color fs-6"> <i class="bi bi-file-plus"></i>Attachment</span></label>
+              <br>
+              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            <div class="form-group mt-2">
+              <span class="text-color">Start Date :</span>
+              <input type="date">
+              <span class="text-color mx-3">End Date :</span>
+              <input type="date">
+            </div>
+            <button type="submit" class="btn btn-color mt-3 fs-6 my-auto">SUBMIT</button>
+          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-color" (click)="updateTaskDescription()">Update Task</button>
+        <div class="col-md-3">
+          <h2 class="text-color fw-bold">Actions</h2>
+          <div class="d-block">
+            <button class="btn btn-color btn-lg btn-block"> <i class="bi bi-people mx-2"></i>Members</button>
+            <button class="btn btn-color btn-lg btn-block mt-2" (click)="openModal(add)"> <i class="bi bi-plus mx-2"></i>Add Task</button>
+          </div>
+        </div>
+        <hr class="mt-3">
+        <div class="comment">
+          <textarea class="form-control"></textarea>
+          <button class="btn btn-color mt-2">Comment</button>
         </div>
       </div>
     </div>
-  </div>
-  <!-- edit modal ends -->
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (dblclick)="modalRef.hide()">
+        Close
+      </button>
+    </div>
+  </ng-template>
+  <!-- activity ng modal end -->
+  <!-- edit task desc ng modal start -->
+  <ng-template #edit>
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="editModalLabel">Edit Task</h1>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <input [(ngModel)]="updateDescription" [value]="getTaskDetails()" class="form-control" name="taskDesc">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-color" (click)="updateTaskDescription()">Update Task</button>
+    </div>
+  </ng-template>
+
+  <!-- edit task desc ng modal end -->
+  <!-- add new activity modal start -->
+  <ng-template #add>
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Add Task</h1>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <input [(ngModel)]="newTask"  class="form-control" name="name">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-color"  placeholder="enter task name...."  (click)="addActivity(newTask)">Add New Task</button>
+    </div>
+  </ng-template>
+  <!-- add new activity modal start -->
 </div>

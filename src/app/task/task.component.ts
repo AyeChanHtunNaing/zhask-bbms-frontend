@@ -1,10 +1,11 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import { Task } from "../models/Task";
 import { TaskService } from "../services/task.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
 import {MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 import {ActivityComponent} from "../activity/activity.component";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-card",
@@ -12,17 +13,18 @@ import {ActivityComponent} from "../activity/activity.component";
   styleUrls: ["./task.component.css"],
 })
 export class CardComponent implements OnInit {
-  modalRef: MdbModalRef<ActivityComponent> | null = null;
   @Input() card!: Task;
   @Input() title!:string;
-  @ViewChild('updatedescription') updatedescription!:ElementRef;
+  updateDescription=this.getTaskDetails();
   isView: boolean=false;
   taskDetails!:Task;
   taskDesc!:string;
   task=new Task();
   editForm!:FormGroup;
-
-  constructor(private taskService:TaskService,private fb:FormBuilder,private modalService: MdbModalService) {
+  taskName=this.getTaskDetails()
+  newTask!:string;
+  modalRef!: BsModalRef;
+  constructor(private modalService: BsModalService,private taskService:TaskService,private fb:FormBuilder) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
@@ -43,7 +45,7 @@ export class CardComponent implements OnInit {
   }
 
   updateTaskDescription(){
-    const value=this.updatedescription.nativeElement.value;
+    const value=this.updateDescription;
     console.log(value);
     this.task.description=value;
     console.log(this.task.description);
@@ -61,6 +63,7 @@ export class CardComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     });
+    this.task.description="";
   }
 
   delete(taskId:number){
@@ -86,27 +89,26 @@ export class CardComponent implements OnInit {
           window.location.reload();
         }, 1000);
       }});
-    }
-    setTaskDetails(task:Task){
-      this.taskDetails=task;
-      this.taskDesc=this.taskDetails.description;
-      console.log(this.taskDesc);
-      window.localStorage.setItem('des',this.taskDesc);
-      window.localStorage.setItem('id',this.taskDetails.id+"");
-    }
-    getTaskDetails():string{
-      return window.localStorage.getItem('des') as string;
-    }
+  }
+  setTaskDetails(task:Task){
+    this.taskDetails=task;
+    this.taskDesc=this.taskDetails.description;
+    console.log(this.taskDesc);
+    window.localStorage.setItem('des',this.taskDesc);
+    window.localStorage.setItem('id',this.taskDetails.id+"");
+  }
+  getTaskDetails():string{
+    return window.localStorage.getItem('des') as string;
+  }
 
-    getId():string{
-     return window.localStorage.getItem('id') as string;
-   }
+  getId():string{
+    return window.localStorage.getItem('id') as string;
+  }
 
-  showActivity() {
-    this.modalRef = this.modalService.open(ActivityComponent,{
-      data: { title: 'Custom title' },
-      modalClass: 'modal-xl'
-    })
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,{ class: 'modal-lg'});
+  }
+  addActivity(subtask:string){
 
   }
 }
