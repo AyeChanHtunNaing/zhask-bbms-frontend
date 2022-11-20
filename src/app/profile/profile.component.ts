@@ -84,9 +84,11 @@ export class ProfileComponent implements OnInit {
         this.pict = event.target.result;
       }
     }
-
   }
 
+  delete(){
+    this.pict = null;
+  }
   onSubmit(){
 
    const value=this.uname.nativeElement.value;
@@ -100,7 +102,7 @@ export class ProfileComponent implements OnInit {
    this.user.profile=this.pict;
    this.user.id=this.getUserId() as number;
   // this.user.profiles=this.profile;
-    
+
     this.formdata.append('file',this.profile);
     console.log(this.profile);
 

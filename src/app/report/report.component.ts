@@ -4,6 +4,7 @@ import { Board } from '../models/board';
 import { Workspace } from '../models/workspace';
 import { BoardService } from '../services/board.service';
 import { WorkspaceService } from '../services/workspace.service';
+import {Chart} from "chart.js";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -41,7 +42,7 @@ export class ReportComponent implements OnInit {
 
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
-  
+
   }
 
   ngOnInit(): void {
@@ -50,23 +51,23 @@ export class ReportComponent implements OnInit {
       this.workspaceCount=data.length;
       this.workspaces=data;
       for(let i=0;i<data.length;i++){
-        
+
         this.boardService.getBoard(data[i].id,this.getUserId()as number).subscribe(f=>{
-          
-          // console.log(data[i].id);        
+
+          // console.log(data[i].id);
           this.boardCount=f.length+this.boardCount;
           // console.log(f.length);
           for(let j=0;j<f.length;j++)
           {
             this.boards.push(f[j]);
           }
-          
-          
-        });   
+
+
+        });
       }
-      
+
     });
-    
+
   }
  isClicks(target:string)
  {

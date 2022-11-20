@@ -3,9 +3,15 @@
   <div class="container w-75 h-75 d-flex mx-auto mt-5">
     <div class="row">
       <div class="col-md-5 mt-5">
-        <img [src]="pict" class="img-fluid rounded-circle mx-5" alt="profile pic" width="200px" height="200px">
-        <label for="pic" class="btn btn-primary">Choose Picture</label>
-        <input type="file" id="pic" name="pic" class="d-none" (change)="selectpic($event)" accept="image/*">
+
+        <label class="hoverable" for="fileInput">
+          <img [src]="pict ? pict : 'https://www.w3schools.com/howto/img_avatar.png'">
+          <div class="hover-text">Choose file</div>
+          <div class="background"></div>
+        </label>
+        <br/>
+        <input id="fileInput" type='file' (change)="selectpic($event)" accept="image/*">
+        <button *ngIf="pict" (click)="delete()" >delete</button>
       </div>
       <div class="col-md-7 mt-5">
         <form class="mx-5" (ngSubmit)="onSubmit()">
