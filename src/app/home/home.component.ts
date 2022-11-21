@@ -114,15 +114,7 @@ export class HomeComponent implements OnInit ,OnChanges {
         err => {
 
         });
-
-      this.invitememberService.inviteMember(this.invitemember).subscribe(res => {
-        },
-        err => {
-
-        }
-      )
-
-      this.getWorkspaces();
+      this.registerForm.reset()
     }
 
   }
@@ -253,7 +245,8 @@ export class HomeComponent implements OnInit ,OnChanges {
     return "Weekend"
   }
   openModal(template: TemplateRef<any>) {
-    this.workspace.name="";
+    this.workspace.description="";
+    this.workspace.name=""
     this.modalRef = this.modalService.show(template);
   }
 }

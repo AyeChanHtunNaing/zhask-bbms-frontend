@@ -10,7 +10,7 @@ import {Activity} from "../models/activity";
 import {ActivityService} from "../services/activity.service";
 import {TaskList} from "../models/TaskList";
 import {Workspace} from "../models/workspace";
-import {Observable} from "rxjs";
+import {Observable, take} from "rxjs";
 import {AttachmentService} from "../services/attachment.service";
 import {HttpEventType, HttpResponse} from "@angular/common/http";
 import {Attachment} from "../models/attachment";
@@ -203,7 +203,7 @@ export class CardComponent implements OnInit {
               this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
-              this.fileInfos = this.attachmentService.getFiles();
+              this.fileInfos = this.attachmentService.getFiles(this.taskDetails.id);
             }
           },
           error: (err: any) => {
@@ -223,6 +223,9 @@ export class CardComponent implements OnInit {
 
       this.selectedFiles = undefined;
     }
+  }
+  getFilebyId(task:Task){
+    this.fileInfos = this.attachmentService.getFiles(task.id);
   }
 
 }

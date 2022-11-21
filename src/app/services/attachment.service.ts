@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Attachment} from "../models/attachment";
 
@@ -21,7 +21,13 @@ export class AttachmentService {
 
     return this.http.request(req);
   }
-  getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/files`);
+  getFiles(taskId : number): Observable<Attachment[]> {
+    return this.http.get<Attachment[]>(`${this.baseUrl}/${taskId}`);
+  }
+
+  getFileById(id:number):  Observable<HttpResponse<Blob>> {
+
+    return this.http.get(`${this.baseUrl}/files/${id}`, { responseType: 'blob', observe: 'response' });
+
   }
 }
