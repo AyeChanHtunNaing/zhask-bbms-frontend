@@ -11,8 +11,8 @@ export class TaskListService {
     constructor(private httpClient: HttpClient) {
 
     }
-    getTaskList(boardId : number): Observable<TaskList[]>{
-        return this.httpClient.get<TaskList[]>(`${this.baseURL}/${boardId}`);
+    getTaskList(boardId : number,userId:number): Observable<TaskList[]>{
+        return this.httpClient.get<TaskList[]>(`${this.baseURL}/${userId}/${boardId}`);
       }
 
     createTaskList(tasklist : TaskList): Observable<Object>{

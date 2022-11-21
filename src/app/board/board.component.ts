@@ -22,7 +22,7 @@ interface SideNavToggle {
 export class BoardComponent implements OnInit {
   invitemember:InviteMember=new InviteMember();
   //form
-
+  userId=window.localStorage.getItem('userId');
   inviteForm!:FormGroup;
   addListForm!:FormGroup;
   submitted = false;
@@ -71,7 +71,7 @@ export class BoardComponent implements OnInit {
   }
 
   setMockData(): void {
-     this.tasklistService.getTaskList(this.board.id).subscribe(data => {
+     this.tasklistService.getTaskList(this.board.id,Number(this.userId)).subscribe(data => {
       this.tasklists  = data;
     });
   }
