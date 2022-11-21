@@ -26,6 +26,7 @@ export class BoardComponent implements OnInit {
   inviteForm!:FormGroup;
   addListForm!:FormGroup;
   submitted = false;
+  isDataAvailable:boolean=true;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -73,6 +74,7 @@ export class BoardComponent implements OnInit {
   setMockData(): void {
     this.tasklistService.getTaskList(this.board.id,this.getUserId() as number).subscribe(data => {
      this.tasklists  = data;
+     this.isDataAvailable=this.tasklists.length>0;
    });
   }
 
