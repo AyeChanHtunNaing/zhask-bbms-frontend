@@ -1,10 +1,10 @@
-<div class="card d-flex justify-content-between p-3 flex-row mt-3" (click)="setTaskDetails(card);openModal(activity)" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
+<div class="card d-flex justify-content-between p-3 flex-row mt-3" (click)="setTaskDetails(card);openModal(taskActivity);getAllActivities()" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
   <div>
     {{card.description}}
   </div>
 
   <!-- activity ng modal start -->
-  <ng-template #activity>
+  <ng-template #taskActivity>
     <div class="modal-header">
       <h2 class="modal-title text-color fw-bold">{{taskDesc}}</h2>
       <div *ngIf="title=='ToDo'" >
@@ -37,35 +37,30 @@
             <!-- checkbox start -->
             <div class="text-start mt-3">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  To Sleep
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                  To Code
-                </label>
+                <div class="d-flex gap-1"  *ngFor="let activity of activities" >
+
+                  <input type="checkbox"  class="form-check-input"  name="name" [checked]="checkActivity(activity)" (change)="changed($event,activity)">
+                  {{activity.name}}
+                </div>
               </div>
             </div>
             <!-- checkbox end -->
             <div class="form-group">
               <label for="exampleFormControlTextarea1"><span class="text-color fs-6"> <i class="bi bi-file-earmark mx-2"></i> Description</span></label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="taskDetails.content" name="content"></textarea>
             </div>
             <div class="form-group">
               <label for="exampleFormControlFile1"><span class="text-color fs-6"> <i class="bi bi-file-plus"></i>Attachment</span></label>
               <br>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+              <input type="file" class="form-control-file" id="exampleFormControlFile1"  (change)="selectFile($event);upload()">
             </div>
             <div class="form-group mt-2">
               <span class="text-color">Start Date :</span>
-              <input type="date">
+              <input type="date" [(ngModel)]="taskDetails.startDate" name="startDate">
               <span class="text-color mx-3">End Date :</span>
-              <input type="date">
+              <input type="date" [(ngModel)]="taskDetails.endDate" name="endDate">
             </div>
-            <button type="submit" class="btn btn-color mt-3 fs-6 my-auto">SUBMIT</button>
+            <button type="submit" class="btn btn-color mt-3 fs-6 my-auto" (click)="updateTask()">SUBMIT</button>
           </form>
         </div>
         <div class="col-md-3">
@@ -84,7 +79,7 @@
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (dblclick)="modalRef.hide()">
+      <button type="button" class="btn btn-secondary" (dblclick)="modalRef.hide();">
         Close
       </button>
     </div>
@@ -98,7 +93,7 @@
     <div class="modal-body">
       <form>
         <div class="mb-3">
-          <input [(ngModel)]="updateDescription" [value]="getTaskDetails()" class="form-control" name="taskDesc">
+          <input [(ngModel)]="taskDetails.description" class="form-control" name="taskDesc">
         </div>
       </form>
     </div>
@@ -116,12 +111,12 @@
     <div class="modal-body">
       <form>
         <div class="mb-3">
-          <input [(ngModel)]="newTask"  class="form-control" name="name">
+          <input [(ngModel)]="activity.name"  placeholder="enter task name...." class="form-control" name="name">
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-color"  placeholder="enter task name...."  (click)="addActivity(newTask)">Add New Task</button>
+      <button type="button" class="btn btn-color"   (click)="addActivity()">Add New Task</button>
     </div>
   </ng-template>
   <!-- add new activity modal start -->

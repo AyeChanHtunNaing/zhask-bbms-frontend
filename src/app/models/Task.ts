@@ -8,5 +8,10 @@ export class Task {
   createdBy!:string;
   taskList!:TaskList;
   board!:Board;
+  content!:string;
+  startDate!:Date;
+  endDate!:Date;
+  createAt!:Date;
+  updateAt!:Date;
   users:Array<User>=[];
 }

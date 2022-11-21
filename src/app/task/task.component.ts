@@ -6,6 +6,14 @@ import Swal from "sweetalert2";
 import {MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 import {ActivityComponent} from "../activity/activity.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {Activity} from "../models/activity";
+import {ActivityService} from "../services/activity.service";
+import {TaskList} from "../models/TaskList";
+import {Workspace} from "../models/workspace";
+import {Observable} from "rxjs";
+import {AttachmentService} from "../services/attachment.service";
+import {HttpEventType, HttpResponse} from "@angular/common/http";
+import {Attachment} from "../models/attachment";
 
 @Component({
   selector: "app-card",
@@ -15,16 +23,23 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 export class CardComponent implements OnInit {
   @Input() card!: Task;
   @Input() title!:string;
-  updateDescription=this.getTaskDetails();
   isView: boolean=false;
   taskDetails!:Task;
   taskDesc!:string;
   task=new Task();
+  activity=new Activity();
   editForm!:FormGroup;
   taskName=this.getTaskDetails()
-  newTask!:string;
+  activities!: Activity[] ;
   modalRef!: BsModalRef;
-  constructor(private modalService: BsModalService,private taskService:TaskService,private fb:FormBuilder) {
+  /* attachment */
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+  fileInfos?: Observable<any>;
+  attachment=new Attachment()
+  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
@@ -43,19 +58,13 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('taskId',this.card.id+"");
     window.localStorage.setItem('description',this.card.description);
   }
-
-  updateTaskDescription(){
-    const value=this.updateDescription;
+  updateTaskDescription() {
+    const value = this.taskDetails.description;
     console.log(value);
-    this.task.description=value;
-    console.log(this.task.description);
+    this.task.description = value;
     this.taskService.updateTaskDescription(this.getId(),this.task).subscribe(data=>{
       console.log(data);
     })
-
-    setTimeout(function(){
-      window.location.reload();
-    }, 900);
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -63,7 +72,31 @@ export class CardComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     });
-    this.task.description="";
+    window.location.reload()
+    this.ngOnInit()
+  }
+  updateTask(){
+    alert("reach")
+    this.task.content=this.taskDetails.content;
+    this.task.description=this.taskDetails.description;
+    this.task.board=this.taskDetails.board;
+    this.task.taskList=this.taskDetails.taskList;
+    this.task.createdBy=this.taskDetails.createdBy;
+    this.task.startDate=this.taskDetails.startDate;
+    this.task.endDate=this.taskDetails.endDate
+    this.taskService.updateTask(this.getId(),this.task).subscribe(data=>{
+      console.log(data);
+    })
+
+
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Updated Successfully',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
   }
 
   delete(taskId:number){
@@ -100,7 +133,6 @@ export class CardComponent implements OnInit {
   getTaskDetails():string{
     return window.localStorage.getItem('des') as string;
   }
-
   getId():string{
     return window.localStorage.getItem('id') as string;
   }
@@ -108,8 +140,90 @@ export class CardComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,{ class: 'modal-lg'});
   }
-  addActivity(subtask:string){
+  addActivity(){
+    console.log(this.taskDetails.id)
+    this.activity.task=this.taskDetails;
+    this.activityService.createActivity(this.activity)
+      .subscribe(res => {
+          this.activity.name="";
+          this.modalRef.hide();
+          this.getAllActivities()
+
+        });
+  }
+  getAllActivities(){
+
+      this.activityService.getAllActivities(Number(this.getId())).subscribe(data => {
+        this.activities = data;
+        console.log(this.getId())
+      });
 
   }
+  changed(event, activity:Activity) {
+    console.log(event.target.checked)
+    if (event.target.checked == true) {
+      activity.checked=true
+      this.activityService.setActivity(activity.id,activity).subscribe(date=>{
+      });
+      this.activityService.setTaskList(Number(this.getId()),activity).subscribe(data=>{
+
+      });
+    }else{
+      activity.checked=false
+      this.activityService.setActivity(activity.id,activity).subscribe(date=>{
+      });
+    }
+  }
+
+  checkActivity(item: Activity) {
+    console.log(item.checked)
+    let check = false;
+    if (item.checked) {
+      check = true;
+    }
+    return check;
+  }
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+  upload(): void {
+    this.attachment.task=this.taskDetails;
+    //console.log(this.taskDetails)
+    this.progress = 0;
+
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.currentFile = file;
+
+        this.attachmentService.upload(this.currentFile,this.attachment).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round(100 * event.loaded / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+              this.fileInfos = this.attachmentService.getFiles();
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.progress = 0;
+
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+
+            this.currentFile = undefined;
+          }
+        });
+      }
+
+      this.selectedFiles = undefined;
+    }
+  }
+
 }
 
