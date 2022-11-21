@@ -71,9 +71,13 @@ export class BoardComponent implements OnInit {
   }
 
   setMockData(): void {
-     this.tasklistService.getTaskList(this.board.id).subscribe(data => {
-      this.tasklists  = data;
-    });
+    this.tasklistService.getTaskList(this.board.id,this.getUserId() as number).subscribe(data => {
+     this.tasklists  = data;
+   });
+  }
+
+  getUserId(): number | null {
+   return window.localStorage.getItem('userId') as number | null;
   }
 
   ngOnInit() {
