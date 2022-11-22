@@ -1,10 +1,10 @@
 <div class="comment">
   <div class="comment-image-container">
-    <img src="/assets/user-icon.png" />
+    <img [src]="pict ? pict:'/assets/user-icon.png'"style="width:40px;height:40px;boarder-radius:50%" alt="Profile"/>
   </div>
   <div class="comment-right-part">
     <div class="comment-content">
-      <div class="comment-author">{{ comment.user.id }}</div>
+      <div class="comment-author">{{ userName }}</div>
       <div>{{ createdAt }}</div>
     </div>
     <div class="comment-text" *ngIf="!isEditing()">{{ comment.content }}</div>

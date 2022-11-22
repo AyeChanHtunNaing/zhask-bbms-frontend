@@ -12,26 +12,21 @@ export class CommentsService {
       
   }
   private baseURL = "http://localhost:8080/api/v1/comment";
-  getComments(): Observable<CommentInterface[]> {
-    return this.httpClient.get<CommentInterface[]>(
-      `http://localhost:3000/comments`
-    );
+  getComments(taskId:number): Observable<CommentInterface[]> {
+    return this.httpClient.get<CommentInterface[]>(`${this.baseURL}/${taskId}`)
   }
 
   createComment(comment:CommentInterface ): Observable<CommentInterface> {
     return this.httpClient.post<CommentInterface>(`${this.baseURL}`, comment);
   }
 
-  updateComment(id: string, text: string): Observable<CommentInterface> {
-    return this.httpClient.patch<CommentInterface>(
-      `http://localhost:3000/comments/${id}`,
-      {
-        body: text,
-      }
+  updateComment(comment:CommentInterface): Observable<CommentInterface> {
+    return this.httpClient.put<CommentInterface>(
+      `${this.baseURL}`,comment
     );
   }
 
   deleteComment(id: string): Observable<{}> {
-    return this.httpClient.delete(`http://localhost:3000/comments/${id}`);
+    return this.httpClient.delete(`${this.baseURL}/${id}`);
   }
 }

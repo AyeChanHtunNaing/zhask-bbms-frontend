@@ -84,24 +84,12 @@
           </div>
         </div>
          <!--start here comment-->
-          <div *ngFor="let item of comments">
-            <div class="comment">
-              <div class="comment-right-part">
-                <div class="comment-content">
-                  <div class="comment-author">{{ item.content }}</div>
-                  <div>{{ item.createAt }}</div>   
-                  <div *ngFor="let j of item.users">
-                    <div>{{j.id}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
+          
         <!--end here comment-->
         <hr class="mt-3">
         <div class="comment">
-          <comments>
-            </comments>
+          <comments [currentUserId]="userId"></comments>
         </div>
       </div>
     </div>

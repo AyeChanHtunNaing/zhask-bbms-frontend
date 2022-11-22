@@ -33,7 +33,7 @@
               "./node_modules/boxicons/css/boxicons.css",
               "node_modules/sweetalert2/src/sweetalert2.scss",
               "./node_modules/@fullcalendar/common/main.css",
-              "./node_modules/@fullcalendar/daygrid/main.css",
+              "./node_modules/@fullcalendar/daygrid/main.css"
             ],
             "scripts": []
           },

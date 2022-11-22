@@ -7,5 +7,5 @@ export class CommentInterface {
   user!:User;
   task!:Task; 
   parentId!: null | string;
-  createdAt!: string;
+  createAt!: string;
 }

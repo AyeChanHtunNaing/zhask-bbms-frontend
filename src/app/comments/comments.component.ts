@@ -1,32 +1,36 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Task } from '../models/Task';
 import { User } from '../models/user';
 import { CommentsService } from '../services/comments.service';
 import { ActiveCommentInterface } from '../types/activeComment.interface';
 import { CommentInterface } from '../types/comment.interface';
 
-
 @Component({
   selector: 'comments',
   templateUrl: './comments.component.html',
+  styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
   @Input() currentUserId!: number;
 
   comments: CommentInterface[] = [];
   user:User=new User();
+  task:Task=new Task();
   comment:CommentInterface=new CommentInterface();
   activeComment: ActiveCommentInterface | null = null;
 
   constructor(private commentsService: CommentsService) {}
 
   ngOnInit(): void {
-    this.commentsService.getComments().subscribe((comments) => {
+    this.commentsService.getComments(Number(this.getId())).subscribe((comments) => {
       this.comments = comments;
+      console.log(this.comments);
+      
     });
   }
 
   getRootComments(): CommentInterface[] {
-    return this.comments.filter((comment) => comment.parentId === null);
+    return this.comments.filter((comment) => comment.parentId == null);
   }
 
   updateComment({
@@ -36,24 +40,27 @@ export class CommentsComponent implements OnInit {
     text: string;
     commentId: string;
   }): void {
+    this.comment.id=commentId;
+    this.comment.content=text;
     this.commentsService
-      .updateComment(commentId, text)
+      .updateComment(this.comment)
       .subscribe((updatedComment) => {
         this.comments = this.comments.map((comment) => {
-          if (comment.id === commentId) {
+          if (comment.id == commentId) {
             return updatedComment;
           }
           return comment;
         });
-
+        this.ngOnInit();
         this.activeComment = null;
       });
+      
   }
 
   deleteComment(commentId: string): void {
     this.commentsService.deleteComment(commentId).subscribe(() => {
       this.comments = this.comments.filter(
-        (comment) => comment.id !== commentId
+        (comment) => comment.id != commentId
       );
     });
   }
@@ -75,6 +82,8 @@ export class CommentsComponent implements OnInit {
     this.comment.parentId=parentId;
     this.user.id=this.getUserId() as number;
     this.comment.user=this.user;
+    this.task.id=Number(this.getId());
+    this.comment.task=this.task;
     this.commentsService
       .createComment(this.comment)
       .subscribe((createdComment) => {
@@ -85,10 +94,13 @@ export class CommentsComponent implements OnInit {
 
   getReplies(commentId: string): CommentInterface[] {
     return this.comments
-      .filter((comment) => comment.parentId === commentId)
+      .filter((comment) => comment.parentId == commentId)
       .sort(
         (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          new Date(a.createAt).getTime() - new Date(b.createAt).getTime()
       );
+  }
+  getId():string{
+    return window.localStorage.getItem('id') as string;
   }
 }

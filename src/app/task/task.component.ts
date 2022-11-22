@@ -10,10 +10,8 @@ import {Observable} from "rxjs";
 import {AttachmentService} from "../services/attachment.service";
 import {HttpEventType, HttpResponse} from "@angular/common/http";
 import {Attachment} from "../models/attachment";
-import { CommentService } from "../services/comment.service";
 import { Comment } from "../models/comment";
 import { User } from "../models/user";
-import { ThirdPartyDraggable } from "@fullcalendar/interaction";
 import { UserService } from "../services/user.service";
 
 @Component({
@@ -37,6 +35,7 @@ export class CardComponent implements OnInit {
   comments : Comment [] = [];
   users: User[] = [];
   user: User = new User();
+  userId!:number;
   /* attachment */
   selectedFiles?: FileList;
   currentFile?: File;
@@ -44,7 +43,7 @@ export class CardComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   attachment=new Attachment()
-  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private commentService : CommentService,private userService : UserService) {
+  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
@@ -52,6 +51,7 @@ export class CardComponent implements OnInit {
   }
   ngOnInit() {
     this.writeComment();
+    this.userId=this.getUserId() as number;
   }
 
   dragend(ev:any)
@@ -248,12 +248,12 @@ export class CardComponent implements OnInit {
     this.comment.task=this.task;
     this.users.push(this.user);
     this.comment.users=this.users;
-    this.commentService.writeComment(this.comment).subscribe(data=>{    
+    // this.commentService.writeComment(this.comment).subscribe(data=>{    
       
-    });
-    this.commentService.getCommentByTaskId(Number(this.getId())).subscribe(data=>{
-      this.comments=data;
-    });
+    // });
+    // this.commentService.getCommentByTaskId(Number(this.getId())).subscribe(data=>{
+    //   this.comments=data;
+    // });
   }
 }
 
