@@ -210,6 +210,12 @@ export class HomeComponent implements OnInit ,OnChanges {
   changed(event, id: number) {
     console.log(event.target.checked)
     if (event.target.checked == true) {
+      this.workspace.marked=true
+      this.workspaceService.setFavWorkspace(id.toString(), this.workspace).subscribe(data => {
+        console.log(data);
+      })
+    }else{
+      this.workspace.marked=false
       this.workspaceService.setFavWorkspace(id.toString(), this.workspace).subscribe(data => {
         console.log(data);
       })
