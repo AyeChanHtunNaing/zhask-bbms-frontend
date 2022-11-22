@@ -1,8 +1,23 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="body" [ngClass]="getBodyClass()">
 <div class="report-div">
-  <button type="button" class="btn btn-outline-primary float-end">Generate Report</button>
-
+  <div class="btn-group float-end" dropdown #dropdown="bs-dropdown" [autoClose]="true">
+    <button id="button-basic" dropdownToggle type="button"
+            class="btn btn-outline-primary dropdown-toggle"
+            aria-controls="dropdown-basic">
+     Export Report <span class="caret"></span>
+    </button>
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+        role="menu" aria-labelledby="button-basic">
+      <li role="menuitem"><a class="dropdown-item" href="#">Workspaces</a></li>
+      <li role="menuitem"><a class="dropdown-item" href="#">Boards</a></li>
+      <li role="menuitem"><a class="dropdown-item" href="#">Assigned Tasks</a></li>
+      <li role="menuitem"><a class="dropdown-item" href="#">Finished Tasks</a></li>
+      <li class="divider dropdown-divider"></li>
+      <li role="menuitem"><a class="dropdown-item" href="#">Overview</a>
+      </li>
+    </ul>
+  </div>
   <main class="py-6 bg-surface-secondary mt-5">
     <div class="container-fluid">
       <!-- Card stats -->
