@@ -1,15 +1,19 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="body" [ngClass]="getBodyClass()">
-  <div class="display">
+  <div *ngIf="isDataAvailable==false">
+    <app-no-data></app-no-data>
+  </div>
+  <div *ngIf="isDataAvailable" class="display">
+  <!-- <div class="display"> -->
     <button type="button" class="btn btn-color me-3 my-2 invite" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-      <i class="bi bi-person-plus"></i> 
+      <i class="bi bi-person-plus"></i>
     </button>
   <app-list *ngFor="let list of tasklists" [tasklist]="list"></app-list>
   <div class="add">
   <form [formGroup]="addListForm">
     <input type="text" class="input"  class="form-control" [(ngModel)]="listName" formControlName="listName" placeholder="Add Title"  name="listName" (keyup.enter)="addList(listName);">
   </form>
-  
+
   <span class="btn" (click)="addList(listName);">Add New List</span>
   </div>
 

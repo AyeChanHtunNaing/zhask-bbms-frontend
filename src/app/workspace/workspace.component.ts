@@ -266,6 +266,12 @@ export class WorkspaceComponent implements OnInit {
     console.log(this.board)
     console.log(event.target.checked)
     if (event.target.checked == true) {
+      this.board.marked=true
+      this.boardService.setFavBoard(id.toString(), this.board).subscribe(data => {
+        console.log(data);
+      })
+    }else{
+      this.board.marked=false
       this.boardService.setFavBoard(id.toString(), this.board).subscribe(data => {
         console.log(data);
       })
