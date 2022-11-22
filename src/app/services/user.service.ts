@@ -46,6 +46,7 @@ export class UserService {
   updateUserByUserId(user : any):Observable<boolean>{
     return this.http.put<boolean>(`${this.baseURL}/updateprofile`,user);
   }
+  
   uploadProfile(file:any):Observable<boolean>
   {
     return this.http.post<boolean>(`${this.baseURL}/uploadProfile`,file);

@@ -1,19 +1,20 @@
-import {Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import {Component, Input, OnInit, TemplateRef} from "@angular/core";
 import { Task } from "../models/Task";
 import { TaskService } from "../services/task.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
-import {MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
-import {ActivityComponent} from "../activity/activity.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {Activity} from "../models/activity";
 import {ActivityService} from "../services/activity.service";
-import {TaskList} from "../models/TaskList";
-import {Workspace} from "../models/workspace";
-import {Observable, take} from "rxjs";
+import {Observable} from "rxjs";
 import {AttachmentService} from "../services/attachment.service";
 import {HttpEventType, HttpResponse} from "@angular/common/http";
 import {Attachment} from "../models/attachment";
+import { CommentService } from "../services/comment.service";
+import { Comment } from "../models/comment";
+import { User } from "../models/user";
+import { ThirdPartyDraggable } from "@fullcalendar/interaction";
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: "app-card",
@@ -32,6 +33,10 @@ export class CardComponent implements OnInit {
   taskName=this.getTaskDetails()
   activities!: Activity[] ;
   modalRef!: BsModalRef;
+  comment : Comment = new Comment();
+  comments : Comment [] = [];
+  users: User[] = [];
+  user: User = new User();
   /* attachment */
   selectedFiles?: FileList;
   currentFile?: File;
@@ -39,14 +44,14 @@ export class CardComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   attachment=new Attachment()
-  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder) {
+  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private commentService : CommentService,private userService : UserService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
 
   }
   ngOnInit() {
-
+    this.writeComment();
   }
 
   dragend(ev:any)
@@ -130,16 +135,23 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('des',this.taskDesc);
     window.localStorage.setItem('id',this.taskDetails.id+"");
   }
+
   getTaskDetails():string{
     return window.localStorage.getItem('des') as string;
   }
+
   getId():string{
     return window.localStorage.getItem('id') as string;
+  }
+
+  getUserId(): number | null {
+    return window.localStorage.getItem('userId') as number | null;
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,{ class: 'modal-lg'});
   }
+  
   addActivity(){
     console.log(this.taskDetails.id)
     this.activity.task=this.taskDetails;
@@ -148,9 +160,9 @@ export class CardComponent implements OnInit {
           this.activity.name="";
           this.modalRef.hide();
           this.getAllActivities()
-
         });
   }
+
   getAllActivities(){
 
       this.activityService.getAllActivities(Number(this.getId())).subscribe(data => {
@@ -228,5 +240,20 @@ export class CardComponent implements OnInit {
     this.fileInfos = this.attachmentService.getFiles(task.id);
   }
 
+  writeComment(){
+
+   this.task.id=Number(this.getId());
+    console.log(this.comment.content);
+    this.user.id=this.getUserId() as number; 
+    this.comment.task=this.task;
+    this.users.push(this.user);
+    this.comment.users=this.users;
+    this.commentService.writeComment(this.comment).subscribe(data=>{    
+      
+    });
+    this.commentService.getCommentByTaskId(Number(this.getId())).subscribe(data=>{
+      this.comments=data;
+    });
+  }
 }
 

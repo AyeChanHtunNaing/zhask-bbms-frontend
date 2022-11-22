@@ -1,4 +1,5 @@
 export class User {
+
   id!:number;
   name!:string;
   email!:string;
@@ -8,4 +9,5 @@ export class User {
   createAt!:string;
   profile!:string;
   pictureName!:string;
+  
 }

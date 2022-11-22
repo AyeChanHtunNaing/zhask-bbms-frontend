@@ -41,6 +41,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { NoDataComponent } from './no-data/no-data.component';
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {NgxSpinnerModule} from "ngx-spinner";
+import { CommentComponent } from './comment/comment.component';
+import { CommentsComponent } from './comments/comments.component';
+import { CommentFormComponent } from './commentForm/commentForm.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
@@ -74,6 +77,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FavWorkspaceComponent,
     PageNotFoundComponent,
     NoDataComponent,
+    CommentComponent,
+    CommentsComponent,
+    CommentFormComponent
 
   ],
   imports: [
