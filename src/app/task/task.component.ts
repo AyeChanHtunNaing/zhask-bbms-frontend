@@ -13,6 +13,9 @@ import {Attachment} from "../models/attachment";
 import { Comment } from "../models/comment";
 import { User } from "../models/user";
 import { UserService } from "../services/user.service";
+import { InviteMember } from "../models/invitemember";
+import { WorkspaceService } from "../services/workspace.service";
+import { InvitememberService } from "../services/invitemember.service";
 
 @Component({
   selector: "app-card",
@@ -28,9 +31,13 @@ export class CardComponent implements OnInit {
   task=new Task();
   activity=new Activity();
   editForm!:FormGroup;
+  inviteForm!:FormGroup;
   taskName=this.getTaskDetails()
   activities!: Activity[] ;
   modalRef!: BsModalRef;
+  submitted = false;
+  email!:string;
+  invitemember:InviteMember=new InviteMember();
   comment : Comment = new Comment();
   comments : Comment [] = [];
   users: User[] = [];
@@ -43,7 +50,7 @@ export class CardComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   attachment=new Attachment()
-  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService) {
+  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
@@ -255,5 +262,31 @@ export class CardComponent implements OnInit {
     //   this.comments=data;
     // });
   }
+
+  onInviteSubmit() {
+    
+      this.invitemember.id=window.localStorage.getItem('userId') as string;
+      this.invitemember.name=window.localStorage.getItem('userName') as string;
+      this.invitemember.url="task";
+      this.invitemember.workspaceId=Number(this.getId());
+      this.invitemember.email=this.email;
+     
+      this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Invited Successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.modalRef.hide();
+          this.email=" ";
+      },
+        err=>{
+          alert("No Exist")
+        });
+        
+    }
 }
+
 

@@ -79,14 +79,11 @@
         <div class="col-md-3">
           <h2 class="text-color fw-bold">Actions</h2>
           <div class="d-block">
-            <button class="btn btn-color btn-lg btn-block"> <i class="bi bi-people mx-2"></i>Members</button>
+            <button class="btn btn-color btn-lg btn-block" (click)="openModal(invite)"> <i class="bi bi-people mx-2"></i>Members</button>
             <button class="btn btn-color btn-lg btn-block mt-2" (click)="openModal(add)"> <i class="bi bi-plus mx-2"></i>Add Task</button>
           </div>
         </div>
-         <!--start here comment-->
-          
-          
-        <!--end here comment-->
+        
         <hr class="mt-3">
         <div class="comment">
           <comments [currentUserId]="userId"></comments>
@@ -117,8 +114,22 @@
       <button type="button" class="btn btn-color" (click)="updateTaskDescription()">Update Task</button>
     </div>
   </ng-template>
-
   <!-- edit task desc ng modal end -->
+  <!-- invite member ng modal box start -->
+  <ng-template #invite>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="invite" class="form-label">Invite people</label>
+          <input type="text" class="form-control" [(ngModel)]="email" name="email" id="invite">
+        </div>
+        <button type="button" class="btn btn-color d-flex mx-auto" (click)="onInviteSubmit()">Invite</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </ng-template>
+  <!-- invite member ng modal box end -->
   <!-- add new activity modal start -->
   <ng-template #add>
     <div class="modal-header">
