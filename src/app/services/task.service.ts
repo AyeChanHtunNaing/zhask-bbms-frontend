@@ -10,7 +10,8 @@ import { TaskList } from '../models/TaskList';
 export class TaskService{
 
     private baseURL = "http://localhost:8080/api/v1/task";
-    private baseURLForTaskDescription = "http://localhost:8080/api/v1/tasklist";
+    private baseURLForTaskById = "http://localhost:8080/api/v1/tasklist";
+    private baseURLForTaskDescription = "http://localhost:8080/api/v1/taskDescription";
     constructor(private httpClient: HttpClient) {
     }
 
@@ -37,6 +38,6 @@ export class TaskService{
     }
 
     getTaskListById(taskListid : number):Observable<TaskList>{
-      return this.httpClient.get<TaskList>(`${this.baseURLForTaskDescription}/${taskListid}`);
+      return this.httpClient.get<TaskList>(`${this.baseURLForTaskById}/${taskListid}`);
     }
 }

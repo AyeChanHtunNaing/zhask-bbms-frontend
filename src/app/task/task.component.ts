@@ -96,6 +96,9 @@ export class CardComponent implements OnInit {
     this.task.createdBy=this.taskDetails.createdBy;
     this.task.startDate=this.taskDetails.startDate;
     this.task.endDate=this.taskDetails.endDate
+    this.user.id=this.getUserId() as number;
+    this.users.push(this.user);
+    this.task.users=this.users;
     this.taskService.updateTask(this.getId(),this.task).subscribe(data=>{
       console.log(data);
     })

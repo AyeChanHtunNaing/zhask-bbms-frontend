@@ -18,7 +18,13 @@
   width: calc(100% - 5rem);
   margin-left: 5rem;
 }
-
+.card:hover{
+  transform: scale(0.9);
+  transition: all linear 200ms;
+  z-index: 1;
+  box-shadow: 1px 1px 10px rgba(0,0,0,.3);
+  cursor: pointer;
+}
 @media only screen and (min-width: 1200px) {
   .report-div{
     position: absolute;
