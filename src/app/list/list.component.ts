@@ -74,12 +74,15 @@ export class ListComponent implements OnInit {
     this.task.taskList=this.tasklistModel;
     this.board.id=Number(window.localStorage.getItem('boardId'));
     this.task.board=this.board;
+    this.user.id=this.getUserId() as number;
+    this.users.push(this.user);
+    this.task.users=this.users;
     this.taskService.updateTask(this.taskId,this.task).subscribe(data=>
     {
     });
     window.localStorage.removeItem('taskId');
     window.localStorage.removeItem('description');
-    window.localStorage.setItem('title',this.tasklist.title)
+    window.localStorage.setItem('title',this.tasklist.title);
 
   }
   dragstart(ev:any)

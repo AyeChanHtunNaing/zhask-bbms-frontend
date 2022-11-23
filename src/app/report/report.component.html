@@ -46,17 +46,17 @@
           <div class="card shadow border-0">
             <div class="card-body">
               <div class="row">
-                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Assigned Tasks</span> <span class="h3 font-bold mb-0">233</span> </div>
+                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Assigned Tasks</span> <span class="h3 font-bold mb-0">{{assignTask.length}}</span> </div>
 
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-sm-6 col-12">
+        <div class="col-xl-3 col-sm-6 col-12" (click)="isClicks('assigntask')">
           <div class="card shadow border-0">
             <div class="card-body">
               <div class="row">
-                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Finished Tasks</span> <span class="h3 font-bold mb-0">99</span> </div>
+                <div class="col"> <span class="h6 font-semibold text-muted text-sm d-block mb-2">Your Finished Tasks</span> <span class="h3 font-bold mb-0">{{assignedTask.length}}</span> </div>
 
               </div>
             </div>
@@ -69,6 +69,7 @@
     <h2 style="text-align: left" class="text-color" *ngIf="isClick=='workspace'">Workspaces</h2>
     <h2 style="text-align: left" class="text-color" *ngIf="isClick=='board'">Boards</h2>
     <h2 style="text-align: left" class="text-color" *ngIf="isClick=='task'">Tasks</h2>
+    <h2 style="text-align: left" class="text-color" *ngIf="isClick=='assigntask'">Tasks</h2>
     <div class="table-responsive">
       <table class="table table-hover table-nowrap">
         <thead class="thead-light">
@@ -92,6 +93,20 @@
             <td></td>
           </tr>
           </tbody>
+          <tbody *ngIf="isClick=='task'">
+            <tr *ngFor="let b of assignTask;let i=index">
+              <td>{{i+1}}</td>
+              <td>{{b.description}} </td>
+              <td></td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="isClick=='assigntask'">
+              <tr *ngFor="let b of assignedTask;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{b.description}} </td>
+                <td></td>
+              </tr>
+              </tbody>
       </table>
     </div>
   </main>

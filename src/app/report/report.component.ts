@@ -6,6 +6,9 @@ import { BoardService } from '../services/board.service';
 import { WorkspaceService } from '../services/workspace.service';
 import {Chart} from "chart.js";
 import {ReportService} from "../services/report.service";
+import { TaskService } from '../services/task.service';
+import { Task } from '../models/Task';
+import { O } from 'chart.js/dist/chunks/helpers.core';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -22,7 +25,11 @@ export class ReportComponent implements OnInit {
   isClick:string="workspace";
   workspaces:Workspace[]=[];
   boards:Board[]=[];
+  assignTask:Task[]=[];
+  assignedTask:Task[]=[];
   boardCount : number = 0;
+  assignCount : number=0;
+  assignedtask:number=0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   onToggleSideNav(data: SideNavToggle): void {
@@ -39,7 +46,7 @@ export class ReportComponent implements OnInit {
     }
     return styleClass;
   }
-  constructor(private reportService:ReportService,private workspaceService : WorkspaceService , private boardService : BoardService) { }
+  constructor(private reportService:ReportService,private workspaceService : WorkspaceService , private boardService : BoardService,private taskService:TaskService) { }
 
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
@@ -48,6 +55,23 @@ export class ReportComponent implements OnInit {
 
   ngOnInit(): void {
    this.isClick="workspace";
+   this.taskService.selectTaskByUserId(this.getUserId() as number).subscribe(
+    data=>
+    {
+    
+      for(let j=0;j<data.length;j++)
+      {
+        this.taskService.getTaskListById(data[j].taskList.id).subscribe(d=>
+          {
+            console.log(d.title);
+            
+           if(d.title=='ToDo' || d.title=='Doing')
+             this.assignTask.push(data[j]);
+             else if(d.title=='Done')
+             this.assignedTask.push(data[j]);
+          });
+        }
+      });
     this.workspaceService.getWorkspace(this.getUserId() as number).subscribe(data=>{
       this.workspaceCount=data.length;
       this.workspaces=data;
@@ -68,6 +92,7 @@ export class ReportComponent implements OnInit {
       }
 
     });
+   
 
   }
  isClicks(target:string)
