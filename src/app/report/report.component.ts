@@ -5,6 +5,7 @@ import { Workspace } from '../models/workspace';
 import { BoardService } from '../services/board.service';
 import { WorkspaceService } from '../services/workspace.service';
 import {Chart} from "chart.js";
+import {ReportService} from "../services/report.service";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -28,7 +29,7 @@ export class ReportComponent implements OnInit {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
-
+   userId=Number(this.getUserId())
   getBodyClass(): string {
     let styleClass = '';
     if(this.collapsed && this.screenWidth > 768) {
@@ -38,7 +39,7 @@ export class ReportComponent implements OnInit {
     }
     return styleClass;
   }
-  constructor(private workspaceService : WorkspaceService , private boardService : BoardService) { }
+  constructor(private reportService:ReportService,private workspaceService : WorkspaceService , private boardService : BoardService) { }
 
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
@@ -72,5 +73,10 @@ export class ReportComponent implements OnInit {
  isClicks(target:string)
  {
  this.isClick=target;
+ }
+ exportWorkspace(id:number){
+   this.reportService.exportWorkspace(id).subscribe(data=>{
+     alert("exported successfully")
+   })
  }
 }
