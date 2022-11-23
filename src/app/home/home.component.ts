@@ -252,7 +252,8 @@ export class HomeComponent implements OnInit ,OnChanges {
   }
   openModal(template: TemplateRef<any>) {
     this.workspace.description="";
-    this.workspace.name=""
+    this.workspace.name="";
+    this.submitted=false;
     this.modalRef = this.modalService.show(template);
   }
 }

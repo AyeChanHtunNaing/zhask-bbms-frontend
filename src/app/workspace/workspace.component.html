@@ -131,14 +131,14 @@
       <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
         <div class="mb-3">
           <label for="names" class="form-label">Board Name</label>
-          <input type="text" class="form-control" [(ngModel)]="board.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+          <input name="name" type="text" class="form-control" [(ngModel)]="board.name"   formControlName="name" id="names" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
           <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
             <div *ngIf="f.name.errors?.['required']">Name is required</div>
           </div>
         </div>
         <div class="mb-3">
           <label class="form-label">Description</label>
-          <textarea class="form-control" [(ngModel)]="board.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
+          <textarea name="des" class="form-control" [(ngModel)]="board.description" formControlName="desc"  rows="3" [ngClass]="{ 'is-invalid': submitted && f.desc.errors}" ></textarea>
           <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
             <div>Description is required</div>
 

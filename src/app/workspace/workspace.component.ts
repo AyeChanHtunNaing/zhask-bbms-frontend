@@ -52,7 +52,7 @@ export class WorkspaceComponent implements OnInit {
 
   @Input() collapsed = false;
   @Input() screenWidth = 0;
-
+  //submitted = false;
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -116,7 +116,7 @@ export class WorkspaceComponent implements OnInit {
           err => {
 
           });
-
+        this.submitted=false;
     }
   }
   onInviteSubmit() {
@@ -154,7 +154,7 @@ export class WorkspaceComponent implements OnInit {
   getBoard()
 
   {
-    this.registerForm.reset()
+    //this.registerForm.reset()
     this.boardName="";
     this.spinner.show();
     this.boardService.getBoard(this.workspace.id,this.getUserId()as number).subscribe(data => {
@@ -212,8 +212,6 @@ export class WorkspaceComponent implements OnInit {
     const value=this.boardName;
     console.log(value);
     this.board.name=value;
-    console.log(this.board.name);
-    console.log(this.getId());
     this.boardService.updateBoardById(this.getId(),this.board).subscribe(data=>{
       Swal.fire({
         position: 'center',
@@ -268,12 +266,12 @@ export class WorkspaceComponent implements OnInit {
     if (event.target.checked == true) {
       this.board.marked=true
       this.boardService.setFavBoard(id.toString(), this.board).subscribe(data => {
-        console.log(data);
+      
       })
     }else{
       this.board.marked=false
       this.boardService.setFavBoard(id.toString(), this.board).subscribe(data => {
-        console.log(data);
+       
       })
     }
   }
@@ -290,6 +288,7 @@ export class WorkspaceComponent implements OnInit {
   }
   openModal(template: TemplateRef<any>) {
     this.board.name="";
+    this.submitted=false;
     this.modalRef = this.modalService.show(template);
   }
 
