@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import Swal from 'sweetalert2';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 
@@ -34,9 +35,25 @@ export class ForgotPasswordComponent implements OnInit {
       this.service.forgotPsw(this.user).subscribe(
         responseData =>{
           if(responseData == false){
-            alert("Failed!")
+            Swal.fire({
+              title: 'Reset Password process Failed',
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              }
+            })
           }else{
-            alert("Please, Confirm From Your Email")
+            Swal.fire({
+              title: 'Reset password link is successfully sent to your mail',
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              }
+            })
             //
             // this.router.navigate(['reset-password']);
           }
