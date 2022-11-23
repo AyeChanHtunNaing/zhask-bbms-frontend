@@ -9,7 +9,7 @@
     </button>
     <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
         role="menu" aria-labelledby="button-basic">
-      <li role="menuitem"><a class="dropdown-item" href="#">Workspaces</a></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="exportWorkspace(userId)">Workspaces</a></li>
       <li role="menuitem"><a class="dropdown-item" href="#">Boards</a></li>
       <li role="menuitem"><a class="dropdown-item" href="#">Assigned Tasks</a></li>
       <li role="menuitem"><a class="dropdown-item" href="#">Finished Tasks</a></li>
