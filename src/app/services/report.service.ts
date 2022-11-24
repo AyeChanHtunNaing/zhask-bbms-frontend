@@ -19,4 +19,7 @@ export class ReportService {
   exportEndTask(id:number){
     return this.httpClient.get<any>(`${this.baseURL}/endTask/${id}`);
   }
+  exportClosedTask(id:number){
+    return this.httpClient.get<any>(`${this.baseURL}/closedTask/${id}`);
+  }
 }

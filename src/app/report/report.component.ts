@@ -121,4 +121,9 @@ export class ReportComponent implements OnInit {
       alert("exported successfully")
     })
   }
+  exportClosedTask(id:number){
+    this.reportService.exportClosedTask(id).subscribe(data=>{
+      alert("exported successfully")
+    })
+  }
 }
