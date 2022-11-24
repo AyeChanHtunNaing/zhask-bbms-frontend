@@ -58,13 +58,13 @@ export class ReportComponent implements OnInit {
    this.taskService.selectTaskByUserId(this.getUserId() as number).subscribe(
     data=>
     {
-    
+
       for(let j=0;j<data.length;j++)
       {
         this.taskService.getTaskListById(data[j].taskList.id).subscribe(d=>
           {
             console.log(d.title);
-            
+
            if(d.title=='ToDo' || d.title=='Doing')
              this.assignTask.push(data[j]);
              else if(d.title=='Done')
@@ -92,16 +92,23 @@ export class ReportComponent implements OnInit {
       }
 
     });
-   
+
 
   }
  isClicks(target:string)
  {
  this.isClick=target;
  }
+
  exportWorkspace(id:number){
    this.reportService.exportWorkspace(id).subscribe(data=>{
      alert("exported successfully")
    })
  }
+
+  exportBoard(id:number){
+    this.reportService.exportBoard(id).subscribe(data=>{
+      alert("exported successfully")
+    })
+  }
 }

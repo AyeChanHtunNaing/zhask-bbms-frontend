@@ -10,4 +10,7 @@ export class ReportService {
   exportWorkspace(id:number){
     return this.httpClient.get<any>(`${this.baseURL}/workspace/${id}`);
   }
+  exportBoard(id:number){
+    return this.httpClient.get<any>(`${this.baseURL}/board/${id}`);
+  }
 }
