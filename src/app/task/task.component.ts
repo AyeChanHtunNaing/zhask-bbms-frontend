@@ -96,6 +96,9 @@ export class CardComponent implements OnInit {
     this.task.createdBy=this.taskDetails.createdBy;
     this.task.startDate=this.taskDetails.startDate;
     this.task.endDate=this.taskDetails.endDate
+    console.log(this.task.createdBy)
+    console.log(this.task.startDate)
+    console.log(this.task.endDate)
     this.user.id=this.getUserId() as number;
     this.users.push(this.user);
     this.task.users=this.users;
@@ -161,7 +164,7 @@ export class CardComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,{ class: 'modal-lg'});
   }
-  
+
   addActivity(){
     console.log(this.taskDetails.id)
     this.activity.task=this.taskDetails;
@@ -254,12 +257,12 @@ export class CardComponent implements OnInit {
 
    this.task.id=Number(this.getId());
     console.log(this.comment.content);
-    this.user.id=this.getUserId() as number; 
+    this.user.id=this.getUserId() as number;
     this.comment.task=this.task;
     this.users.push(this.user);
     this.comment.users=this.users;
-    // this.commentService.writeComment(this.comment).subscribe(data=>{    
-      
+    // this.commentService.writeComment(this.comment).subscribe(data=>{
+
     // });
     // this.commentService.getCommentByTaskId(Number(this.getId())).subscribe(data=>{
     //   this.comments=data;
@@ -267,13 +270,13 @@ export class CardComponent implements OnInit {
   }
 
   onInviteSubmit() {
-    
+
       this.invitemember.id=window.localStorage.getItem('userId') as string;
       this.invitemember.name=window.localStorage.getItem('userName') as string;
       this.invitemember.url="task";
       this.invitemember.workspaceId=Number(this.getId());
       this.invitemember.email=this.email;
-     
+
       this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
           Swal.fire({
             position: 'center',
@@ -288,7 +291,7 @@ export class CardComponent implements OnInit {
         err=>{
           alert("No Exist")
         });
-        
+
     }
 }
 

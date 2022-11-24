@@ -13,4 +13,10 @@ export class ReportService {
   exportBoard(id:number){
     return this.httpClient.get<any>(`${this.baseURL}/board/${id}`);
   }
+  exportAssignedTask(id:number){
+    return this.httpClient.get<any>(`${this.baseURL}/assignedTask/${id}`);
+  }
+  exportEndTask(id:number){
+    return this.httpClient.get<any>(`${this.baseURL}/endTask/${id}`);
+  }
 }

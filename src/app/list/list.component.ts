@@ -35,7 +35,7 @@ export class ListComponent implements OnInit {
       this.tasks=data;
     })
   }
-  
+
   allowDrop($event:any) {
     $event.preventDefault();
 
@@ -77,7 +77,8 @@ export class ListComponent implements OnInit {
     this.user.id=this.getUserId() as number;
     this.users.push(this.user);
     this.task.users=this.users;
-    this.taskService.updateTask(this.taskId,this.task).subscribe(data=>
+    //this.task.startDate=
+    this.taskService.updateTaskList(this.taskId,this.task).subscribe(data=>
     {
     });
     window.localStorage.removeItem('taskId');

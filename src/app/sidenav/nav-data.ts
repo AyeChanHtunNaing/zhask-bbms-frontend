@@ -1,18 +1,18 @@
 export const navbarData = [
     {
         routeLink: '/home',
-        icon: 'fal fa-home',
+        icon: 'bx bxs-home',
         label: 'Home'
     },
 
     {
         routeLink: '/report',
-        icon: 'fal fa-chart-bar',
+        icon: 'bx bxs-report',
         label: 'Report'
     },
     {
         routeLink: '/profile',
-        icon: 'fal fa-user',
+        icon: 'bi bi-person',
         label: 'Profile'
     },
     {
@@ -22,12 +22,12 @@ export const navbarData = [
     },
     {
         routeLink: '/calendar',
-        icon: 'fal fa-calendar',
+        icon: 'bx bx-calendar',
         label: 'Calendar'
     },
     {
         routeLink: '/friend',
-        icon: 'fal fa-users',
+        icon: 'bi bi-people',
         label: 'Friends'
     },
   {

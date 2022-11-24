@@ -11,11 +11,11 @@
         role="menu" aria-labelledby="button-basic">
       <li role="menuitem"><a class="dropdown-item" (click)="exportWorkspace(userId)">Workspaces</a></li>
       <li role="menuitem"><a class="dropdown-item" (click)="exportBoard(userId)">Boards</a></li>
-      <li role="menuitem"><a class="dropdown-item" href="#">Assigned Tasks</a></li>
-      <li role="menuitem"><a class="dropdown-item" href="#">Finished Tasks</a></li>
-      <li class="divider dropdown-divider"></li>
-      <li role="menuitem"><a class="dropdown-item" href="#">Overview</a>
-      </li>
+      <li role="menuitem"><a class="dropdown-item" (click)="exportAssignedTask(userId)">Assigned Tasks</a></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="exportEndTask(userId)">Finished Tasks</a></li>
+<!--      <li class="divider dropdown-divider"></li>-->
+<!--      <li role="menuitem"><a class="dropdown-item" href="#">Closed Task</a>-->
+<!--      </li>-->
     </ul>
   </div>
   <main class="py-6 bg-surface-secondary mt-5">
