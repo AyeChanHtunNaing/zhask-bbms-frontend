@@ -48,6 +48,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
 ]);
+import {ToastrModule} from "ngx-toastr";
+import { NgToastModule } from 'ng-angular-popup'
 
 @NgModule({
   declarations: [
@@ -96,6 +98,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ModalModule.forRoot(),
     BsDropdownModule,
     NgxSpinnerModule,
+    NgToastModule,
+    ToastrModule.forRoot({
+      positionClass :'toast-top-right'
+    })
   ],
   providers: [
     {

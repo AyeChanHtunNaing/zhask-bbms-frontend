@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { User } from '../models/user';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import { NotificationService } from '../services/notification.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -56,7 +57,7 @@ export class HomeComponent implements OnInit ,OnChanges {
     return forbidden ? {'email': {value: control.value}} : null;
   };
 
-  constructor(private formBuilder: FormBuilder, private modalService: BsModalService,private workspaceService: WorkspaceService, private invitememberService: InvitememberService
+  constructor(private formBuilder: FormBuilder, private modalService: BsModalService,private workspaceService: WorkspaceService, private invitememberService: InvitememberService, private notifyService:NotificationService
     , private router: Router) {
     this.registerForm = this.formBuilder.group({
       email: ['', [this.commaSepEmail]],
@@ -129,7 +130,10 @@ export class HomeComponent implements OnInit ,OnChanges {
 
   ngOnInit() {
     this.getWorkspaces();
+  }
 
+  Noti(msg : string){
+    this.notifyService.showToast(msg);
   }
 
   goToBoard(workspaceId: number) {
@@ -162,7 +166,7 @@ export class HomeComponent implements OnInit ,OnChanges {
     this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
       this.modalRef.hide()
       this.getWorkspaces()
-
+      this.Noti("Updated Successfully.");
     })
 
     // setTimeout(function(){
