@@ -13,5 +13,7 @@ export class Task {
   endDate!:Date;
   createAt!:Date;
   updateAt!:Date;
+  profile!:string;
+  pictureName!:string;
   users:Array<User>=[];
 }

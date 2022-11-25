@@ -14,8 +14,8 @@ import { Comment } from "../models/comment";
 import { User } from "../models/user";
 import { UserService } from "../services/user.service";
 import { InviteMember } from "../models/invitemember";
-import { WorkspaceService } from "../services/workspace.service";
 import { InvitememberService } from "../services/invitemember.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-card",
@@ -25,6 +25,7 @@ import { InvitememberService } from "../services/invitemember.service";
 export class CardComponent implements OnInit {
   @Input() card!: Task;
   @Input() title!:string;
+  formdata :any;
   isView: boolean=false;
   taskDetails!:Task;
   taskDesc!:string;
@@ -43,6 +44,8 @@ export class CardComponent implements OnInit {
   users: User[] = [];
   user: User = new User();
   userId!:number;
+  pict :any;
+  profile: any = File;
   /* attachment */
   selectedFiles?: FileList;
   currentFile?: File;
@@ -50,21 +53,58 @@ export class CardComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   attachment=new Attachment()
-  constructor(private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
+  constructor(private router: Router,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
 
   }
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+        console.log(currentUrl);
+        
+    });
+}
   ngOnInit() {
+    this.formdata = new FormData();
     this.writeComment();
     this.userId=this.getUserId() as number;
-  }
+    const b = window.atob(this.card.profile);
+        const c = new ArrayBuffer(b.length);
+        const z = new Uint8Array(c);
+        for(let i = 0 ; i < b.length ;i++){
+          z[i] = b.charCodeAt(i);
+        }
+        const blob = new Blob([z],{type: 'image/jpeg'})
+        const file = new File([blob],this.card.pictureName || '',{type:'image/jpeg'});
+        this.profile = file;
+        var read = new FileReader();
+        read.readAsDataURL(file);
+        read.onload=(event : any)=>{
+          this.pict = event.target.result;
+     }
+ }
 
   dragend(ev:any)
   {
     this.title=window.localStorage.getItem('title') as string;
   }
+  
+  selectpic(e : any){
+    if(e.target.files){
+      var read = new FileReader();
+      this.profile = e.target.files[0];
+      this.user.pictureName=e.target.files[0].name;
+      console.log(this.profile);
+      read.readAsDataURL(e.target.files[0]);
+      read.onload=(event : any)=>{
+        this.pict = event.target.result;
+      }
+    }
+    }
+
   dragStart(ev:any) {
     ev.dataTransfer.setData("text", ev.target.id);
     window.localStorage.setItem('taskId',this.card.id+"");
@@ -76,6 +116,7 @@ export class CardComponent implements OnInit {
     this.task.description = value;
     this.taskService.updateTaskDescription(this.getId(),this.task).subscribe(data=>{
       console.log(data);
+      this.reloadCurrentRoute();
     })
     Swal.fire({
       position: 'center',
@@ -84,11 +125,13 @@ export class CardComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     });
-    window.location.reload()
+   // window.location.reload()
+  
     this.ngOnInit()
   }
   updateTask(){
-    alert("reach")
+    
+    // alert("reach");
     this.task.content=this.taskDetails.content;
     this.task.description=this.taskDetails.description;
     this.task.board=this.taskDetails.board;
@@ -96,15 +139,17 @@ export class CardComponent implements OnInit {
     this.task.createdBy=this.taskDetails.createdBy;
     this.task.startDate=this.taskDetails.startDate;
     this.task.endDate=this.taskDetails.endDate
-    console.log(this.task.createdBy)
-    console.log(this.task.startDate)
-    console.log(this.task.endDate)
     this.user.id=this.getUserId() as number;
     this.users.push(this.user);
     this.task.users=this.users;
-    this.taskService.updateTask(this.getId(),this.task).subscribe(data=>{
-      console.log(data);
-    })
+    this.task.id=Number(this.getId());
+    this.formdata.append('tasks',JSON.stringify(this.task));
+    this.formdata.append('file',this.profile);
+    this.taskService.updateTask(this.formdata).subscribe(data=>{
+      console.log(data);   
+      
+      this.reloadCurrentRoute();
+    });
 
 
     Swal.fire({
@@ -114,7 +159,7 @@ export class CardComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     });
-
+  //  this.reloadCurrentRoute();
   }
 
   delete(taskId:number){
@@ -136,8 +181,10 @@ export class CardComponent implements OnInit {
           'Your task has been deleted.',
           'success'
         )
+        this.reloadCurrentRoute();
         setTimeout(function(){
-          window.location.reload();
+         
+          //window.location.reload();
         }, 1000);
       }});
   }
@@ -198,6 +245,7 @@ export class CardComponent implements OnInit {
       this.activityService.setActivity(activity.id,activity).subscribe(date=>{
       });
     }
+    this.reloadCurrentRoute();
   }
 
   checkActivity(item: Activity) {
@@ -293,6 +341,22 @@ export class CardComponent implements OnInit {
         });
 
     }
-}
 
+    error:any={isError:false,errorMessage:''};
+    
+    compareTwoDates(){
+      // console.log(this.taskDetails.startDate);
+      // console.log(this.taskDetails.endDate);
+      
+       if(new Date(this.taskDetails.endDate)<new Date(this.taskDetails.startDate)){
+       
+       this.error={isError:true,errorMessage:"Start Date cann't set before End Date you MORON!!!"}; 
+        }
+        else{
+          this.error={isError:false,errorMessage:''};   
+        }
+        
+    }
+   
+}
 

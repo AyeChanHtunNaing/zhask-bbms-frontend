@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {TaskListService} from "../services/tasklist.service";
 import { Board } from "../models/board";
 import { User } from "../models/user";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-list",
@@ -25,7 +26,7 @@ export class ListComponent implements OnInit {
   board : Board = new Board();
    user:User=new User();
    users:User[]=[];
-  constructor(private taskService : TaskService,private taskListService:TaskListService) {}
+  constructor(private router: Router,private taskService : TaskService,private taskListService:TaskListService) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
@@ -35,7 +36,14 @@ export class ListComponent implements OnInit {
       this.tasks=data;
     })
   }
-
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+       // console.log(currentUrl);
+        
+    });
+}
   allowDrop($event:any) {
     $event.preventDefault();
 
@@ -106,7 +114,8 @@ export class ListComponent implements OnInit {
     this.users.push(this.user);
     this.task.users=this.users;
     this.taskService.createTask(this.task).subscribe(res => {
-        location.reload();
+        //location.reload();
+        this.ngOnInit();
         console.log(res);
       },
       err => {
@@ -146,9 +155,11 @@ export class ListComponent implements OnInit {
           'Your task has been deleted.',
           'success'
         )
-        setTimeout(function(){
-          window.location.reload();
-        }, 1000);
+        // this.reloadCurrentRoute();
+        this.ngOnInit();
+        // setTimeout(function(){
+        // //  window.location.reload();
+        // }, 1000);
       }
     });
   }
@@ -169,11 +180,13 @@ export class ListComponent implements OnInit {
     this.taskList.title=value;
     this.taskListService.updateTaskList(this.getId(),this.taskList).subscribe(data=>{
       console.log(data);
-    })
-
-    setTimeout(function(){
-      window.location.reload();
-    }, 900);
+      this.reloadCurrentRoute();
+    this.ngOnInit();
+    });
+    
+    // setTimeout(function(){
+    // //  window.location.reload();
+    // }, 900);
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -181,6 +194,9 @@ export class ListComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     });
+    
+   
   }
+  
 }
 

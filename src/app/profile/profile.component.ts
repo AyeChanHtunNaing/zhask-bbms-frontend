@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
   constructor(private userService:UserService) { }
 
   ngOnInit(): void {
-    this.formdata = new FormData();
+   this.formdata = new FormData();
    this.names=window.localStorage.getItem('name') as string;
    this.userName=window.localStorage.getItem('userName') as string;
    this.email=window.localStorage.getItem('userEmail') as string;

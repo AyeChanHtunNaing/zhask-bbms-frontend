@@ -1,6 +1,8 @@
 import {Component, Input, OnInit,ViewChild} from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
 import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
+import { NgxSpinnerService } from 'ngx-spinner';
+import { TaskService } from '../services/task.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -15,20 +17,11 @@ interface SideNavToggle {
 export class CalendarComponent implements OnInit {
   modalRef?:BsModalRef;
   // add some events
-  events:any=[
-    {title:'Task Start',date:'2022-11-08', color:'#406595'},
-    {title:'Task Due',date:'2022-11-08', color:'#FF0000'},
-    {title:'Task Start',date:'2022-11-11', color:'#406595'},
-    {title:'Task Due',date:'2022-11-28', color:'#FF0000'},
-  ];
+  events:any=[];
+  calendarOptions!: CalendarOptions;
   title!:string;
   taskDate!:string;
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    events:this.events,
-    eventClick:this.handleDateClick.bind(this),
-  };
-
+  
   config={
     animated:true
   };
@@ -53,16 +46,56 @@ export class CalendarComponent implements OnInit {
     }
     return styleClass;
   }
-  constructor(private modalService:BsModalService) { }
+  
+  constructor(private spinner: NgxSpinnerService,private modalService:BsModalService,private taskService:TaskService) {
 
+   }
   ngOnInit(): void {
+    setTimeout(() => {
+    this.taskService.selectTaskByUserId(this.getUserId() as number).subscribe(data=>{
+      data.forEach(e => {
+        let calendarevent = {  
+          title: "Start:"+e.description,
+          date:e.startDate,
+          color:'#406595',
+          name:e.description
+        };
+        let calendareventend = {
+          title: "End:"+e.description,
+          date:e.endDate,
+          color:'#FF0000',
+          name:e.description
+        };
+        this.events.push(calendarevent);
+        this.events.push(calendareventend)
+       // console.log(calendarevent);
+        
+      });
+      console.log(this.calendarOptions);
+      
+    });}, 900);
+    setTimeout(() => {
+      this.calendarOptions = {
+        initialView: 'dayGridMonth',
+        events:this.events,
+         eventClick:this.handleDateClick.bind(this),
+      };
+    }, 1000);
+  
+     
   }
+
   handleDateClick(arg:any){
     console.log(arg);
     console.log(arg.event._def.title);
     this.title=arg.event._def.title;
     this.taskDate=arg.event.start;
     this.modalRef=this.modalService.show(this.template,this.config);
+
+  }
+
+  getUserId():number | null{
+    return window.localStorage.getItem('userId') as number | null;
 
   }
 }

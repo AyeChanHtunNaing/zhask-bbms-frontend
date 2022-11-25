@@ -1,7 +1,13 @@
+
+<ngx-spinner size="medium"
+color="#fff"
+type="ball-scale-multiple" [fullScreen]="true">
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-
+<form>
   <div class="row box d-flex justify-content-center">
     <div class="col-md-5 mt-3">
       <h1 class="text-muted mb-6 text-center">View Events in Calendar Mode</h1>
@@ -9,6 +15,7 @@
       <full-calendar [options]="calendarOptions"></full-calendar>
     </div>
   </div>
+</form>
 </div>
 
 <ng-template #template>
@@ -19,6 +26,6 @@
   </button>
 </div>
 <div class="modal-body">
-  Task Name is {{title}} on {{taskDate | date}}
+  {{title}} on {{taskDate | date}}
 </div>
 </ng-template>

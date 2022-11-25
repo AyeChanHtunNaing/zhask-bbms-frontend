@@ -108,7 +108,7 @@ export class BoardComponent implements OnInit {
 
         }
       );
-      this.ngOnInit()
+      
     }
   }
 
@@ -120,13 +120,13 @@ export class BoardComponent implements OnInit {
       this.tasklistService.createTaskList(this.tasklist)
       .subscribe(res => {
 
-          location.reload();
-
+          //location.reload();
+          this.ngOnInit();
         },
         err => {
 
         });
-
+       
         this.listName=" ";
       }
       else
@@ -136,6 +136,7 @@ export class BoardComponent implements OnInit {
           title: 'No Input',
           text: 'Please fill the data'
         });
+        
       }
     }
 

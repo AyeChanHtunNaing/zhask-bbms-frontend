@@ -58,20 +58,19 @@ export class CommentComponent implements OnInit {
         read.onload=(event : any)=>{
           this.pict = event.target.result;
         }
-      })
-    const fiveMinutes = 300000;
-    const timePassed =
+      });
+      const fiveMinutes = 300000;
+      const timePassed =
       new Date().getMilliseconds() -
-        new Date(this.comment.createAt).getMilliseconds() >
+      new Date(this.comment.createAt).getMilliseconds() >
       fiveMinutes;
-    this.createdAt = new Date(this.comment.createAt).toLocaleDateString();
-    this.canReply = Boolean(this.currentUserId);
-    this.canEdit = this.currentUserId == this.comment.user.id && !timePassed;
-    this.canDelete =
+      this.createdAt = new Date(this.comment.createAt).toLocaleDateString();
+      this.canReply = Boolean(this.currentUserId);
+      this.canEdit = this.currentUserId == this.comment.user.id && !timePassed;
+      this.canDelete =
       this.currentUserId == this.comment.user.id &&
-      this.replies.length == 0 &&
-      !timePassed;
-    this.replyId = this.parentId ? this.parentId : this.comment.id;
+      this.replies.length == 0 && !timePassed;
+      this.replyId = this.parentId ? this.parentId : this.comment.id;
   }
 
   isReplying(): boolean {

@@ -2,6 +2,12 @@
   <div>
     {{card.description}}
   </div>
+  <div *ngIf="card.profile!=null">
+    <img [src]="pict ? pict:'/assets/user-icon.png'"style="width:40px;height:40px;boarder-radius:50%" alt="Profile"/>
+  </div>
+  <div *ngIf="card.startDate!=null && card.endDate!=null">
+    <p> Start Date {{card.startDate}} End Date {{card.endDate}}</p>
+  </div>
 
   <!-- activity ng modal start -->
   <ng-template #taskActivity>
@@ -18,7 +24,7 @@
       </div>
       <div *ngIf="title!='ToDo' && title!='Doing' && title!='Done'">
         <i class="bi bi-pencil-square fs-6" (click)="setTaskDetails(card);openModal(edit)" ></i>
-        <i class="bi bi-x-square fs-6 mx-3" (click)="delete(card.id)"></i>
+        <i class="bi bi-x-square fs-6 mx-3" (click)="delete(card.id)" ></i>
       </div>
       <button type="button" class="close pull-right" aria-label="Close" (dblclick)="modalRef.hide()">
         <span aria-hidden="true">×</span>
@@ -30,7 +36,7 @@
           <form>
             <div class="form-group">
               <label for="exampleFormControlFile"><span class="text-color fs-6"> <i class="bi bi-images"></i>Add Image</span></label>
-              <input type="file" class="form-control-file mx-2" id="exampleFormControlFile">
+              <input type="file" class="form-control-file mx-2" id="exampleFormControlFile" (change)="selectpic($event)" accept="image/*">
             </div>
           </form>
           <form>
@@ -69,9 +75,12 @@
             </div>
             <div class="form-group mt-2">
               <span class="text-color">Start Date :</span>
-              <input type="date" [(ngModel)]="taskDetails.startDate" name="startDate">
+              <input type="date" [(ngModel)]="taskDetails.startDate" name="startDate" id="startDate">
               <span class="text-color mx-3">End Date :</span>
-              <input type="date" [(ngModel)]="taskDetails.endDate" name="endDate">
+              <input type="date"  [(ngModel)]="taskDetails.endDate " name="endDate" id="endDate" (blur)="compareTwoDates()" >
+                  <div *ngIf="error.isError" class="alert alert-danger">
+                      {{ error.errorMessage }}    
+                  </div>                          
             </div>
             <button type="submit" class="btn btn-color mt-3 fs-6 my-auto" (click)="updateTask()">SUBMIT</button>
           </form>
