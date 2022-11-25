@@ -64,7 +64,7 @@ export class CardComponent implements OnInit {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
         this.router.navigate([currentUrl]);
         console.log(currentUrl);
-        
+
     });
 }
   ngOnInit() {
@@ -91,7 +91,7 @@ export class CardComponent implements OnInit {
   {
     this.title=window.localStorage.getItem('title') as string;
   }
-  
+
   selectpic(e : any){
     if(e.target.files){
       var read = new FileReader();
@@ -126,11 +126,11 @@ export class CardComponent implements OnInit {
       timer: 1500
     });
    // window.location.reload()
-  
+
     this.ngOnInit()
   }
   updateTask(){
-    
+
     // alert("reach");
     this.task.content=this.taskDetails.content;
     this.task.description=this.taskDetails.description;
@@ -146,8 +146,8 @@ export class CardComponent implements OnInit {
     this.formdata.append('tasks',JSON.stringify(this.task));
     this.formdata.append('file',this.profile);
     this.taskService.updateTask(this.formdata).subscribe(data=>{
-      console.log(data);   
-      
+      console.log(data);
+
       this.reloadCurrentRoute();
     });
 
@@ -183,7 +183,7 @@ export class CardComponent implements OnInit {
         )
         this.reloadCurrentRoute();
         setTimeout(function(){
-         
+
           //window.location.reload();
         }, 1000);
       }});
@@ -343,20 +343,20 @@ export class CardComponent implements OnInit {
     }
 
     error:any={isError:false,errorMessage:''};
-    
+
     compareTwoDates(){
       // console.log(this.taskDetails.startDate);
       // console.log(this.taskDetails.endDate);
-      
+
        if(new Date(this.taskDetails.endDate)<new Date(this.taskDetails.startDate)){
-       
-       this.error={isError:true,errorMessage:"Start Date cann't set before End Date you MORON!!!"}; 
+
+       this.error={isError:true,errorMessage:"Start Date cannot set before End Date!!!"};
         }
         else{
-          this.error={isError:false,errorMessage:''};   
+          this.error={isError:false,errorMessage:''};
         }
-        
+
     }
-   
+
 }
 
