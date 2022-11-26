@@ -10,6 +10,7 @@
   <div *ngIf="card.startDate!=null && card.endDate!=null">
     <p class="mt-3 bg-white"> {{card.startDate}} - {{card.endDate}}</p>
   </div>
+    <span>Process is in {{percentage}} %</span>
   </div>
   <!-- activity ng modal start -->
   <ng-template #taskActivity>

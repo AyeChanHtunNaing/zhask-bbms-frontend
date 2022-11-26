@@ -56,6 +56,7 @@ export class CardComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   attachment=new Attachment()
+  percentage:number=0
   constructor(private router: Router,private logsService:LogsService,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
@@ -74,6 +75,7 @@ export class CardComponent implements OnInit {
     this.formdata = new FormData();
     this.writeComment();
     this.userId=this.getUserId() as number;
+    this.checkPercentage()
     const b = window.atob(this.card.profile);
         const c = new ArrayBuffer(b.length);
         const z = new Uint8Array(c);
@@ -365,6 +367,21 @@ export class CardComponent implements OnInit {
    this.logsService.getAllLogs(Number(this.getId())).subscribe(data=>{
       this.logs=data;
    })
+  }
+  checkPercentage(){
+    this.activityService.getAllActivities(this.card.id).subscribe(data => {
+      let check=0;
+      for(let i=0;i<data.length;i++){
+        if(data.at(i)?.checked==true){
+          check+=1;
+        }
+      }
+      if(data.length!=0) {
+        this.percentage =Math.round((check / data.length) * 100) ;
+      }else{
+        this.percentage=0;
+      }
+    });
   }
 }
 

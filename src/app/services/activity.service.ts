@@ -24,4 +24,7 @@ export class ActivityService {
   setTaskList(taskId: number,activity : Activity):Observable<Activity>{
     return this.httpClient.put<Activity>(`${this.baseURL}/taskList/${taskId}`,activity);
   }
+  // checkActivityPercentage(taskId : number):Observable<number>{
+  //   return this.httpClient.get<number>(`${this.baseURL}/check/${taskId}`);
+  // }
 }
