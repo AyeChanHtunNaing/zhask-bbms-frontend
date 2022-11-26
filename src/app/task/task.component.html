@@ -1,5 +1,5 @@
 <div class="card d-flex justify-content-between p-3 flex-row mt-3" (click)="setTaskDetails(card);openModal(taskActivity);getAllActivities();getFilebyId(card)" draggable="true" (dragend)="dragend($event)" (dragstart)="dragStart($event)" id="{{card.id}}">
-  <div class="d-inline">
+  <div class="d-inline text-center">
   <div>
     {{card.description}}
   </div>
@@ -75,6 +75,7 @@
               </ul>
             </div>
             </div>
+
             <div class="form-group mt-2">
               <span class="text-color">Start Date :</span>
               <input type="date" [(ngModel)]="taskDetails.startDate" name="startDate" id="startDate">
@@ -86,6 +87,14 @@
             </div>
             <button type="submit" class="btn btn-color mt-3 fs-6 my-auto" (click)="updateTask()">SUBMIT</button>
           </form>
+          <div *ngIf="logs.length!=0">
+            <div class="card mt-3">
+              <div class="card-header">Logs</div>
+              <div  *ngFor="let log of logs">
+                <span>{{log.message}}</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-md-3">
           <h2 class="text-color fw-bold">Actions</h2>

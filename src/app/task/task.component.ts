@@ -16,6 +16,8 @@ import { UserService } from "../services/user.service";
 import { InviteMember } from "../models/invitemember";
 import { InvitememberService } from "../services/invitemember.service";
 import { Router } from "@angular/router";
+import {LogsService} from "../services/logs.service";
+import {Logs} from "../models/logs";
 
 @Component({
   selector: "app-card",
@@ -42,6 +44,7 @@ export class CardComponent implements OnInit {
   comment : Comment = new Comment();
   comments : Comment [] = [];
   users: User[] = [];
+  logs:Logs[]=[];
   user: User = new User();
   userId!:number;
   pict :any;
@@ -53,7 +56,7 @@ export class CardComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   attachment=new Attachment()
-  constructor(private router: Router,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
+  constructor(private router: Router,private logsService:LogsService,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
@@ -209,6 +212,7 @@ export class CardComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
+    this.showLogs()
     this.modalRef = this.modalService.show(template,{ class: 'modal-lg'});
   }
 
@@ -357,6 +361,10 @@ export class CardComponent implements OnInit {
         }
 
     }
-
+  showLogs(){
+   this.logsService.getAllLogs(Number(this.getId())).subscribe(data=>{
+      this.logs=data;
+   })
+  }
 }
 

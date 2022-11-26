@@ -7,6 +7,8 @@ import {TaskListService} from "../services/tasklist.service";
 import { Board } from "../models/board";
 import { User } from "../models/user";
 import { Router } from "@angular/router";
+import {Logs} from "../models/logs";
+import {LogsService} from "../services/logs.service";
 
 @Component({
   selector: "app-list",
@@ -26,7 +28,11 @@ export class ListComponent implements OnInit {
   board : Board = new Board();
    user:User=new User();
    users:User[]=[];
-  constructor(private router: Router,private taskService : TaskService,private taskListService:TaskListService) {}
+   logs:Logs=new Logs();
+   message!:string;
+   userName= window.localStorage.getItem('userName');
+   createdId!:number;
+  constructor(private router: Router,private logsService:LogsService,private taskService : TaskService,private taskListService:TaskListService) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
@@ -41,7 +47,7 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
         this.router.navigate([currentUrl]);
        // console.log(currentUrl);
-        
+
     });
 }
   allowDrop($event:any) {
@@ -89,7 +95,16 @@ export class ListComponent implements OnInit {
     this.taskService.updateTaskList(this.taskId,this.task).subscribe(data=>
     {
     });
-    window.localStorage.removeItem('taskId');
+    this.task.id=Number(this.taskId)
+    console.log(this.task.id)
+    this.logs.task=this.task;
+    console.log(this.logs.task)
+    this.message=this.userName+' moved the card to '+this.tasklist.title
+    this.logs.message=this.message
+    this.logsService.createLogs(this.logs).subscribe(date=>{
+
+    });
+    window.localStorage.removeItem('taskId')
     window.localStorage.removeItem('description');
     window.localStorage.setItem('title',this.tasklist.title);
 
@@ -114,16 +129,29 @@ export class ListComponent implements OnInit {
     this.users.push(this.user);
     this.task.users=this.users;
     this.taskService.createTask(this.task).subscribe(res => {
-        //location.reload();
-        this.ngOnInit();
+        //location.reload()
         console.log(res);
+        this.createdId=res.id
+        this.task.id=Number(res.id)
+        this.logs.task=this.task;
+        console.log(this.logs.task.id)
+        this.message=this.userName+' created this card'
+        this.logs.message=this.message
+        this.logsService.createLogs(this.logs).subscribe(date=>{
+
+        });
+
+        this.ngOnInit()
       },
       err => {
         console.log(err);
       });
     this.taskService.getTask(this.tasklist.id).subscribe(data=>{
       this.tasks=data;
+      console.log(this.tasks)
     });
+
+
     }else{
       Swal.fire({
         icon: 'error',
@@ -183,7 +211,7 @@ export class ListComponent implements OnInit {
       this.reloadCurrentRoute();
     this.ngOnInit();
     });
-    
+
     // setTimeout(function(){
     // //  window.location.reload();
     // }, 900);
@@ -194,9 +222,9 @@ export class ListComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     });
-    
-   
+
+
   }
-  
+
 }
 
