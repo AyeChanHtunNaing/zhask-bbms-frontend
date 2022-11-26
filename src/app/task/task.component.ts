@@ -244,14 +244,15 @@ export class CardComponent implements OnInit {
       this.activityService.setActivity(activity.id,activity).subscribe(date=>{
       });
       this.activityService.setTaskList(Number(this.getId()),activity).subscribe(data=>{
-
+        this.reloadCurrentRoute();
       });
     }else{
       activity.checked=false
       this.activityService.setActivity(activity.id,activity).subscribe(date=>{
+        this.reloadCurrentRoute();
       });
     }
-    this.reloadCurrentRoute();
+
   }
 
   checkActivity(item: Activity) {

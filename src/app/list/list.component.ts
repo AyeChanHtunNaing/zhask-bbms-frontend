@@ -208,13 +208,13 @@ export class ListComponent implements OnInit {
     this.taskList.title=value;
     this.taskListService.updateTaskList(this.getId(),this.taskList).subscribe(data=>{
       console.log(data);
-      this.reloadCurrentRoute();
-    this.ngOnInit();
+    //   this.reloadCurrentRoute();
+    // this.ngOnInit();
     });
 
-    // setTimeout(function(){
-    // //  window.location.reload();
-    // }, 900);
+     setTimeout(function(){
+     window.location.reload();
+     }, 900);
     Swal.fire({
       position: 'center',
       icon: 'success',
