@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-logout',
@@ -12,9 +13,14 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
 
-      console.log(this.logout());
       localStorage.removeItem('Authorization');
-      alert("Success!")
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Logout Successfully',
+      showConfirmButton: false,
+      timer: 1500
+    });
      this.router.navigate(['login']);
 
   }

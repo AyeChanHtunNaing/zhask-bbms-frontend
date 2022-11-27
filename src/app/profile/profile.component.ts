@@ -126,11 +126,15 @@ export class ProfileComponent implements OnInit {
         timer: 1500
       })
 
+      window.localStorage.setItem('name',this.user.name)
     }
    )
   }
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
 
+  }
+  setDefaultPic() {
+    this.pict = "assets/images/user.png";
   }
 }

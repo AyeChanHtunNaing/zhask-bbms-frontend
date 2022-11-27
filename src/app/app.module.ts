@@ -51,6 +51,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 import {ToastrModule} from "ngx-toastr";
 import { NgToastModule } from 'ng-angular-popup';
 import { NotificationsComponent } from './notifications/notifications.component'
+import {LogoutComponent} from "./logout/logout.component";
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     CommentComponent,
     CommentsComponent,
     CommentFormComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    LogoutComponent
 
   ],
   imports: [

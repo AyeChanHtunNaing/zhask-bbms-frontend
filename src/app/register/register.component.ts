@@ -57,6 +57,7 @@ export class RegisterComponent implements OnInit {
             })
           }else{
             //  alert("Successfully Registered");
+            this.router.navigate(['/login']);
             Swal.fire({
               title: 'Registered successfully. Check your email to verify account',
               showClass: {
@@ -66,7 +67,7 @@ export class RegisterComponent implements OnInit {
                 popup: 'animate__animated animate__fadeOutUp'
               }
             })
-            this.router.navigate(['/login']);
+
           }
         }
         );

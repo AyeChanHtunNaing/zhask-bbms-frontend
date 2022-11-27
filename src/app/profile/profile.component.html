@@ -5,13 +5,13 @@
       <div class="col-md-5 mt-5">
 
         <label class="hoverable" for="fileInput">
-          <img [src]="pict ? pict : 'https://www.w3schools.com/howto/img_avatar.png'" alt="profile">
+          <img [src]="pict" (error)="setDefaultPic()" alt="profile">
           <div class="hover-text">Choose file</div>
           <div class="background"></div>
         </label>
         <br/>
         <input id="fileInput" type='file' (change)="selectpic($event)" accept="image/*">
-        <button *ngIf="pict" (click)="delete()" >delete</button>
+        <
       </div>
       <div class="col-md-7 mt-5">
         <form class="mx-5" (ngSubmit)="onSubmit()">
