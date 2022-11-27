@@ -9,6 +9,10 @@ import { User } from "../models/user";
 import { Router } from "@angular/router";
 import {Logs} from "../models/logs";
 import {LogsService} from "../services/logs.service";
+import { NotiEmailService } from "../services/notiemail.service";
+import { NotiEmail } from "../models/notiemail";
+import { BoardService } from "../services/board.service";
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: "app-list",
@@ -29,18 +33,22 @@ export class ListComponent implements OnInit {
    user:User=new User();
    users:User[]=[];
    logs:Logs=new Logs();
+   notiEmails:NotiEmail[]=[];
+   notiEmail:NotiEmail=new NotiEmail();
    message!:string;
    userName= window.localStorage.getItem('userName');
    createdId!:number;
-  constructor(private router: Router,private logsService:LogsService,private taskService : TaskService,private taskListService:TaskListService) {}
+  constructor(private userService:UserService,private boardService:BoardService,private notiEmailService:NotiEmailService,private router: Router,private logsService:LogsService,private taskService : TaskService,private taskListService:TaskListService) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
   ngOnInit(): void {
+  this.changeDone();
     this.taskService.getTask(this.tasklist.id).subscribe(data=>
     {
       this.tasks=data;
-    })
+    });
+    
   }
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
@@ -48,6 +56,21 @@ export class ListComponent implements OnInit {
         this.router.navigate([currentUrl]);
        // console.log(currentUrl);
 
+    });
+}
+changeDone()
+{
+  this.taskService.getTask(this.tasklist.id).subscribe(data=>
+    {
+      for(let i=0;i<data.length;i++)
+      {
+        if(data[i].endDate!=null &&new Date(data[i].endDate)<=new Date(Date.now())){
+          console.log("End date"+new Date(data[i].endDate)+" Now "+new Date(Date.now()));
+          
+          this.taskService.updateTaskListToDone(data[i].id,data[i]).subscribe(d=>{});
+        }
+      }
+     // this.reloadCurrentRoute();
     });
 }
   allowDrop($event:any) {
@@ -104,10 +127,12 @@ export class ListComponent implements OnInit {
     this.logsService.createLogs(this.logs).subscribe(date=>{
 
     });
+    this.sendNoti(' moved the card '+ window.localStorage.getItem('description') as string+' from '+window.localStorage.getItem('title')+' to '+this.tasklist.title);
+   
     window.localStorage.removeItem('taskId')
     window.localStorage.removeItem('description');
     window.localStorage.setItem('title',this.tasklist.title);
-
+    
   }
   dragstart(ev:any)
   {
@@ -159,7 +184,34 @@ export class ListComponent implements OnInit {
         text: 'Please fill the data'
       });
     }
+ 
+   this.sendNoti("card create  "+value);
+   
+  }
+  sendNoti(value:string)
+  {
+    this.boardService.getBoardMemberByBoardId(Number(window.localStorage.getItem('boardId'))).subscribe(data=>
+      {
+        let set = new Set();
 
+        for(let j=0;j<data.users.length;j++){
+          if(data.users[j].id!=Number(this.getUserId()))
+           set.add(data.users[j].id);
+        }
+        for(let entry of set){
+          this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
+            this.notiEmail.content=value;
+            this.notiEmail.email=d.email;
+            this.notiEmail.name=d.userName;
+            this.notiEmails.push(this.notiEmail);
+            this.notiEmailService.sendNotiEmail(window.localStorage.getItem('userName') as string,this.notiEmails).subscribe(data=>
+              {
+               console.log(data+"Hi");
+               
+              });
+          });
+        }
+      });
   }
   delete(taskId:number){
 

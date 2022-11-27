@@ -18,6 +18,9 @@ import { InvitememberService } from "../services/invitemember.service";
 import { Router } from "@angular/router";
 import {LogsService} from "../services/logs.service";
 import {Logs} from "../models/logs";
+import { NotiEmailService } from "../services/notiemail.service";
+import { BoardService } from "../services/board.service";
+import { NotiEmail } from "../models/notiemail";
 
 @Component({
   selector: "app-card",
@@ -48,7 +51,10 @@ export class CardComponent implements OnInit {
   user: User = new User();
   userId!:number;
   pict :any;
+  picts:any;
   profile: any = File;
+  notiEmails:NotiEmail[]=[];
+  notiEmail:NotiEmail=new NotiEmail();
   /* attachment */
   selectedFiles?: FileList;
   currentFile?: File;
@@ -57,7 +63,7 @@ export class CardComponent implements OnInit {
   fileInfos?: Observable<any>;
   attachment=new Attachment()
   percentage:number=0
-  constructor(private router: Router,private logsService:LogsService,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
+  constructor(private boardService:BoardService,private notiEmailService:NotiEmailService,private router: Router,private logsService:LogsService,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
     });
@@ -72,6 +78,7 @@ export class CardComponent implements OnInit {
     });
 }
   ngOnInit() {
+    //this.profile=null;
     this.formdata = new FormData();
     this.writeComment();
     this.userId=this.getUserId() as number;
@@ -84,7 +91,7 @@ export class CardComponent implements OnInit {
         }
         const blob = new Blob([z],{type: 'image/jpeg'})
         const file = new File([blob],this.card.pictureName || '',{type:'image/jpeg'});
-        this.profile = file;
+        //gthis.profile = file;
         var read = new FileReader();
         read.readAsDataURL(file);
         read.onload=(event : any)=>{
@@ -107,6 +114,7 @@ export class CardComponent implements OnInit {
       read.onload=(event : any)=>{
         this.pict = event.target.result;
       }
+     
     }
     }
 
@@ -147,23 +155,54 @@ export class CardComponent implements OnInit {
     this.user.id=this.getUserId() as number;
     this.users.push(this.user);
     this.task.users=this.users;
-    this.task.id=Number(this.getId());
-    this.formdata.append('tasks',JSON.stringify(this.task));
-    this.formdata.append('file',this.profile);
-    this.taskService.updateTask(this.formdata).subscribe(data=>{
-      console.log(data);
+    if(this.taskDetails.startDate!=null && this.taskDetails.endDate!=null)
+    {
+      if(new Date(this.taskDetails.endDate)<new Date(this.taskDetails.startDate)){
 
-      this.reloadCurrentRoute();
-    });
+        this.error={isError:true,errorMessage:"Start Date cannot set before End Date!!!"};
+         }
+         else{
+           this.error={isError:false,errorMessage:''};
+           this.task.id=Number(this.getId());
+           this.formdata.append('tasks',JSON.stringify(this.task));
+           this.formdata.append('file',this.profile);
+           this.taskService.updateTask(this.formdata).subscribe(data=>{
+             console.log(data);
+       
+         
+           });
+           Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Updated Successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
+       
+         }
+         
+    }
+    else{
+      this.error={isError:false,errorMessage:''};
+           this.task.id=Number(this.getId());
+           this.formdata.append('tasks',JSON.stringify(this.task));
+           this.formdata.append('file',this.profile);
+           this.taskService.updateTask(this.formdata).subscribe(data=>{
+             console.log(data);
+       
+          //   this.reloadCurrentRoute();
+           });
+           Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Updated Successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
 
-
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Updated Successfully',
-      showConfirmButton: false,
-      timer: 1500
-    });
+    this.reloadCurrentRoute();
+  
   //  this.reloadCurrentRoute();
   }
 
@@ -241,20 +280,53 @@ export class CardComponent implements OnInit {
     console.log(event.target.checked)
     if (event.target.checked == true) {
       activity.checked=true
-      this.activityService.setActivity(activity.id,activity).subscribe(date=>{
-      });
-      this.activityService.setTaskList(Number(this.getId()),activity).subscribe(data=>{
+      setTimeout(() => {this.activityService.setActivity(activity.id,activity).subscribe(date=>{
+      });}, 900);
+      setTimeout(() => {this.activityService.setTaskList(Number(this.getId()),activity).subscribe(data=>{
         this.reloadCurrentRoute();
-      });
+      });}, 1000);
     }else{
       activity.checked=false
       this.activityService.setActivity(activity.id,activity).subscribe(date=>{
         this.reloadCurrentRoute();
       });
     }
-
+    setTimeout(() => {this.activityService.getAllActivities(Number(this.getId())).subscribe(data => {
+      let size=0;
+      for(let i=0;i<data.length;i++)
+      {
+       if(data[i].checked==true)
+         size+=1;
+      }
+     if(size==data.length)
+      this.sendNoti('finished the task '+ this.taskDetails.description);
+    });}, 1100);
   }
+  sendNoti(value:string)
+  {
+    this.boardService.getBoardMemberByBoardId(Number(window.localStorage.getItem('boardId'))).subscribe(data=>
+      {
+        let set = new Set();
 
+        for(let j=0;j<data.users.length;j++){
+          if(data.users[j].id!=Number(this.getUserId()))
+           set.add(data.users[j].id);
+        }
+        for(let entry of set){
+          this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
+            this.notiEmail.content=value;
+            this.notiEmail.email=d.email;
+            this.notiEmail.name=d.userName;
+            this.notiEmails.push(this.notiEmail);
+            this.notiEmailService.sendNotiEmail(window.localStorage.getItem('userName') as string,this.notiEmails).subscribe(data=>
+              {
+               console.log(data+"Hi");
+               
+              });
+          });
+        }
+      });
+  }
   checkActivity(item: Activity) {
     console.log(item.checked)
     let check = false;

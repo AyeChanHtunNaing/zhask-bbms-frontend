@@ -81,7 +81,7 @@
               <span class="text-color">Start Date :</span>
               <input type="date" [(ngModel)]="taskDetails.startDate" name="startDate" id="startDate">
               <span class="text-color mx-3">End Date :</span>
-              <input type="date"  [(ngModel)]="taskDetails.endDate " name="endDate" id="endDate" (blur)="compareTwoDates()" >
+              <input type="date"  [(ngModel)]="taskDetails.endDate " name="endDate" id="endDate"  >
                   <div *ngIf="error.isError" class="alert alert-danger">
                       {{ error.errorMessage }}
                   </div>

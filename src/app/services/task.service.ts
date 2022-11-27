@@ -43,4 +43,7 @@ export class TaskService{
     updateTaskList(taskId:string,task:Task):Observable<Object>{
       return this.httpClient.put(`${this.baseURL}/edit/${taskId}`,task);
     }
+    updateTaskListToDone(taskId:number,task:Task):Observable<Object>{
+      return this.httpClient.put(`${this.baseURL}/editTaskList/${taskId}`,task);
+    }
 }
