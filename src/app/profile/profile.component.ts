@@ -125,8 +125,8 @@ export class ProfileComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
-
-      window.localStorage.setItem('name',this.user.name)
+      window.localStorage.setItem('name',this.user.name) ;
+      window.localStorage.setItem('userName',this.user.userName) ;
     }
    )
   }

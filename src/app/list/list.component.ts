@@ -48,7 +48,7 @@ export class ListComponent implements OnInit {
     {
       this.tasks=data;
     });
-    
+
   }
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
@@ -66,11 +66,13 @@ changeDone()
       {
         if(data[i].endDate!=null &&new Date(data[i].endDate)<=new Date(Date.now())){
           console.log("End date"+new Date(data[i].endDate)+" Now "+new Date(Date.now()));
-          
-          this.taskService.updateTaskListToDone(data[i].id,data[i]).subscribe(d=>{});
+
+          this.taskService.updateTaskListToDone(data[i].id,data[i]).subscribe(d=>{
+           // this.reloadCurrentRoute()
+          });
         }
       }
-     // this.reloadCurrentRoute();
+
     });
 }
   allowDrop($event:any) {
@@ -123,17 +125,17 @@ changeDone()
     console.log(this.task.id)
     this.logs.task=this.task;
     console.log(this.logs.task)
-    this.message=this.userName+' moved the card to '+this.tasklist.title
+    this.message=this.userName+' moved the card from '+window.localStorage.getItem('title')+' to '+this.tasklist.title
     this.logs.message=this.message
     this.logsService.createLogs(this.logs).subscribe(date=>{
 
     });
     this.sendNoti(' moved the card '+ window.localStorage.getItem('description') as string+' from '+window.localStorage.getItem('title')+' to '+this.tasklist.title);
-   
+
     window.localStorage.removeItem('taskId')
     window.localStorage.removeItem('description');
     window.localStorage.setItem('title',this.tasklist.title);
-    
+
   }
   dragstart(ev:any)
   {
@@ -185,9 +187,9 @@ changeDone()
         text: 'Please fill the data'
       });
     }
- 
+
    this.sendNoti("card create  "+value);
-   
+
   }
   sendNoti(value:string)
   {
@@ -208,7 +210,7 @@ changeDone()
             this.notiEmailService.sendNotiEmail(window.localStorage.getItem('userName') as string,this.notiEmails).subscribe(data=>
               {
                console.log(data+"Hi");
-               
+
               });
           });
         }

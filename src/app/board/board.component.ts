@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { TaskListService } from '../services/tasklist.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Board } from '../models/board';
 import {TaskList} from '../models/TaskList';
 import {InviteMember} from "../models/invitemember";
@@ -61,7 +61,7 @@ export class BoardComponent implements OnInit {
   board:Board=new Board();
   count!: number;
 
-  constructor(private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
+  constructor(private router: Router,private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
               ,private invitememberService:InvitememberService,private route:ActivatedRoute) {
     this.inviteForm = this.formBuilder.group({
       email: ['',[this.commaSepEmail ]],
@@ -102,13 +102,22 @@ export class BoardComponent implements OnInit {
       this.invitemember.url="board";
       this.invitemember.workspaceId=this.board.id;
       this.invitememberService.inviteMember(this.invitemember).subscribe(res=>{
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'invited successfully',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        //this.reloadCurrentRoute()
+        this.ngOnInit()
         },
         err=>
         {
 
         }
       );
-      
+
     }
   }
 
@@ -126,7 +135,7 @@ export class BoardComponent implements OnInit {
         err => {
 
         });
-       
+
         this.listName=" ";
       }
       else
@@ -136,8 +145,17 @@ export class BoardComponent implements OnInit {
           title: 'No Input',
           text: 'Please fill the data'
         });
-        
+
       }
     }
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([currentUrl]);
+      // console.log(currentUrl);
 
+    });
+
+
+  }
 }

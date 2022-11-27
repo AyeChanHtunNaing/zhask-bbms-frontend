@@ -113,7 +113,7 @@
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (dblclick)="modalRef.hide();">
+      <button type="button" class="btn btn-secondary" (click)="modalRef.hide();">
         Close
       </button>
     </div>
@@ -159,7 +159,7 @@
     <div class="modal-body">
       <form>
         <div class="mb-3">
-          <input [(ngModel)]="activity.name"  placeholder="enter task name...." class="form-control" name="name">
+          <input [(ngModel)]="activity.name"  placeholder="enter task name...." class="form-control" name="name" (keyup.enter)="addActivity()">
         </div>
       </form>
     </div>

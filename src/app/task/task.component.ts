@@ -102,7 +102,7 @@ export class CardComponent implements OnInit {
         this.pict = event.target.result;
    }
     }
-    
+
  }
 
   dragend(ev:any)
@@ -120,7 +120,7 @@ export class CardComponent implements OnInit {
       read.onload=(event : any)=>{
         this.pict = event.target.result;
       }
-     
+
     }
     }
 
@@ -177,7 +177,7 @@ export class CardComponent implements OnInit {
           //  this.formdata.append('file',this.profile);
            this.taskService.updateTask(this.formdata).subscribe(data=>{
              console.log(data);
-       
+
            this.reloadCurrentRoute();
            });
            Swal.fire({
@@ -187,16 +187,16 @@ export class CardComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           });
-       
+
          }
-         
+
     }
     else{
       this.error={isError:false,errorMessage:''};
-           
+
            this.taskService.updateTask(this.formdata).subscribe(data=>{
              console.log(data);
-       
+
             this.reloadCurrentRoute();
            });
            Swal.fire({
@@ -209,7 +209,7 @@ export class CardComponent implements OnInit {
     }
 
     //this.reloadCurrentRoute();
-  
+
   //  this.reloadCurrentRoute();
   }
 
@@ -328,7 +328,7 @@ export class CardComponent implements OnInit {
             this.notiEmailService.sendNotiEmail(window.localStorage.getItem('userName') as string,this.notiEmails).subscribe(data=>
               {
                console.log(data+"Hi");
-               
+
               });
           });
         }
@@ -423,7 +423,13 @@ export class CardComponent implements OnInit {
           this.email=" ";
       },
         err=>{
-          alert("No Exist")
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'There is no data with your email in this board. Cannot invite',
+            showConfirmButton: false,
+            timer: 1500
+          });
         });
 
     }
