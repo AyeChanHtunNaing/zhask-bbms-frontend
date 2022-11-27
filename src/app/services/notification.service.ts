@@ -19,16 +19,24 @@ export class NotificationService {
   playAudio(){
     let audio = new Audio();
     console.log("start");
-    audio.src = "../../assets/audio/pikachu.mp3";
+    audio.src = "../../assets/audio/notification.mp3";
     console.log("end");
     audio.load();
     audio.play();
   }
 
-  private baseURL = "http://localhost:8080/noti";
+  private baseURL = "http://localhost:8080";
 
   getNotifications(userId:number): Observable<NotificationModel[]> {
-    return this.httpClient.get<NotificationModel[]>(`${this.baseURL}/${userId}`)
+    return this.httpClient.get<NotificationModel[]>(`${this.baseURL}/noti/${userId}`)
   }
+
+  setSentNotification(userId:number): Observable<number> {
+  //   return this.httpClient.get<boolean>(`${this.baseURL}/${userId}`)
+    console.log("setSentNotification:"+userId);
+    return this.httpClient.get<number>(`${this.baseURL}/noti/chg/${userId}`);
+  }
+
+  // chg/
 
 }

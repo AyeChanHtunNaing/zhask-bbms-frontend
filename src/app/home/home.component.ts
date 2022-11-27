@@ -143,11 +143,20 @@ export class HomeComponent implements OnInit ,OnChanges {
           this.Noti(value.content);
         }
         );
-
+        this.setSentNoti(userId);
       }else{
         console.log("No New Noti.");
       }
     });
+  }
+
+  setSentNoti(userId:number){
+    console.log("Sent Start");
+    this.notifyService.setSentNotification(userId).subscribe(data=>{
+      console.log(data);
+
+    });
+    console.log("Sent End");
   }
 
   Noti(msg : string){
@@ -184,7 +193,6 @@ export class HomeComponent implements OnInit ,OnChanges {
     this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
       this.modalRef.hide()
       this.getWorkspaces()
-      this.Noti("Updated Successfully.");
     })
 
     // setTimeout(function(){
