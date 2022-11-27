@@ -91,7 +91,7 @@ export class CardComponent implements OnInit {
         }
         const blob = new Blob([z],{type: 'image/jpeg'})
         const file = new File([blob],this.card.pictureName || '',{type:'image/jpeg'});
-        //gthis.profile = file;
+        //this.profile = file;
         var read = new FileReader();
         read.readAsDataURL(file);
         read.onload=(event : any)=>{
@@ -155,6 +155,9 @@ export class CardComponent implements OnInit {
     this.user.id=this.getUserId() as number;
     this.users.push(this.user);
     this.task.users=this.users;
+    this.task.id=Number(this.getId());
+           this.formdata.append('tasks',JSON.stringify(this.task));
+           this.formdata.append('file',this.profile);
     if(this.taskDetails.startDate!=null && this.taskDetails.endDate!=null)
     {
       if(new Date(this.taskDetails.endDate)<new Date(this.taskDetails.startDate)){
@@ -163,13 +166,13 @@ export class CardComponent implements OnInit {
          }
          else{
            this.error={isError:false,errorMessage:''};
-           this.task.id=Number(this.getId());
-           this.formdata.append('tasks',JSON.stringify(this.task));
-           this.formdata.append('file',this.profile);
+           //this.task.id=Number(this.getId());
+          //  this.formdata.append('tasks',JSON.stringify(this.task));
+          //  this.formdata.append('file',this.profile);
            this.taskService.updateTask(this.formdata).subscribe(data=>{
              console.log(data);
        
-         
+           this.reloadCurrentRoute();
            });
            Swal.fire({
             position: 'center',
@@ -184,13 +187,11 @@ export class CardComponent implements OnInit {
     }
     else{
       this.error={isError:false,errorMessage:''};
-           this.task.id=Number(this.getId());
-           this.formdata.append('tasks',JSON.stringify(this.task));
-           this.formdata.append('file',this.profile);
+           
            this.taskService.updateTask(this.formdata).subscribe(data=>{
              console.log(data);
        
-          //   this.reloadCurrentRoute();
+            this.reloadCurrentRoute();
            });
            Swal.fire({
             position: 'center',
