@@ -83,20 +83,26 @@ export class CardComponent implements OnInit {
     this.writeComment();
     this.userId=this.getUserId() as number;
     this.checkPercentage()
-    const b = window.atob(this.card.profile);
-        const c = new ArrayBuffer(b.length);
-        const z = new Uint8Array(c);
-        for(let i = 0 ; i < b.length ;i++){
-          z[i] = b.charCodeAt(i);
-        }
-        const blob = new Blob([z],{type: 'image/jpeg'})
-        const file = new File([blob],this.card.pictureName || '',{type:'image/jpeg'});
-        //this.profile = file;
-        var read = new FileReader();
-        read.readAsDataURL(file);
-        read.onload=(event : any)=>{
-          this.pict = event.target.result;
-     }
+    //if(this.card.profile!=null)
+    console.log(this.card.profile);
+    if(this.card.profile!=null)
+    {
+      const b = window.atob(this.card.profile);
+      const c = new ArrayBuffer(b.length);
+      const z = new Uint8Array(c);
+      for(let i = 0 ; i < b.length ;i++){
+        z[i] = b.charCodeAt(i);
+      }
+      const blob = new Blob([z],{type: 'image/jpeg'})
+      const file = new File([blob],this.card.pictureName || '',{type:'image/jpeg'});
+      this.profile = file;
+      var read = new FileReader();
+      read.readAsDataURL(file);
+      read.onload=(event : any)=>{
+        this.pict = event.target.result;
+   }
+    }
+    
  }
 
   dragend(ev:any)
@@ -202,7 +208,7 @@ export class CardComponent implements OnInit {
           });
     }
 
-    this.reloadCurrentRoute();
+    //this.reloadCurrentRoute();
   
   //  this.reloadCurrentRoute();
   }

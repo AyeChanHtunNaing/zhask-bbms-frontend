@@ -111,6 +111,7 @@ changeDone()
     this.task.taskList=this.tasklistModel;
     this.board.id=Number(window.localStorage.getItem('boardId'));
     this.task.board=this.board;
+    //this.task.profile=""
     this.user.id=this.getUserId() as number;
     this.users.push(this.user);
     this.task.users=this.users;
