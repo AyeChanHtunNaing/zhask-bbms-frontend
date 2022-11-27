@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { User } from '../models/user';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import { NotificationService } from '../services/notification.service';
+import { NotificationModel } from '../models/notification';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -130,6 +131,23 @@ export class HomeComponent implements OnInit ,OnChanges {
 
   ngOnInit() {
     this.getWorkspaces();
+    this.getNoti();
+  }
+
+  getNoti(){
+    let userId = this.getUserId() as number;
+    this.notifyService.getNotifications(userId).subscribe(data => {
+      if(data.length>0){
+        data.forEach((value) =>{
+          // console.log(value.content);
+          this.Noti(value.content);
+        }
+        );
+
+      }else{
+        console.log("No New Noti.");
+      }
+    });
   }
 
   Noti(msg : string){
