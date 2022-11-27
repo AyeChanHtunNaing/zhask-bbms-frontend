@@ -31,12 +31,12 @@ export class NotificationService {
     return this.httpClient.get<NotificationModel[]>(`${this.baseURL}/noti/${userId}`)
   }
 
-  setSentNotification(userId:number): Observable<number> {
-  //   return this.httpClient.get<boolean>(`${this.baseURL}/${userId}`)
-    console.log("setSentNotification:"+userId);
-    return this.httpClient.get<number>(`${this.baseURL}/noti/chg/${userId}`);
+  getAllNotifications(userId:number): Observable<NotificationModel[]> {
+    return this.httpClient.get<NotificationModel[]>(`${this.baseURL}/allnoti/${userId}`)
   }
 
-  // chg/
+  setSentNotification(userId:number): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseURL}/noti/chg/${userId}`);
+  }
 
 }

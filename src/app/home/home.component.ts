@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
 import { User } from '../models/user';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import { NotificationService } from '../services/notification.service';
-import { NotificationModel } from '../models/notification';
 
 interface SideNavToggle {
   screenWidth: number;
