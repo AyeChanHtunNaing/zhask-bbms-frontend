@@ -18,6 +18,7 @@ import { AuthGuard } from './guard/app-authguard';
 import {FavoriteComponent} from "./favorite/favorite.component";
 import {ChatComponent} from "./chat/chat.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
+import {NotificationsComponent} from "./notifications/notifications.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: 'reset-password', component: ResetPasswordComponent},
   {path:'favorite',component:FavoriteComponent,canActivate:[AuthGuard]},
   {path:'chat',component:ChatComponent,canActivate:[AuthGuard]},
+  { path: 'notifications', component: NotificationsComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

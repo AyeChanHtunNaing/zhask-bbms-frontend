@@ -35,6 +35,11 @@ export const navbarData = [
     icon: 'bx bxs-chat',
     label: 'Chat'
   },
+  {
+    routeLink: '/notifications',
+    icon: 'bx bxs-bell-ring',
+    label: 'Notifications'
+  },
     {
         routeLink: '/logout',
         icon: 'bx bx-log-out icon',

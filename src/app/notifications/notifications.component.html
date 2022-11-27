@@ -1,0 +1,9 @@
+<app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+<div class="body" [ngClass]="getBodyClass()">
+  <h1 class="text-color text-center fs-2">Notifications <i class='bx bxs-bell' ></i></h1>
+  <div class="container d-flex flex-column">
+    <mat-card><span class="fs-6">Phoe Chan smokes so much</span></mat-card>
+    <hr>
+    <mat-card><span class="fs-6">Ma Han Su drinks so much</span></mat-card>
+  </div>
+</div>
