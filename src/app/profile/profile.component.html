@@ -16,12 +16,12 @@
       <div class="col-md-7 mt-5">
         <form class="mx-5" (ngSubmit)="onSubmit()">
           <div class="form-outline mb-4">
-            <label class="form-label" for="name">Name</label>
-            <input type="text" #name class="form-control" id="user.name" [value]="names">
-          </div>
-          <div class="form-outline mb-4">
             <label class="form-label" for="uname">User Name</label>
             <input #username type="text" class="form-control" id="uname" [value]="user.userName">
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="name">Nickname</label>
+            <input type="text" #name class="form-control" id="user.name" [value]="names">
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="email">Email address</label>
