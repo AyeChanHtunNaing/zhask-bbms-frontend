@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { NotificationService } from '../services/notification.service';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -13,7 +14,8 @@ export class NotificationsComponent implements OnInit {
   screenWidths = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
-  constructor() { }
+  Notifications:string[]=[];
+  constructor(private notifyService:NotificationService) { }
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -28,7 +30,23 @@ export class NotificationsComponent implements OnInit {
     }
     return styleClass;
   }
+
+  getUserId(): number | null {
+    return window.localStorage.getItem('userId') as number | null;
+  }
+
   ngOnInit(): void {
+    this.getNoti();
+  }
+
+
+  getNoti(){
+    let userId = this.getUserId() as number;
+    this.notifyService.getAllNotifications(userId).subscribe(data => {
+        for(let i=0;i<data.length;i++){
+          this.Notifications.push(data[i].content);
+        }
+    });
   }
 
 }
