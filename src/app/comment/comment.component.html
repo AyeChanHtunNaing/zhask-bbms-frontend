@@ -1,6 +1,6 @@
 <div class="comment">
   <div class="comment-image-container">
-    <img [src]="pict ? pict:'/assets/user-icon.png'"style="width:40px;height:40px;boarder-radius:50%" alt="Profile"/>
+    <img [src]="pict" (error)="setDefaultPic()" alt="profile" style="width:40px;height:40px;border-radius:50%">
   </div>
   <div class="comment-right-part">
     <div class="comment-content">

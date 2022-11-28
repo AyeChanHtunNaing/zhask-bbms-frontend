@@ -36,7 +36,7 @@ export class CommentComponent implements OnInit {
   userName!:string;
   constructor(private userService:UserService)
   {
-  
+
   }
   ngOnInit(): void {
     this.userService.getUserNameByUserId(this.comment.user.id).subscribe(data=>
@@ -91,5 +91,8 @@ export class CommentComponent implements OnInit {
       this.activeComment.id == this.comment.id &&
       this.activeComment.type == 'editing'
     );
+  }
+  setDefaultPic() {
+    this.pict = "assets/images/user.png";
   }
 }

@@ -25,7 +25,7 @@ export class CommentsComponent implements OnInit {
     this.commentsService.getComments(Number(this.getId())).subscribe((comments) => {
       this.comments = comments;
       console.log(this.comments);
-      
+
     });
   }
 
@@ -54,7 +54,7 @@ export class CommentsComponent implements OnInit {
         this.ngOnInit();
         this.activeComment = null;
       });
-      
+
   }
 
   deleteComment(commentId: string): void {
@@ -103,4 +103,5 @@ export class CommentsComponent implements OnInit {
   getId():string{
     return window.localStorage.getItem('id') as string;
   }
+
 }
