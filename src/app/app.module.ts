@@ -52,6 +52,7 @@ import {ToastrModule} from "ngx-toastr";
 import { NgToastModule } from 'ng-angular-popup';
 import { NotificationsComponent } from './notifications/notifications.component'
 import {LogoutComponent} from "./logout/logout.component";
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import {LogoutComponent} from "./logout/logout.component";
     BsDropdownModule,
     NgxSpinnerModule,
     NgToastModule,
+    NgxPaginationModule,
     ToastrModule.forRoot({
       positionClass :'toast-top-right'
     })

@@ -63,6 +63,7 @@ export class CardComponent implements OnInit {
   fileInfos?: Observable<any>;
   attachment=new Attachment()
   percentage:number=0
+  p: number = 1;
   constructor(private boardService:BoardService,private notiEmailService:NotiEmailService,private router: Router,private logsService:LogsService,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
@@ -135,6 +136,7 @@ export class CardComponent implements OnInit {
     this.task.description = value;
     this.taskService.updateTaskDescription(this.getId(),this.task).subscribe(data=>{
       console.log(data);
+      this.sendNoti(' update the card from '+ window.localStorage.getItem('taskdes') +" to " +this.taskDetails.description+" at "+new Date(Date.now()));
       this.reloadCurrentRoute();
     })
     Swal.fire({
@@ -196,8 +198,9 @@ export class CardComponent implements OnInit {
 
            this.taskService.updateTask(this.formdata).subscribe(data=>{
              console.log(data);
-
+           
             this.reloadCurrentRoute();
+
            });
            Swal.fire({
             position: 'center',
@@ -225,7 +228,7 @@ export class CardComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.taskService.deleteTask(taskId).subscribe(data => {
-
+          this.sendNoti(' delete the card '+ this.taskDetails.description+" at "+new Date(Date.now()));
         });
         Swal.fire(
           'Deleted!',
@@ -245,6 +248,7 @@ export class CardComponent implements OnInit {
     console.log(this.taskDesc);
     window.localStorage.setItem('des',this.taskDesc);
     window.localStorage.setItem('id',this.taskDetails.id+"");
+    window.localStorage.setItem('taskdes',this.card.description);
   }
 
   getTaskDetails():string{
@@ -306,7 +310,7 @@ export class CardComponent implements OnInit {
          size+=1;
       }
      if(size==data.length)
-      this.sendNoti('finished the task '+ this.taskDetails.description);
+      this.sendNoti('finished the task '+ this.taskDetails.description+" at "+new Date(Date.now()));
     });}, 1100);
   }
   sendNoti(value:string)

@@ -10,6 +10,9 @@ import Swal from 'sweetalert2';
 import { User } from '../models/user';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import { NotificationService } from '../services/notification.service';
+import { NotiEmail } from '../models/notiemail';
+import { NotiEmailService } from '../services/notiemail.service';
+import { UserService } from '../services/user.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -39,6 +42,8 @@ export class HomeComponent implements OnInit ,OnChanges {
    date = new Date; // get current date
    current = this.date.getDay();
    today=this.checkDay();
+   notiEmails:NotiEmail[]=[];
+  notiEmail:NotiEmail=new NotiEmail();
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   userEmail=window.localStorage.getItem('userEmail');
@@ -57,7 +62,7 @@ export class HomeComponent implements OnInit ,OnChanges {
     return forbidden ? {'email': {value: control.value}} : null;
   };
 
-  constructor(private formBuilder: FormBuilder, private modalService: BsModalService,private workspaceService: WorkspaceService, private invitememberService: InvitememberService, private notifyService:NotificationService
+  constructor(private notiEmailService:NotiEmailService,private userService:UserService,private formBuilder: FormBuilder, private modalService: BsModalService,private workspaceService: WorkspaceService, private invitememberService: InvitememberService, private notifyService:NotificationService
     , private router: Router) {
     this.registerForm = this.formBuilder.group({
       email: ['', [this.commaSepEmail]],
@@ -75,7 +80,32 @@ export class HomeComponent implements OnInit ,OnChanges {
     token: ''
 
   }
+  sendNoti(value:string)
+  {
+    let set = new Set();
+    this.workspaceService.getWorkspace(this.getUserId() as number).subscribe(data=>{
+      for(let i=0;i<data.length;i++){
+        for(let j=0;j<data[i].users.length;j++){
+          set.add(data[i].users[j].id);
+          // console.log(data[i].users[j].id);
+        }
+       }
+       for(let entry of set){
+        this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
+          this.notiEmail.content=value;
+          this.notiEmail.email=d.email;
+          this.notiEmail.name=d.userName;
+          this.notiEmails.push(this.notiEmail);
+          this.notiEmailService.sendNotiEmail(window.localStorage.getItem('userName') as string,this.notiEmails).subscribe(data=>
+            {
+             console.log(data+"Hi");
 
+            });
+        });
+
+      }
+    });
+  }
   getBodyClass(): string {
     let styleClass = '';
     if (this.collapsed && this.screenWidth > 768) {
@@ -205,9 +235,10 @@ export class HomeComponent implements OnInit ,OnChanges {
       showConfirmButton: false,
       timer: 1500
     });
+    this.sendNoti("update workspace from "+ window.localStorage.getItem('des')+" to "+value+" at "+new Date(Date.now()));
   }
 
-  deleteWorkspace(workspaceId: number) {
+  deleteWorkspace(workspaceId: number,wname:string) {
 
     Swal.fire({
       title: 'Are you sure?',
@@ -233,6 +264,7 @@ export class HomeComponent implements OnInit ,OnChanges {
         // }, 1000);
       }
     });
+    this.sendNoti("delete workspace "+wname+" at "+new Date(Date.now()));
     this.getWorkspaces();
   }
 

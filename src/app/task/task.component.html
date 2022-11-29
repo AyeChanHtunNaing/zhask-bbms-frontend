@@ -91,10 +91,11 @@
           <div *ngIf="logs.length!=0">
             <div class="card mt-3">
               <div class="card-header">Logs</div>
-              <div  *ngFor="let log of logs">
+              <div  *ngFor="let log of logs | paginate: { itemsPerPage: 10, currentPage: p }">
                 <span>{{log.message}}</span>
               </div>
             </div>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
           </div>
         </div>
         <div class="col-md-3">

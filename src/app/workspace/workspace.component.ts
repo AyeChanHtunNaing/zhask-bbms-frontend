@@ -12,6 +12,9 @@ import Swal from 'sweetalert2';
 import { User } from '../models/user';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {NgxSpinnerService} from "ngx-spinner";
+import { NotiEmail } from '../models/notiemail';
+import { UserService } from '../services/user.service';
+import { NotiEmailService } from '../services/notiemail.service';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -39,6 +42,8 @@ export class WorkspaceComponent implements OnInit {
   submitted = false;
   users:User[]=[];
   user:User=new User();
+  notiEmails:NotiEmail[]=[];
+  notiEmail:NotiEmail=new NotiEmail();
 //  @ViewChild('updatedDescription') updatedescription!:ElementRef;
   userEmail=window.localStorage.getItem('userEmail');
   modalRef!: BsModalRef;
@@ -68,7 +73,7 @@ export class WorkspaceComponent implements OnInit {
     return styleClass;
   }
 
-  constructor( private formBuilder: FormBuilder,private spinner: NgxSpinnerService ,private modalService: BsModalService,private boardService: BoardService,private invitememberService:InvitememberService
+  constructor(private notiEmailService:NotiEmailService,private userService:UserService, private formBuilder: FormBuilder,private spinner: NgxSpinnerService ,private modalService: BsModalService,private boardService: BoardService,private invitememberService:InvitememberService
                 ,private route : ActivatedRoute , private router : Router){
     this.registerForm = this.formBuilder.group({
 
@@ -92,6 +97,32 @@ export class WorkspaceComponent implements OnInit {
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
 
+  }
+
+  sendNoti(value:string)
+  {
+    this.boardService.getBoardMemberByBoardId(Number(window.localStorage.getItem('boardId'))).subscribe(data=>
+      {
+        let set = new Set();
+
+        for(let j=0;j<data.users.length;j++){
+          if(data.users[j].id!=Number(this.getUserId()))
+           set.add(data.users[j].id);
+        }
+        for(let entry of set){
+          this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
+            this.notiEmail.content=value;
+            this.notiEmail.email=d.email;
+            this.notiEmail.name=d.userName;
+            this.notiEmails.push(this.notiEmail);
+            this.notiEmailService.sendNotiEmail(window.localStorage.getItem('userName') as string,this.notiEmails).subscribe(data=>
+              {
+               console.log(data+"Hi");
+
+              });
+          });
+        }
+      });
   }
   onRegisterSubmit() {
 
@@ -224,8 +255,8 @@ export class WorkspaceComponent implements OnInit {
       this.modalRef.hide()
       this.getBoard();
       this.boardName="";
-    })
-
+    });
+    this.sendNoti("update board from "+ window.localStorage.getItem('des')+" to "+value+" at "+new Date(Date.now()));
     // setTimeout(function(){
     //   window.location.reload();
     // }, 900);
@@ -233,7 +264,7 @@ export class WorkspaceComponent implements OnInit {
 
   }
 
-  deleteBoard(boardId : number){
+  deleteBoard(boardId : number,name:string){
 
     Swal.fire({
       title: 'Are you sure?',
@@ -258,6 +289,8 @@ export class WorkspaceComponent implements OnInit {
         //   //window.location.reload();
         // }, 1000);
       }});
+      this.sendNoti("delete board "+name+" at "+new Date(Date.now()));
+
       this.getBoard();
 }
   changed(event, id: number) {

@@ -43,12 +43,12 @@ export class ListComponent implements OnInit {
     this.displayAddCard = !this.displayAddCard;
   }
   ngOnInit(): void {
+   // window.localStorage.removeItem('description')
   this.changeDone();
     this.taskService.getTask(this.tasklist.id).subscribe(data=>
     {
       this.tasks=data;
     });
-
   }
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
@@ -77,7 +77,8 @@ changeDone()
 }
   allowDrop($event:any) {
     $event.preventDefault();
-
+  // alert(this.tasklist.title)
+   window.localStorage.setItem('m',this.tasklist.title)
   }
 
   getUserId():number | null{
@@ -118,6 +119,10 @@ changeDone()
     this.users.push(this.user);
     this.task.users=this.users;
     //this.task.startDate=
+    if(window.localStorage.getItem('move')!=null)
+    this.message=this.userName+' moved the card from '+window.localStorage.getItem('move')+' to '+this.tasklist.title+" at "+new Date(Date.now());
+    else
+    this.message=this.userName+' moved the card from '+window.localStorage.getItem('m')+' to '+this.tasklist.title+" at "+new Date(Date.now());
     this.taskService.updateTaskList(this.taskId,this.task).subscribe(data=>
     {
     });
@@ -125,22 +130,22 @@ changeDone()
     console.log(this.task.id)
     this.logs.task=this.task;
     console.log(this.logs.task)
-    this.message=this.userName+' moved the card from '+window.localStorage.getItem('title')+' to '+this.tasklist.title
+   
     this.logs.message=this.message
     this.logsService.createLogs(this.logs).subscribe(date=>{
 
     });
-    this.sendNoti(' moved the card '+ window.localStorage.getItem('description') as string+' from '+window.localStorage.getItem('title')+' to '+this.tasklist.title);
-
+  
+    this.sendNoti(' moved the card '+ window.localStorage.getItem('description') as string+' from '+window.localStorage.getItem('title')+' to '+this.tasklist.title+" at "+new Date(Date.now()));
     window.localStorage.removeItem('taskId')
     window.localStorage.removeItem('description');
     window.localStorage.setItem('title',this.tasklist.title);
-
   }
   dragstart(ev:any)
   {
+    //window.localStorage.removeItem('title')
+    window.localStorage.setItem('move',this.tasklist.title)
     window.localStorage.setItem('title',this.tasklist.title);
-    //alert(this.tasklist.title)
   }
   getId():string{
     return window.localStorage.getItem('id') as string;
@@ -163,13 +168,15 @@ changeDone()
         this.task.id=Number(res.id)
         this.logs.task=this.task;
         console.log(this.logs.task.id)
-        this.message=this.userName+' created this card'
+        this.message=this.userName+' created this card'+" at "+new Date(Date.now());
         this.logs.message=this.message
+        this.ngOnInit();
+        this.reloadCurrentRoute();
         this.logsService.createLogs(this.logs).subscribe(date=>{
 
         });
 
-        this.ngOnInit()
+        
       },
       err => {
         console.log(err);
@@ -187,8 +194,8 @@ changeDone()
         text: 'Please fill the data'
       });
     }
-
-   this.sendNoti("card create  "+value);
+   window.localStorage.setItem('move',this.tasklist.title)
+   this.sendNoti("card create  "+value+" at "+new Date(Date.now()));
 
   }
   sendNoti(value:string)
