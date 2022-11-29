@@ -9,6 +9,7 @@ import {ReportService} from "../services/report.service";
 import { TaskService } from '../services/task.service';
 import { Task } from '../models/Task';
 import { O } from 'chart.js/dist/chunks/helpers.core';
+import Swal from "sweetalert2";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -102,28 +103,58 @@ export class ReportComponent implements OnInit {
 
  exportWorkspace(id:number){
    this.reportService.exportWorkspace(id).subscribe(data=>{
-     alert("exported successfully")
+     Swal.fire({
+       position: 'center',
+       icon: 'success',
+       title: 'Exported Successfully',
+       showConfirmButton: false,
+       timer: 1500
+     });
    })
  }
 
   exportBoard(id:number){
     this.reportService.exportBoard(id).subscribe(data=>{
-      alert("exported successfully")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Exported Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
     })
   }
   exportAssignedTask(id:number){
     this.reportService.exportAssignedTask(id).subscribe(data=>{
-      alert("exported successfully")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Exported Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
     })
   }
   exportEndTask(id:number){
     this.reportService.exportEndTask(id).subscribe(data=>{
-      alert("exported successfully")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Exported Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
     })
   }
   exportClosedTask(id:number){
     this.reportService.exportClosedTask(id).subscribe(data=>{
-      alert("exported successfully")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Exported Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
     })
   }
 }

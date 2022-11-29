@@ -93,6 +93,7 @@ export class BoardComponent implements OnInit {
     // stop here if form is invalid
     if (this.inviteForm.invalid) {
       return;
+
     }
     //True if all the fields are filled
     if(this.submitted)

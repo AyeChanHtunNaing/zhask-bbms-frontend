@@ -166,7 +166,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-color"   (click)="addActivity()">Add New Task</button>
+      <button type="button" class="btn btn-color"  [disabled]="!activity.name" (click)="addActivity()">Add New Task</button>
     </div>
   </ng-template>
   <!-- add new activity modal start -->

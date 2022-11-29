@@ -272,14 +272,23 @@ export class CardComponent implements OnInit {
   }
 
   addActivity(){
-    console.log(this.taskDetails.id)
-    this.activity.task=this.taskDetails;
-    this.activityService.createActivity(this.activity)
-      .subscribe(res => {
+    if(!this.activity.name.trim().length ){
+      Swal.fire({
+        icon: 'error',
+        title: 'No Input',
+        text: 'Please fill the data'
+      });
+    }else{
+      console.log(this.taskDetails.id)
+      this.activity.task=this.taskDetails;
+      this.activityService.createActivity(this.activity)
+        .subscribe(res => {
           this.activity.name="";
           this.modalRef.hide();
           this.getAllActivities()
         });
+    }
+
   }
 
   getAllActivities(){

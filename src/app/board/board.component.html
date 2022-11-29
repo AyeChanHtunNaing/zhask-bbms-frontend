@@ -32,7 +32,7 @@
                 <label for="invite" class="form-label">Invite people</label>
                 <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite" required>
               </div>
-              <button type="submit" class="btn btn-color">Invite</button>
+              <button type="submit" class="btn btn-color"  [disabled]="!invitemember.email">Invite</button>
             </form>
           </div>
           <div class="modal-footer">
