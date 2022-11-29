@@ -34,6 +34,7 @@ export class CardComponent implements OnInit {
   isView: boolean=false;
   taskDetails!:Task;
   taskDesc!:string;
+  updateDescription!:string;
   task=new Task();
   activity=new Activity();
   editForm!:FormGroup;
@@ -131,12 +132,13 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('description',this.card.description);
   }
   updateTaskDescription() {
-    const value = this.taskDetails.description;
+
+    const value = this.updateDescription;
     console.log(value);
     this.task.description = value;
     this.taskService.updateTaskDescription(this.getId(),this.task).subscribe(data=>{
       console.log(data);
-      this.sendNoti(' update the card from '+ window.localStorage.getItem('taskdes') +" to " +this.taskDetails.description+" at "+new Date(Date.now()));
+      this.sendNoti(' update the card from '+ window.localStorage.getItem('taskdes') +" to " +this.taskDetails.description+" at "+new Date(Date.now()).toLocaleString());
       this.reloadCurrentRoute();
     })
     Swal.fire({
@@ -198,7 +200,7 @@ export class CardComponent implements OnInit {
 
            this.taskService.updateTask(this.formdata).subscribe(data=>{
              console.log(data);
-           
+
             this.reloadCurrentRoute();
 
            });
@@ -228,7 +230,7 @@ export class CardComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.taskService.deleteTask(taskId).subscribe(data => {
-          this.sendNoti(' delete the card '+ this.taskDetails.description+" at "+new Date(Date.now()));
+          this.sendNoti(' delete the card '+ this.taskDetails.description+" at "+new Date(Date.now()).toLocaleString());
         });
         Swal.fire(
           'Deleted!',
@@ -264,6 +266,7 @@ export class CardComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
+    this.updateDescription=this.taskDetails.description
     this.showLogs()
     this.modalRef = this.modalService.show(template,{ class: 'modal-lg'});
   }
@@ -310,7 +313,7 @@ export class CardComponent implements OnInit {
          size+=1;
       }
      if(size==data.length)
-      this.sendNoti('finished the task '+ this.taskDetails.description+" at "+new Date(Date.now()));
+      this.sendNoti('finished the task '+ this.taskDetails.description+" at "+new Date(Date.now()).toLocaleString());
     });}, 1100);
   }
   sendNoti(value:string)

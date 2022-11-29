@@ -128,12 +128,13 @@
     <div class="modal-body">
       <form>
         <div class="mb-3">
-          <input [(ngModel)]="taskDetails.description" class="form-control" name="taskDesc">
+          <input  [(ngModel)]="updateDescription" [value]="taskDetails.description" class="form-control" name="description">
+          <div *ngIf="updateDescription==''"><span class="text-danger">Description not to be null</span></div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-color" (click)="updateTaskDescription()">Update Task</button>
+      <button type="button" class="btn btn-color" (click)="updateTaskDescription()" [disabled]="!updateDescription">Update Task</button>
     </div>
   </ng-template>
   <!-- edit task desc ng modal end -->
