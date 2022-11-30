@@ -153,7 +153,7 @@ changeDone()
     return window.localStorage.getItem('id') as string;
   }
   onEnter(value: string) {
-    if(value!=""&& value!=null){
+    if(value!=""&& value!=null&&value.trim().length!=0){
     this.tasklistModel.id=this.tasklist.id;
     this.task.description=value;
     this.task.taskList=this.tasklistModel;

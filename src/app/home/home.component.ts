@@ -134,20 +134,29 @@ export class HomeComponent implements OnInit ,OnChanges {
     }
     //True if all the fields are filled
     if (this.submitted) {
-      this.user.id = this.getUserId() as number;
-      this.users.push(this.user);
-      this.workspace.users = this.users;
-      this.workspace.createdBy = window.localStorage.getItem('userEmail') as string;
-      this.workspaceService.createWorkspace(this.workspace).subscribe(res => {
-         this.modalRef.hide()
-        this.getWorkspaces()
-        },
-        err => {
+      if (this.workspace.name.trim().length != 0 && this.workspace.description.trim().length != 0) {
+        this.user.id = this.getUserId() as number;
+        this.users.push(this.user);
+        this.workspace.users = this.users;
+        this.workspace.createdBy = window.localStorage.getItem('userEmail') as string;
+        this.workspaceService.createWorkspace(this.workspace).subscribe(res => {
+            this.modalRef.hide()
+            this.getWorkspaces()
+          },
+          err => {
 
+          });
+        this.registerForm.reset()
+      }else{
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Please fill data correctly',
+          showConfirmButton: false,
+          timer: 1500
         });
-      this.registerForm.reset()
+      }
     }
-
   }
 
   getWorkspaces() {
@@ -213,29 +222,39 @@ export class HomeComponent implements OnInit ,OnChanges {
   }
 
   updateWorkspaceDescription() {
-    const value = this.workspaceName;
-    console.log(value);
-    this.workspace.name = value;
-    console.log(this.workspace.name);
-    console.log(this.getId());
+    if (this.workspaceName.trim().length != 0 && this.workspaceName) {
+      const value = this.workspaceName;
+      console.log(value);
+      this.workspace.name = value;
+      console.log(this.workspace.name);
+      console.log(this.getId());
 
-    this.workspaceService.updateWorkspaceById(this.getId(),this.workspace).subscribe(data=>{
-      this.modalRef.hide()
-      this.getWorkspaces()
-    })
+      this.workspaceService.updateWorkspaceById(this.getId(), this.workspace).subscribe(data => {
+        this.modalRef.hide()
+        this.getWorkspaces()
+      })
 
-    // setTimeout(function(){
-    //   window.location.reload();
-    // }, 900);
+      // setTimeout(function(){
+      //   window.location.reload();
+      // }, 900);
 
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Updated Successfully',
-      showConfirmButton: false,
-      timer: 1500
-    });
-    this.sendNoti("update workspace from "+ window.localStorage.getItem('des')+" to "+value+" at "+new Date(Date.now()).toLocaleString());
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Updated Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.sendNoti("update workspace from " + window.localStorage.getItem('des') + " to " + value + " at " + new Date(Date.now()).toLocaleString());
+    }else{
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Please fill data correctly',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
   }
 
   deleteWorkspace(workspaceId: number,wname:string) {

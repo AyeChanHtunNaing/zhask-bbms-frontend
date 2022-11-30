@@ -16,6 +16,7 @@
   <div class="add">
   <form [formGroup]="addListForm">
     <input type="text" class="input"  class="form-control" [(ngModel)]="listName" formControlName="listName" placeholder="Add Title"  name="listName" (keyup.enter)="addList(listName);">
+
   </form>
 
   <span class="btn" (click)="addList(listName);">Add New List</span>

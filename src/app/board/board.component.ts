@@ -69,7 +69,7 @@ export class BoardComponent implements OnInit {
       email: ['',[this.commaSepEmail ]],
     });
     this.addListForm = this.formBuilder.group({
-      listName: ['',[Validators.required ]],
+      listName: ['',[Validators.required ],this.noWhitespaceValidator],
     });
   }
 
@@ -122,7 +122,14 @@ export class BoardComponent implements OnInit {
         },
         err=>
         {
-
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Invite Failed',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.modalRef.hide();
         }
       );
 
@@ -188,5 +195,10 @@ export class BoardComponent implements OnInit {
   getUserId():number | null{
     return window.localStorage.getItem('userId') as number | null;
 
+  }
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
   }
 }

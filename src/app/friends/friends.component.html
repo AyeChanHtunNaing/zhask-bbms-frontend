@@ -4,13 +4,18 @@
   <h1 style="color:#406595" class="text-color text-center fw-bold">Your Friends</h1>
 
   <div class="container d-flex flex-column" *ngFor="let user of users">
-    <div class="card mt-3" *ngIf="user.userName!=currentUser">
+    <div class="card mt-3 w-75 h-75 d-flex mx-auto" *ngIf="user.userName!=currentUser" >
       <div class="card-body">
+        <img [src]="user.profile" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+        <div *ngIf="user.profile==null">
+          <img src="assets/images/user.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+         </div>
         <p class="card-text"><span style="color:#406595"> User Name :</span> <br>  {{user.userName}}</p>
         <p class="card-text"><span style="color:#406595"> Nickname :</span> <br> {{user.name}}</p>
         <p class="card-text"><span style="color:#406595"> Email :</span> <br> {{user.email}}</p>
         <p class="card-text"><span style="color:#406595"> Member Since :</span>  <br> {{user.createAt}}</p>
       </div>
+
     </div>
 
   </div>

@@ -16,11 +16,11 @@
         <form class="mx-5" (ngSubmit)="onSubmit()">
           <div class="form-outline mb-4">
             <label class="form-label" for="uname">User Name</label>
-            <input #username type="text" class="form-control" id="uname" [value]="user.userName" size="50">
+            <input #username type="text" class="form-control" id="uname" [value]="user.userName" size="50" required>
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="name">Nickname</label>
-            <input type="text" #name class="form-control" id="user.name" [value]="names" size="50">
+            <input type="text" #name class="form-control" id="user.name" [value]="names" size="50" required>
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="email">Email address</label>

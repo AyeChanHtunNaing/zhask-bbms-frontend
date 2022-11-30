@@ -19,6 +19,8 @@ export class FriendsComponent implements OnInit {
   @Input() screenWidth = 0;
   users:Array<User>=[];
   currentUser!:string;
+  pict :any;
+  profile: any = File;
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -53,14 +55,35 @@ export class FriendsComponent implements OnInit {
        }
        for(let entry of set){
         this.userService.getUserNameByUserId(entry as number).subscribe(data=>{
+          const b = window.atob(data.profile);
+          const c = new ArrayBuffer(b.length);
+          const z = new Uint8Array(c);
+          for(let i = 0 ; i < b.length ;i++){
+            z[i] = b.charCodeAt(i);
+          }
+          console.log(data)
+          console.log(data.pictureName+" "+data.profile);
+          const blob = new Blob([z],{type: 'image/jpeg'})
+          const file = new File([blob],data.pictureName || '',{type:'image/jpeg'})
+          this.profile = file;
+          var read = new FileReader();
+          read.readAsDataURL(file);
+          read.onload=(event : any)=>{
+
+            this.pict = event.target.result;
+            data.profile=this.pict
+          }
           this.users.push(data);
+
         });
 
       }
     });
    console.log(this.users);
 
-
+  }
+  setDefaultPic() {
+    this.pict = "assets/images/user.png";
   }
 }
 

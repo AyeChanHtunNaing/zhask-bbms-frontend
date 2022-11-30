@@ -16,6 +16,7 @@ import { NotiEmail } from '../models/notiemail';
 import { UserService } from '../services/user.service';
 import { NotiEmailService } from '../services/notiemail.service';
 import {WorkspaceService} from "../services/workspace.service";
+
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -137,20 +138,30 @@ export class WorkspaceComponent implements OnInit {
     //True if all the fields are filled
     if(this.submitted)
     {
-      this.user.id=this.getUserId() as number;
-      this.board.createdBy=window.localStorage.getItem('userEmail') as string;
-      this.users.push(this.user);
-      this.board.users=this.users;
-      this.boardService.createBoard(this.board)
-        .subscribe(res => {
-            this.registerForm.reset();
-            this.modalRef.hide();
-            this.getBoard();
-          },
-          err => {
+     if(this.board.name.trim().length!=0 && this.board.description.trim().length!=0) {
+       this.user.id = this.getUserId() as number;
+       this.board.createdBy = window.localStorage.getItem('userEmail') as string;
+       this.users.push(this.user);
+       this.board.users = this.users;
+       this.boardService.createBoard(this.board)
+         .subscribe(res => {
+             this.registerForm.reset();
+             this.modalRef.hide();
+             this.getBoard();
+           },
+           err => {
 
-          });
-        this.submitted=false;
+           });
+       this.submitted = false;
+     }else{
+       Swal.fire({
+         position: 'center',
+         icon: 'error',
+         title: 'Please fill data correctly',
+         showConfirmButton: false,
+         timer: 1500
+       });
+     }
     }
   }
   onInviteSubmit() {
@@ -179,7 +190,14 @@ export class WorkspaceComponent implements OnInit {
       },
         err=>
         {
-          alert("error"+err)
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Invite Failed',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.modalRef.hide();
         }
       );
     }
@@ -247,28 +265,36 @@ export class WorkspaceComponent implements OnInit {
   }
 
   updateBoardDescription(){
-   // const value=this.updatedescription.nativeElement.value;
-    const value=this.boardName;
-    console.log(value);
-    this.board.name=value;
-    this.boardService.updateBoardById(this.getId(),this.board).subscribe(data=>{
+    if(this.boardName.trim().length!=0 && this.boardName) {
+      const value = this.boardName;
+      console.log(value);
+      this.board.name = value;
+      this.boardService.updateBoardById(this.getId(), this.board).subscribe(data => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Updated Successfully',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.registerForm.reset()
+        this.modalRef.hide()
+        this.getBoard();
+        this.boardName = "";
+      });
+      this.sendNoti("update board from " + window.localStorage.getItem('des') + " to " + value + " at " + new Date(Date.now()));
+      // setTimeout(function(){
+      //   window.location.reload();
+      // }, 900);
+    }else{
       Swal.fire({
         position: 'center',
-        icon: 'success',
-        title: 'Updated Successfully',
+        icon: 'error',
+        title: 'Please fill data correctly',
         showConfirmButton: false,
         timer: 1500
       });
-      this.registerForm.reset()
-      this.modalRef.hide()
-      this.getBoard();
-      this.boardName="";
-    });
-    this.sendNoti("update board from "+ window.localStorage.getItem('des')+" to "+value+" at "+new Date(Date.now()));
-    // setTimeout(function(){
-    //   window.location.reload();
-    // }, 900);
-
+    }
 
   }
 
@@ -348,4 +374,9 @@ export class WorkspaceComponent implements OnInit {
      }
    });
  }
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
+  }
 }
