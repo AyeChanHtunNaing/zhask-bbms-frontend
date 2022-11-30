@@ -29,7 +29,8 @@ export class LogoutComponent implements OnInit {
         localStorage.removeItem('Authorization');
         this.router.navigate(['login']);
       }else{
-        this.router.navigate(['home']);
+        //this.router.navigate(['home']);
+        window.history.back();
       }
     })
 
