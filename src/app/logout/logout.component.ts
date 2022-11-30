@@ -12,16 +12,27 @@ export class LogoutComponent implements OnInit {
   constructor(private router : Router, private service : UserService) { }
 
   ngOnInit(): void {
-
-      localStorage.removeItem('Authorization');
     Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Logout Successfully',
-      showConfirmButton: false,
-      timer: 1500
-    });
-     this.router.navigate(['login']);
+      title: 'Are you sure to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Logout!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Logout!',
+          'Logout Successfully.',
+          'success'
+        )
+        localStorage.removeItem('Authorization');
+        this.router.navigate(['login']);
+      }else{
+        this.router.navigate(['home']);
+      }
+    })
+
 
   }
 
