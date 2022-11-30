@@ -51,6 +51,7 @@ export class WorkspaceComponent implements OnInit {
   boardName!:string;
   isDataAvailable:boolean=true;
   workspaceName: string | null | undefined;
+  members:String[]=[];
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -221,6 +222,9 @@ export class WorkspaceComponent implements OnInit {
     })
     this.board.workSpace=this.workspace;
     this.getBoard();
+    this.getMembers();
+
+
   }
 
   goTotaskLists(baordId:number){
@@ -329,5 +333,22 @@ export class WorkspaceComponent implements OnInit {
     this.submitted=false;
     this.modalRef = this.modalService.show(template);
   }
+ getMembers(){
+   this.boardService.getBoardMemberByBoardId(Number(window.localStorage.getItem('boardId'))).subscribe(data=>
+   {
 
+     let set = new Set();
+
+     for(let j=0;j<data.users.length;j++){
+       if(data.users[j].id!=Number(this.getUserId()))
+         set.add(data.users[j].id);
+     }
+     for(let entry of set){
+       this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
+         this.members.push(d.name);
+         console.log('Name is' + d.name)
+       });
+     }
+   });
+ }
 }

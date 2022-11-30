@@ -15,8 +15,8 @@
     <button type="button" class="btn btn-color" (click)="openModal(create)">
       Create New Board <i class="bi bi-clipboard"></i>
     </button>
-    <button type="button" class="btn btn-color mx-2" (click)="openModal(invite)">
-       Members  <i class="bi bi-person"></i>
+    <button type="button" class="btn btn-color mx-2" (click)="openModal(show)">
+       Members  <i class='bx bxs-user-detail'></i>
     </button>
   </div>
   <div class="form-group">
@@ -176,4 +176,26 @@
     </div>
   </ng-template>
   <!-- edit board ng modal box end -->
+  <!-- show members ng modal box start -->
+  <ng-template #show>
+    <div class="modal-header">
+      <h2 class="modal-title text-color fw-bold">Members</h2>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div *ngFor="let item of members" >
+     <ul>
+       <li>item</li>
+     </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modalRef.hide();">
+        Close
+      </button>
+    </div>
+  </ng-template>
+  <!-- show members modal end -->
 </div>
