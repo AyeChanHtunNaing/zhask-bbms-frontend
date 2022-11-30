@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { TaskListService } from '../services/tasklist.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -8,6 +8,7 @@ import {InviteMember} from "../models/invitemember";
 import {InvitememberService} from "../services/invitemember.service";
 import { BoardService } from '../services/board.service';
 import Swal from 'sweetalert2';
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -39,7 +40,7 @@ export class BoardComponent implements OnInit {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   boardName: string | null | undefined;
-
+  modalRef!: BsModalRef;
 
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
@@ -61,7 +62,7 @@ export class BoardComponent implements OnInit {
   listName!: string;
   board:Board=new Board();
   count!: number;
-  constructor(private router: Router,private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
+  constructor(private modalService: BsModalService,private router: Router,private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
               ,private invitememberService:InvitememberService,private route:ActivatedRoute) {
     this.inviteForm = this.formBuilder.group({
       email: ['',[this.commaSepEmail ]],
@@ -161,6 +162,8 @@ export class BoardComponent implements OnInit {
 
     });
 
-
+  }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }

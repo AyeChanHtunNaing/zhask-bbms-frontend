@@ -224,7 +224,6 @@ export class WorkspaceComponent implements OnInit {
     this.getBoard();
     this.getMembers();
 
-
   }
 
   goTotaskLists(baordId:number){
@@ -336,7 +335,7 @@ export class WorkspaceComponent implements OnInit {
  getMembers(){
    this.boardService.getBoardMemberByBoardId(Number(window.localStorage.getItem('boardId'))).subscribe(data=>
    {
-
+    console.log(Number(window.localStorage.getItem('boardId')))
      let set = new Set();
 
      for(let j=0;j<data.users.length;j++){
