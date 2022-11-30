@@ -41,40 +41,9 @@
               <label for="exampleFormControlFile"><span class="text-color fs-6"> <i class="bi bi-images"></i>Add Image</span></label>
               <input type="file" class="form-control-file mx-2" id="exampleFormControlFile"  (change)="selectpic($event)" accept="image/*">
             </div>
-          </form>
-          <form>
-            <!-- checkbox start -->
-            <div class="text-start mt-3">
-              <div class="form-check">
-                <div class="d-flex gap-1"  *ngFor="let activity of activities" >
-
-                  <input type="checkbox"  class="form-check-input"  name="name" [checked]="checkActivity(activity)" (change)="changed($event,activity)">
-                  {{activity.name}}
-                </div>
-              </div>
-            </div>
-            <!-- checkbox end -->
             <div class="form-group">
               <label for="exampleFormControlTextarea1"><span class="text-color fs-6"> <i class="bi bi-file-earmark mx-2"></i> Description</span></label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="taskDetails.content" name="content"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlFile1"><span class="text-color fs-6"> <i class="bi bi-file-plus"></i>Attachment</span></label>
-              <br>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1"  (change)="selectFile($event);upload()">
-            </div>
-            <div *ngIf="fileInfos">
-            <div class="card mt-3">
-              <div class="card-header">List of Files</div>
-              <ul
-                class="list-group list-group-flush"
-                *ngFor="let file of fileInfos | async"
-              >
-                <li class="list-group-item">
-                  <a href="http://localhost:8080/api/v1/attachment/files/{{ file.id }}" >{{ file.name }}</a>
-                </li>
-              </ul>
-            </div>
             </div>
 
             <div class="form-group mt-2">
@@ -88,6 +57,42 @@
             </div>
             <button type="submit" class="btn btn-color mt-3 fs-6 my-auto" (click)="updateTask()">SUBMIT</button>
           </form>
+          <hr>
+          <!-- checkbox start -->
+          <div class="text-start mt-3">
+            <h2 class="text-color">Activities</h2>
+            <div class="form-check">
+              <div class="d-flex gap-1"  *ngFor="let activity of activities" >
+
+                <input type="checkbox"  class="form-check-input"  name="name" [checked]="checkActivity(activity)" (change)="changed($event,activity)">
+                {{activity.name}}
+              </div>
+            </div>
+          </div>
+          <!-- checkbox end -->
+          <hr>
+          <!-- attachment start -->
+          <div class="form-group">
+            <label for="exampleFormControlFile1"><span class="text-color fs-6"> <i class="bi bi-file-plus"></i>Attachment</span></label>
+            <br>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1"  (change)="selectFile($event);upload()">
+          </div>
+          <div *ngIf="fileInfos">
+            <div class="card mt-3">
+              <div class="card-header">List of Files</div>
+              <ul
+                class="list-group list-group-flush"
+                *ngFor="let file of fileInfos | async"
+              >
+                <li class="list-group-item">
+                  <a href="http://localhost:8080/api/v1/attachment/files/{{ file.id }}" >{{ file.name }}</a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- attachment end -->
+          <hr>
           <div *ngIf="logs.length!=0">
             <div class="card mt-3">
               <div class="card-header">Logs</div>

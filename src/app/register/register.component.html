@@ -33,9 +33,12 @@
                 </div>
                 <div class="form-outline mb-4">
                   <label class="form-label" for="email">Email address</label>
-                  <input type="email" class="form-control" [(ngModel)]="user.email"  formControlName="email" id="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" email="true" >
+                  <input type="email" class="form-control" [(ngModel)]="user.email"  formControlName="email" id="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" email="true"  >
                   <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <div *ngIf="f.email.errors?.['required']">Email is required</div>
+                    <div *ngIf="f.email.errors.email">
+                      Please enter a valid email.
+                    </div>
                   </div>
                 </div>
 
