@@ -65,6 +65,7 @@ export class CardComponent implements OnInit {
   attachment=new Attachment()
   percentage:number=0
   p: number = 1;
+  members:String[]=[];
   constructor(private boardService:BoardService,private notiEmailService:NotiEmailService,private router: Router,private logsService:LogsService,private modalService: BsModalService,private attachmentService:AttachmentService,private activityService:ActivityService,private taskService:TaskService,private fb:FormBuilder,private userService : UserService, private invitememberService : InvitememberService) {
     this.editForm=this.fb.group({
       taskDesc:['',[Validators.required]],
@@ -132,24 +133,30 @@ export class CardComponent implements OnInit {
     window.localStorage.setItem('description',this.card.description);
   }
   updateTaskDescription() {
-
-    const value = this.updateDescription;
-    console.log(value);
-    this.task.description = value;
-    this.taskService.updateTaskDescription(this.getId(),this.task).subscribe(data=>{
-      console.log(data);
-      this.sendNoti(' update the card from '+ window.localStorage.getItem('taskdes') +" to " +this.taskDetails.description+" at "+new Date(Date.now()).toLocaleString());
-      this.reloadCurrentRoute();
-    })
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Updated Successfully',
-      showConfirmButton: false,
-      timer: 1500
-    });
-   // window.location.reload()
-
+    if(!this.updateDescription.trim().length ){
+      Swal.fire({
+        icon: 'error',
+        title: 'No Input',
+        text: 'Please fill the data'
+      });
+    }else {
+      const value = this.updateDescription;
+      console.log(value);
+      this.task.description = value;
+      this.taskService.updateTaskDescription(this.getId(), this.task).subscribe(data => {
+        console.log(data);
+        this.sendNoti(' update the card from ' + window.localStorage.getItem('taskdes') + " to " + this.taskDetails.description + " at " + new Date(Date.now()).toLocaleString());
+        this.reloadCurrentRoute();
+      })
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Updated Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      // window.location.reload()
+    }
     this.ngOnInit()
   }
   updateTask(){
@@ -485,5 +492,23 @@ export class CardComponent implements OnInit {
       }
     });
   }
+  //member show
+  getMembers(){
+    this.boardService.getBoardMemberByBoardId(Number(window.localStorage.getItem('boardId'))).subscribe(data=>
+    {
+
+      let set = new Set();
+
+      for(let j=0;j<data.users.length;j++){
+        set.add(data.users[j].id);
+      }
+      for(let entry of set){
+        this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
+          this.members.push(d.email);
+        });
+      }
+    });
+  }
+
 }
 

@@ -151,7 +151,7 @@
           <label for="invite" class="form-label">Invite people</label>
           <input type="text" class="form-control" [(ngModel)]="email" name="email" id="invite">
         </div>
-        <button type="button" class="btn btn-color d-flex mx-auto" (click)="onInviteSubmit()">Invite</button>
+        <button type="button" class="btn btn-color d-flex mx-auto" (click)="onInviteSubmit()" [disabled]="!email">Invite</button>
       </form>
     </div>
     <div class="modal-footer">

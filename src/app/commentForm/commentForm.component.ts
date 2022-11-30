@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'comment-form',
@@ -23,12 +23,18 @@ export class CommentFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      title: [this.initialText, Validators.required],
+      title: [this.initialText, Validators.required,this.noWhitespaceValidator],
     });
   }
 
   onSubmit(): void {
+
     this.handleSubmit.emit(this.form.value.title);
     this.form.reset();
+  }
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
   }
 }

@@ -179,8 +179,8 @@ export class BoardComponent implements OnInit {
       }
       for(let entry of set){
         this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
-          this.members.push(d.name);
-          console.log('Name is' + d.name)
+          this.members.push(d.name + ' ('+d.email+')');
+
         });
       }
     });
