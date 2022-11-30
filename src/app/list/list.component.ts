@@ -120,10 +120,10 @@ changeDone()
     this.task.users=this.users;
     //this.task.startDate=
     if(window.localStorage.getItem('move')!=null) {
-      this.message = this.userName + ' moved the card from ' + window.localStorage.getItem('move') + ' to ' + this.tasklist.title + " at " + new Date(Date.now()).toLocaleString();
+      this.message = this.userName + ' moved this card from ' + window.localStorage.getItem('move') + ' to ' + this.tasklist.title + " at " + new Date(Date.now()).toLocaleString();
     }
     else {
-      this.message = this.userName + ' moved the card from ' + window.localStorage.getItem('m') + ' to ' + this.tasklist.title + " at " + new Date(Date.now()).toLocaleString();
+      this.message = this.userName + ' moved this card from ' + window.localStorage.getItem('m') + ' to ' + this.tasklist.title + " at " + new Date(Date.now()).toLocaleString();
     }
     this.taskService.updateTaskList(this.taskId,this.task).subscribe(data=>
     {

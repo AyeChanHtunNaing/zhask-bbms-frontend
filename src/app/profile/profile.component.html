@@ -1,9 +1,8 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="body" [ngClass]="getBodyClass()">
-  <div class="container w-75 h-75 d-flex mx-auto mt-5">
+  <div class="container d-flex mt-5 vh-100">
     <div class="row">
-      <div class="col-md-5 mt-5">
-
+      <div class="col-lg-4 mt-5">
         <label class="hoverable" for="fileInput">
           <img [src]="pict" (error)="setDefaultPic()" alt="profile">
           <div class="hover-text">Choose file</div>
@@ -11,28 +10,31 @@
         </label>
         <br/>
         <input id="fileInput" type='file' (change)="selectpic($event)" accept="image/*">
-        <
+        <button *ngIf="pict" (click)="delete()" >delete</button>
       </div>
-      <div class="col-md-7 mt-5">
+      <div class="col-lg-8 mt-5">
         <form class="mx-5" (ngSubmit)="onSubmit()">
           <div class="form-outline mb-4">
             <label class="form-label" for="uname">User Name</label>
-            <input #username type="text" class="form-control" id="uname" [value]="user.userName">
+            <input #username type="text" class="form-control" id="uname" [value]="user.userName" size="50">
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="name">Nickname</label>
-            <input type="text" #name class="form-control" id="user.name" [value]="names">
+            <input type="text" #name class="form-control" id="user.name" [value]="names" size="50">
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="email">Email address</label>
-            <input type="email" #useremail class="form-control" id="email" [value]="user.email" readonly>
+            <input type="email" #useremail class="form-control" id="email" [value]="user.email" readonly size="50">
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="createdAt">Member Since</label>
 
-            <input type="text" #createat class="form-control"  id="createdAt" [value]="user.createAt" readonly>
+            <input type="text" #createat class="form-control"  id="createdAt" [value]="user.createAt" readonly size="50">
           </div>
-          <button type="submit" class="btn btn-color btn-lg btn-block" >Update Profile</button>
+          <div class="d-flex">
+          <button type="submit" class="btn btn-color" >Update Profile</button>
+          <button type="button" class="btn btn-secondary mx-2" (click)="reset()" >Reset</button>
+          </div>
         </form>
 
       </div>

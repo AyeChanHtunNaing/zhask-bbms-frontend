@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-outline mb-4">
                   <label class="form-label" for="email">Email address</label>
-                  <input type="email" class="form-control" [(ngModel)]="user.email"  formControlName="email" id="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" >
+                  <input type="email" class="form-control" [(ngModel)]="user.email"  formControlName="email" id="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" email="true" >
                   <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <div *ngIf="f.email.errors?.['required']">Email is required</div>
                   </div>
@@ -44,6 +44,9 @@
                   <input type="password" class="form-control" [(ngModel)]="user.password"  formControlName="password" id="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors}" [minlength]="8">
                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                     <div *ngIf="f.password.errors?.['required']">Password is required</div>
+                    <div *ngIf="f.password.errors?.['minlength']">
+                      Password must be at least 8 characters long.
+                    </div>
                   </div>
                 </div>
 

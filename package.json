@@ -33,6 +33,7 @@
     "ng-angular-popup": "^0.2.0",
     "ng2-search-filter": "^0.5.1",
     "ngx-bootstrap": "^9.0.0",
+    "ngx-bootstrap-multiselect": "^2.1.1",
     "ngx-pagination": "^6.0.3",
     "ngx-spinner": "^14.0.0",
     "ngx-toastr": "^15.2.1",

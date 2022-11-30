@@ -137,4 +137,7 @@ export class ProfileComponent implements OnInit {
   setDefaultPic() {
     this.pict = "assets/images/user.png";
   }
+  reset(){
+    window.location.reload()
+  }
 }
