@@ -1,5 +1,6 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="body" [ngClass]="getBodyClass()">
+  <h1 class="text-color text-start">Board Name : {{boardName}}</h1>
   <div *ngIf="isDataAvailable==false">
     <app-no-data></app-no-data>
   </div>

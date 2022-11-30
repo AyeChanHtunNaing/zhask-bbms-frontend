@@ -15,6 +15,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import { NotiEmail } from '../models/notiemail';
 import { UserService } from '../services/user.service';
 import { NotiEmailService } from '../services/notiemail.service';
+import {WorkspaceService} from "../services/workspace.service";
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -49,6 +50,7 @@ export class WorkspaceComponent implements OnInit {
   modalRef!: BsModalRef;
   boardName!:string;
   isDataAvailable:boolean=true;
+  workspaceName: string | null | undefined;
   commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
     const emails = control.value.split(',').map((e: string)=>e.trim());
     const forbidden = emails.some((email: any) => Validators.email(new FormControl(email)));
@@ -74,7 +76,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   constructor(private notiEmailService:NotiEmailService,private userService:UserService, private formBuilder: FormBuilder,private spinner: NgxSpinnerService ,private modalService: BsModalService,private boardService: BoardService,private invitememberService:InvitememberService
-                ,private route : ActivatedRoute , private router : Router){
+               ,private workspaceService:WorkspaceService ,private route : ActivatedRoute , private router : Router){
     this.registerForm = this.formBuilder.group({
 
       name: ['', [Validators.required]],
@@ -214,6 +216,9 @@ export class WorkspaceComponent implements OnInit {
 
   ngOnInit() {
     this.workspace.id=this.route.snapshot.params['workspaceId'];
+    this.workspaceService.getWorkspaceByWorkspaceId(this.workspace.id).subscribe(data=>{
+      this.workspaceName=data.name
+    })
     this.board.workSpace=this.workspace;
     this.getBoard();
   }
@@ -299,12 +304,12 @@ export class WorkspaceComponent implements OnInit {
     if (event.target.checked == true) {
       this.board.marked=true
       this.boardService.setFavBoard(id.toString(), this.board).subscribe(data => {
-      
+
       })
     }else{
       this.board.marked=false
       this.boardService.setFavBoard(id.toString(), this.board).subscribe(data => {
-       
+
       })
     }
   }

@@ -14,6 +14,9 @@ export class WorkspaceService {
       getWorkspace(userId:number): Observable<Workspace[]>{
         return this.httpClient.get<Workspace[]>(`${this.baseURL}/${userId}`);
       }
+      getWorkspaceByWorkspaceId(workspaceId:number): Observable<Workspace>{
+        return this.httpClient.get<Workspace>(`${this.baseURL}/getWorkspace/${workspaceId}`);
+      }
       getFavWorkspace(userId:number): Observable<Workspace[]>{
       return this.httpClient.get<Workspace[]>(`${this.favURL}/workspace/${userId}`);
      }

@@ -6,6 +6,7 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
+  <h1 class="text-color text-start">Workspace Name : {{workspaceName}}</h1>
 
   <div class="text-end">
     <button type="button" class="btn btn-color me-3 my-2" (click)="openModal(invite)">
@@ -13,6 +14,9 @@
     </button>
     <button type="button" class="btn btn-color" (click)="openModal(create)">
       Create New Board <i class="bi bi-clipboard"></i>
+    </button>
+    <button type="button" class="btn btn-color mx-2" (click)="openModal(invite)">
+       Members  <i class="bi bi-person"></i>
     </button>
   </div>
   <div class="form-group">
@@ -112,7 +116,7 @@
           <label for="invite" class="form-label">Invite people</label>
           <input type="text" class="form-control" [(ngModel)]="invitemember.email" formControlName="email"  id="invite">
         </div>
-        <button type="submit" class="btn btn-color d-flex mx-auto">Invite</button>
+        <button type="submit" class="btn btn-color d-flex mx-auto" [disabled]="!invitemember.email">Invite</button>
       </form>
     </div>
     <div class="modal-footer">

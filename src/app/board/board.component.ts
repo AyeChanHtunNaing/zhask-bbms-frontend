@@ -38,6 +38,7 @@ export class BoardComponent implements OnInit {
   screenWidths = 0;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+  boardName: string | null | undefined;
 
 
   onToggleSideNav(data: SideNavToggle): void {
@@ -60,7 +61,6 @@ export class BoardComponent implements OnInit {
   listName!: string;
   board:Board=new Board();
   count!: number;
-
   constructor(private router: Router,private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
               ,private invitememberService:InvitememberService,private route:ActivatedRoute) {
     this.inviteForm = this.formBuilder.group({
@@ -76,16 +76,20 @@ export class BoardComponent implements OnInit {
      this.tasklistService.getTaskList(this.board.id,Number(this.userId)).subscribe(data => {
       this.tasklists  = data;
       this.isDataAvailable=this.tasklists.length>0;
+
     });
   }
 
   ngOnInit() {
+
     this.board.id=this.route.snapshot.params['boardId'];
     window.localStorage.setItem('count',this.count+"")
     this.tasklist.board=this.board;
+    this.boardService.getBoardById(this.board.id).subscribe(data=>{
+      this.boardName=data.name;
+    })
     this.setMockData();
     window.localStorage.setItem('boardId',this.board.id+"");
-
   }
 
   onInviteSubmit() {

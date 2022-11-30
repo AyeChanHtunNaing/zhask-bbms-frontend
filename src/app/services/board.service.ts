@@ -54,6 +54,10 @@ export class BoardService {
       return this.httpClient.delete<Board>(`${this.baseURL}/${boardId}`);
     }
 
+    getBoardById(boardId:number):Observable<any>{
+      return this.httpClient.get(`${this.baseURL}/selectBoardByBoardId/${boardId}`)
+    }
+
 }
 
 
