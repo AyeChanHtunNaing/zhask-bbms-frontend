@@ -9,6 +9,7 @@ import {InvitememberService} from "../services/invitemember.service";
 import { BoardService } from '../services/board.service';
 import Swal from 'sweetalert2';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {UserService} from "../services/user.service";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -41,7 +42,7 @@ export class BoardComponent implements OnInit {
   @Input() screenWidth = 0;
   boardName: string | null | undefined;
   modalRef!: BsModalRef;
-
+  members:String[]=[];
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidths = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
@@ -63,7 +64,7 @@ export class BoardComponent implements OnInit {
   board:Board=new Board();
   count!: number;
   constructor(private modalService: BsModalService,private router: Router,private formBuilder: FormBuilder,private tasklistService:TaskListService,private boardService:BoardService
-              ,private invitememberService:InvitememberService,private route:ActivatedRoute) {
+              ,private invitememberService:InvitememberService,private userService:UserService,private route:ActivatedRoute) {
     this.inviteForm = this.formBuilder.group({
       email: ['',[this.commaSepEmail ]],
     });
@@ -91,6 +92,7 @@ export class BoardComponent implements OnInit {
     })
     this.setMockData();
     window.localStorage.setItem('boardId',this.board.id+"");
+    this.getMembers()
   }
 
   onInviteSubmit() {
@@ -165,5 +167,26 @@ export class BoardComponent implements OnInit {
   }
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+  getMembers(){
+    this.boardService.getBoardMemberByBoardId(Number(window.localStorage.getItem('boardId'))).subscribe(data=>
+    {
+
+      let set = new Set();
+
+      for(let j=0;j<data.users.length;j++){
+          set.add(data.users[j].id);
+      }
+      for(let entry of set){
+        this.userService.getUserNameByUserId(entry as number).subscribe(d=>{
+          this.members.push(d.name);
+          console.log('Name is' + d.name)
+        });
+      }
+    });
+  }
+  getUserId():number | null{
+    return window.localStorage.getItem('userId') as number | null;
+
   }
 }

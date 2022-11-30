@@ -235,7 +235,7 @@ export class HomeComponent implements OnInit ,OnChanges {
       showConfirmButton: false,
       timer: 1500
     });
-    this.sendNoti("update workspace from "+ window.localStorage.getItem('des')+" to "+value+" at "+new Date(Date.now()));
+    this.sendNoti("update workspace from "+ window.localStorage.getItem('des')+" to "+value+" at "+new Date(Date.now()).toLocaleString());
   }
 
   deleteWorkspace(workspaceId: number,wname:string) {
@@ -264,7 +264,7 @@ export class HomeComponent implements OnInit ,OnChanges {
         // }, 1000);
       }
     });
-    this.sendNoti("delete workspace "+wname+" at "+new Date(Date.now()));
+    this.sendNoti("delete workspace "+wname+" at "+new Date(Date.now()).toLocaleString());
     this.getWorkspaces();
   }
 

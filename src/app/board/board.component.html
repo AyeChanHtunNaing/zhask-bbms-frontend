@@ -53,9 +53,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <div>
+        <div *ngFor="let item of members" >
           <ul>
-            <li>item</li>
+            <li>{{item}}</li>
           </ul>
         </div>
       </div>

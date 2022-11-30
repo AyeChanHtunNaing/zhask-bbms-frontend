@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Workspace } from '../models/workspace';
+import {Board} from "../models/board";
 @Injectable({
     providedIn: 'root'
   })
@@ -36,5 +37,8 @@ export class WorkspaceService {
 
       deleteWorkspaceById(workspaceId: number):Observable<Workspace>{
         return this.httpClient.delete<Workspace>(`${this.baseURL}/${workspaceId}`);
+      }
+     getWorkspaceMemberByWorkspaceId(workspaceId : number):Observable<Workspace>{
+        return this.httpClient.get<Workspace>(`${this.baseURL}/generateWorkspaceMemberById/${workspaceId}`);
       }
 }
