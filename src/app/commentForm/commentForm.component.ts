@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'comment-form',
@@ -23,14 +24,23 @@ export class CommentFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      title: [this.initialText, Validators.required,this.noWhitespaceValidator],
+      title: [this.initialText, Validators.required],
     });
   }
 
   onSubmit(): void {
-
+    if(this.form.value.title.trim()!=0){
     this.handleSubmit.emit(this.form.value.title);
     this.form.reset();
+    }else{
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Invalid input',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
   }
   public noWhitespaceValidator(control: FormControl) {
     const isWhitespace = (control.value || '').trim().length === 0;

@@ -138,7 +138,7 @@ changeDone()
 
     });
 
-    this.sendNoti(' moved the card '+ window.localStorage.getItem('description') as string+' from '+window.localStorage.getItem('title')+' to '+this.tasklist.title+" at "+new Date(Date.now()).toLocaleString());
+    this.sendNoti(' moved the card '+ window.localStorage.getItem('description') as string+' from '+window.localStorage.getItem('move')+' to '+this.tasklist.title+" at "+new Date(Date.now()).toLocaleString());
     window.localStorage.removeItem('taskId')
     window.localStorage.removeItem('description');
     window.localStorage.setItem('title',this.tasklist.title);
