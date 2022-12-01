@@ -151,6 +151,12 @@
           <label for="invite" class="form-label">Invite people</label>
           <input type="text" class="form-control" [(ngModel)]="email" name="email" id="invite">
         </div>
+        <h4 class="text-color">Members in this board</h4>
+        <div *ngFor="let item of members" >
+          <ul>
+            <li>{{item}}</li>
+          </ul>
+        </div>
         <button type="button" class="btn btn-color d-flex mx-auto" (click)="onInviteSubmit()" [disabled]="!email">Invite</button>
       </form>
     </div>

@@ -105,6 +105,7 @@ export class CardComponent implements OnInit {
         this.pict = event.target.result;
    }
     }
+    this.getMembers()
 
  }
 
