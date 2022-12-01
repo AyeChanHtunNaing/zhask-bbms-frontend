@@ -69,7 +69,7 @@ export class BoardComponent implements OnInit {
       email: ['',[this.commaSepEmail ]],
     });
     this.addListForm = this.formBuilder.group({
-      listName: ['',[Validators.required ],this.noWhitespaceValidator],
+      listName: ['',[Validators.required ]],
     });
   }
 
@@ -138,7 +138,7 @@ export class BoardComponent implements OnInit {
 
   addList(listName: string) {
     console.log(listName)
-    if(listName!="" && listName!=null)
+    if(listName!="" && listName!=null && listName.trim().length!=0)
     {
       this.tasklist.title=listName;
       this.tasklistService.createTaskList(this.tasklist)
